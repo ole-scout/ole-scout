@@ -1,7 +1,7 @@
 # Basics
 
--   [ ] Disable cookies before consent <-
--   [ ] Cookie consent modal
+-   [x] Disable cookies before consent
+-   [ ] Cookie consent modal <-
 
 # Auth
 
