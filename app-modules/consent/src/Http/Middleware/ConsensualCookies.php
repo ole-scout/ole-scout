@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace FossUndHaas\Consent\Http\Middleware;
 
 use Closure;
 use Illuminate\Foundation\Http\Middleware\Concerns\ExcludesPaths;

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace FossUndHaas\Consent\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
-class ConsentController extends Controller
+class ConsentController
 {
     /**
      * Handle the incoming request.

@@ -1,0 +1,24 @@
+{
+    "name": "foss-haas/consent",
+    "description": "",
+    "type": "library",
+    "version": "1.0",
+    "license": "proprietary",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "FossUndHaas\\Consent\\": "src/",
+            "FossUndHaas\\Consent\\Tests\\": "tests/",
+            "FossUndHaas\\Consent\\Database\\Factories\\": "database/factories/",
+            "FossUndHaas\\Consent\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FossUndHaas\\Consent\\Providers\\ConsentServiceProvider"
+            ]
+        }
+    }
+}
