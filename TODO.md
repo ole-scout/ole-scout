@@ -6,6 +6,7 @@
     -   [ ] i18n-ify legal basis field
     -   [ ] convert duration into machine-readable format
     -   [ ] Load cookie definitions from db (with translations!)
+    -   [ ] Hard-code dfns for system cookies & functional for YT/Vimeo (others too?)
     -   [ ] Create seeder for dummy cookies
     -   [ ] Load app's provider details for system cookies from db (settings?)
     -   [ ] Show cookie consent form in a modal
