@@ -4,6 +4,7 @@ namespace FossUndHaas\Consent\Http\Middleware;
 
 use Closure;
 use Illuminate\Foundation\Http\Middleware\Concerns\ExcludesPaths;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,10 +30,10 @@ class ConsensualCookies
         ) {
             return $next($request);
         }
-        Config::set('session.driver', 'array');
+        // Config::set('session.driver', 'array');
         $response = $next($request);
-        $response->headers->removeCookie('XSRF-TOKEN');
-        $response->headers->removeCookie($sessionCookie);
+        // $response->headers->removeCookie('XSRF-TOKEN');
+        // $response->headers->removeCookie($sessionCookie);
         return $response;
     }
 

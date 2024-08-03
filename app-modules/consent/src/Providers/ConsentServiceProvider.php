@@ -3,6 +3,7 @@
 namespace FossUndHaas\Consent\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
 
 class ConsentServiceProvider extends ServiceProvider
 {
