@@ -3,7 +3,9 @@
 -   [x] Disable cookies before consent
 -   [ ] Cookie consent modal <-
     -   [x] Implement filament form
-    -   [ ] Load cookie definitions from db
+    -   [ ] i18n-ify legal basis field
+    -   [ ] convert duration into machine-readable format
+    -   [ ] Load cookie definitions from db (with translations!)
     -   [ ] Create seeder for dummy cookies
     -   [ ] Load app's provider details for system cookies from db (settings?)
     -   [ ] Show cookie consent form in a modal
