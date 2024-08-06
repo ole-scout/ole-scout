@@ -40,7 +40,8 @@ class CookieConsent extends Component implements HasForms
                 'name' => 'OLE Scout',
                 'description' => 'OLE Scout setzt Cookies ein, um eingeloggte Benutzer zu identifizieren, Ihre Sitzung gegen Identitätsdiebstahl (CSRF) zu schützen und Ihre Privatsphäre-Einstellungen zu speichern.',
                 'provider' => [
-                    'address' => 'Contoso Ltd, 2301 Arely Ports, RI 75911, Johannside, Maldives',
+                    'name' => 'Contoso Ltd',
+                    'address' => '2301 Arely Ports, RI 75911, Johannside, Maldives',
                     'privacyPolicy' => '/privacy',
                     'imprint' => '/imprint',
                     'contact' => '/contact',
@@ -96,7 +97,8 @@ class CookieConsent extends Component implements HasForms
                 'name' => 'Google Fonts',
                 'description' => 'Google Fonts ermöglicht die Einbindung von Schriftarten auf dieser Webseite.',
                 'provider' => [
-                    'address' => 'Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland',
+                    'name' => 'Google Ireland Limited',
+                    'address' => 'Gordon House, Barrow Street, Dublin 4, Irland',
                     'privacyPolicy' => 'https://policies.google.com/privacy',
                     'imprint' => 'https://www.google.de/contact/impressum.html',
                     'contact' => 'https://support.google.com/',
@@ -111,7 +113,8 @@ class CookieConsent extends Component implements HasForms
                 'name' => 'Matomo',
                 'description' => 'Matomo verwendet Cookies, um pseudonymisierte Benutzerprofile zu erzeugen, die Aufschluss über das Nutzungsverhalten über mehrere Besuche hinweg geben können.',
                 'provider' => [
-                    'address' => 'Contoso Ltd, 2301 Arely Ports, RI 75911, Johannside, Maldives',
+                    'name' => 'Contoso Ltd',
+                    'address' => '2301 Arely Ports, RI 75911, Johannside, Maldives',
                     'privacyPolicy' => '/privacy',
                     'imprint' => '/imprint',
                     'contact' => '/contact',
@@ -143,7 +146,8 @@ class CookieConsent extends Component implements HasForms
                 'name' => 'Google Analytics',
                 'description' => 'Google Analytics verwendet Cookies, um pseudonymisierte Benutzerprofile zu erzeugen, die Aufschluss über das Nutzungsverhalten über mehrere Besuche hinweg geben können.',
                 'provider' => [
-                    'address' => 'Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland',
+                    'name' => 'Google Ireland Limited',
+                    'address' => 'Gordon House, Barrow Street, Dublin 4, Irland',
                     'privacyPolicy' => 'https://policies.google.com/privacy',
                     'imprint' => 'https://www.google.de/contact/impressum.html',
                     'contact' => 'https://support.google.com/',
@@ -183,7 +187,8 @@ class CookieConsent extends Component implements HasForms
                 'name' => 'Google Ads',
                 'description' => 'Google Ads verwendet Cookies, um pseudonymisierte Benutzerprofile zu erzeugen, die Aufschluss über das Nutzungsverhalten über mehrere Besuche hinweg geben können.',
                 'provider' => [
-                    'address' => 'Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland',
+                    'name' => 'Google Ireland Limited',
+                    'address' => 'Gordon House, Barrow Street, Dublin 4, Irland',
                     'privacyPolicy' => 'https://policies.google.com/privacy',
                     'imprint' => 'https://www.google.de/contact/impressum.html',
                     'contact' => 'https://support.google.com/',
@@ -215,7 +220,8 @@ class CookieConsent extends Component implements HasForms
                 'name' => 'Facebook',
                 'description' => 'Facebook verwendet Cookies, um pseudonymisierte Benutzerprofile zu erzeugen, die Aufschluss über das Nutzungsverhalten über mehrere Besuche hinweg geben können.',
                 'provider' => [
-                    'address' => 'Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland',
+                    'name' => 'Meta Platforms Ireland Limited',
+                    'address' => '4 Grand Canal Square Grand Canal Harbour, Dublin 2, Irland',
                     'privacyPolicy' => 'https://www.facebook.com/about/privacy',
                     'contact' => 'https://www.facebook.com/business/help',
                     'email' => 'support@fb.com',
@@ -361,49 +367,28 @@ class CookieConsent extends Component implements HasForms
     {
         return $form
             ->schema([
-                Section::make()
-                    ->schema([
-                        Placeholder::make('intro')
-                            ->label(__('Datenschutz-Einstellungen'))
-                            ->content(new Markdown(__("Diese Anwendung verwendet Cookies und ähnliche Technologien und verarbeitet personenbezogene Daten von Ihnen (z.B. IP-Adresse), um Inhalte und Funktionen zur Verfügung zu stellen oder Zugriffe zu analysieren.\n\nSie haben an dieser Stelle die Möglichkeit, Ihre Einwilligung in die Verarbeitung Ihrer personenbezogenen Daten zu bestimmten Zwecken zu erteilen. Sie können diese Einwilligung jederzeit widerrufen. Weitere Informationen zu Ihren Rechten und zur Verwendung Ihrer Daten finden Sie in der [Datenschutzerklärung](/privacy)."))),
-                        $this->categoriesCheckboxes(),
-                        Tabs::make()
-                            ->tabs(Arr::map(
-                                Category::cases(),
-                                fn (Category $category) => $this->categoryTab($category)
-                            )),
-                        Actions::make([
-                            Actions\Action::make('save-all')
-                                ->extraAttributes(['class' => 'flex-grow'])
-                                ->label(__('Alle auswählen & speichern'))
-                                ->action(function (Component $livewire, Set $set) {
-                                    foreach (Category::names() as $category) {
-                                        $set('_categories.' . $category, true);
-                                    }
-                                    foreach ($livewire->services as $services) {
-                                        foreach ($services as $service) {
-                                            $set($service['id'], true);
-                                        }
-                                    }
-                                    $livewire->save();
-                                }),
-                            Actions\Action::make('reject-all')
-                                ->extraAttributes(['class' => 'flex-grow'])
-                                ->label(__('Auswahl speichern'))
-                                ->action(function (Component $livewire) {
-                                    $livewire->save();
-                                })
-                        ])->columns(2)
-                    ])
+                Placeholder::make('intro')
+                    ->hiddenLabel()
+                    ->content(new Markdown(__("Diese Anwendung verwendet Cookies und ähnliche Technologien und verarbeitet personenbezogene Daten von Ihnen (z.B. IP-Adresse), um Inhalte und Funktionen zur Verfügung zu stellen oder Zugriffe zu analysieren.\n\nSie haben an dieser Stelle die Möglichkeit, Ihre Einwilligung in die Verarbeitung Ihrer personenbezogenen Daten zu bestimmten Zwecken zu erteilen. Sie können diese Einwilligung jederzeit widerrufen. Weitere Informationen zu Ihren Rechten und zur Verwendung Ihrer Daten finden Sie in der [Datenschutzerklärung](/privacy)."))),
+                $this->categoriesCheckboxes(),
+                Tabs::make()
+                    ->tabs(Arr::map(
+                        Category::cases(),
+                        fn (Category $category) => $this->categoryTab($category)
+                    ))
             ])
             ->statePath('data');
     }
 
-    public function save(): void
+    public function save(bool $acceptAll = false): void
     {
         $data = $this->form->getState();
 
-        dd(['data' => $this->data, 'state' => $data]);
+        dd([
+            'data' => $this->data,
+            'state' => $data,
+            'acceptAll' => $acceptAll
+        ]);
     }
 
     public function render(): View

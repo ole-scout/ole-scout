@@ -51,7 +51,7 @@ class ProviderDetails extends Component implements HasForms, HasInfolists
     return $infolist
       ->state($this->data)
       ->schema([
-        Section::make(__('Anbieter'))
+        Section::make($this->data['name'])
           ->description($this->data['address'])
           ->compact()
           ->collapsed()
