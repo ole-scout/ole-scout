@@ -2271,6 +2271,31 @@
             "transport-options": {
                 "symlink": true,
                 "relative": true
+            }
+        },
+        {
+            "name": "foss-haas/filament-partials",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/filament-partials",
+                "reference": "2338e7733fee4bbf51ab165f2b316111aed83512"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FossHaas\\FilamentPartials\\Providers\\FilamentPartialsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FossHaas\\FilamentPartials\\": "src/",
+                    "FossHaas\\FilamentPartials\\Tests\\": "tests/",
+                    "FossHaas\\FilamentPartials\\Database\\Factories\\": "database/factories/",
+                    "FossHaas\\FilamentPartials\\Database\\Seeders\\": "database/seeders/"
+                }
             },
             "license": [
                 "proprietary"
