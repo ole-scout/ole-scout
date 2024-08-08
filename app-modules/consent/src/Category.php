@@ -4,12 +4,12 @@ namespace FossHaas\Consent;
 
 use Illuminate\Support\Arr;
 
-enum Category
+enum Category: string
 {
-  case essential;
-  case functional;
-  case analytics;
-  case marketing;
+  case essential = 'essential';
+  case functional = 'functional';
+  case analytics = 'analytics';
+  case marketing = 'marketing';
   public static function names(): array
   {
     return Arr::map(

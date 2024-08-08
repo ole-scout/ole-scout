@@ -10,6 +10,7 @@ use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
+use FossHaas\Consent\CookieType;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
@@ -35,29 +36,26 @@ class CookieDetails extends Component implements HasForms, HasInfolists
           ->schema([
             RepeatableEntry::make('cookies')
               ->hiddenLabel(true)
-              ->columns(3)
+              ->columns(4)
               ->schema([
                 TextEntry::make('type')
                   ->label(__('Typ'))
-                  ->formatStateUsing(fn (string $state): string => match ($state) {
-                    'cookie' => __('Cookie'),
-                    'local_storage' => __('Local Storage'),
-                    'session_storage' => __('Session Storage'),
-                  }),
+                  ->formatStateUsing(fn (string $state): string => CookieType::from($state)->label()),
                 TextEntry::make('name')
                   ->label(__('Name'))
+                  ->columnSpan(2)
                   ->extraAttributes(['class' => 'font-mono']),
                 TextEntry::make('duration')
                   ->label(__('Laufzeit')),
                 TextEntry::make('content')
                   ->label(__('Daten'))
-                  ->columnSpan(3),
+                  ->columnSpan(4),
                 TextEntry::make('purpose')
                   ->label(__('Zweck'))
-                  ->columnSpan(3),
+                  ->columnSpan(4),
                 TextEntry::make('legalBasis')
                   ->label(__('Rechtsgrundlage'))
-                  ->columnSpan(3)
+                  ->columnSpan(4)
               ])
           ])
       ]);
