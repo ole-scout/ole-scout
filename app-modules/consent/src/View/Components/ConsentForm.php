@@ -1,36 +1,23 @@
 <?php
 
-namespace FossHaas\Consent\Livewire;
+namespace FossHaas\Consent\View\Components;
 
-use Filament\Forms\Components\Actions;
-use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Livewire;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Split;
-use Filament\Forms\Components\Tabs;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
-use Filament\Support\Markdown;
+use Closure;
 use FossHaas\Consent\Category;
-use Livewire\Component;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
+use Illuminate\View\Component;
 
-class CookieConsent extends Component implements HasForms
+class ConsentForm extends Component
 {
-    use InteractsWithForms;
 
-    public array $services = [];
+    protected array $services = [];
 
-    public ?array $data = [];
+    protected array $selected = [];
 
+    /**
+     * Create a new component instance.
+     */
     public function __construct()
     {
         $services = [
@@ -249,151 +236,28 @@ class CookieConsent extends Component implements HasForms
         foreach ($services as $service) {
             if (!isset($this->services[$service['category']])) {
                 $this->services[$service['category']] = [];
+                $this->selected[$service['category']] = [];
             }
             $this->services[$service['category']][] = $service;
-            $this->data[$service['id']] = $service['category'] === 'essential';
+            $this->selected[$service['category']][$service['id']] = $service['category'] === 'essential';
         }
     }
 
-    public function mount(): void
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render(): View|Closure|string
     {
-        $this->form->fill([
-            '_categories' => ['essential' => true],
-            '_system' => true,
-            ...$this->data
-        ]);
-    }
-
-    protected function categoriesCheckboxes()
-    {
-        return Grid::make()
-            ->extraAttributes(['class' => 'px-4'])
-            ->columns(['sm' => 2, 'md' => 5, 'lg' => 5])
-            ->schema([
-                Actions::make([
-                    Actions\Action::make('select-all')
-                        ->label(__('Alle auswählen'))
-                        ->link()
-                        ->hidden(fn (Get $get): bool => (
-                            Arr::first(
-                                Category::names(),
-                                fn (string $category) => !$get('_categories.' . $category)
-                            ) === null
-                        ))
-                        ->action(function (Component $livewire, Set $set) {
-                            foreach (Category::names() as $category) {
-                                $set('_categories.' . $category, true);
-                            }
-                            foreach ($livewire->services as $services) {
-                                foreach ($services as $service) {
-                                    $set($service['id'], true);
-                                }
-                            }
-                        }),
-                ])
-                    ->columnSpan(['sm' => 2, 'md' => 1]),
-                ...Arr::map(
+        return view('consent::components.consent-form', [
+            'categories' => Arr::mapWithKeys(
+                Arr::where(
                     Category::cases(),
-                    fn (Category $category) => Checkbox::make('_categories.' . $category->name)
-                        ->label($category->label())
-                        ->disabled($category === Category::essential)
-                        ->afterStateUpdated(function (?bool $state, Component $livewire, Set $set) use ($category) {
-                            if ($state === null) return;
-                            foreach ($livewire->services[$category->name] as $service) {
-                                $set($service['id'], $state);
-                            }
-                        })
-                        ->live()
-                )
-            ]);
-    }
-
-    protected function categoryTab(Category $category)
-    {
-        return Tabs\Tab::make($category->label())
-            ->badge(fn (Component $livewire, Get $get) => (
-                count(Arr::where(
-                    $livewire->services[$category->name],
-                    fn (array $service) => $get($service['id'])
-                )) ?: null
-            ))
-            ->schema(
-                Arr::map(
-                    $this->services[$category->name],
-                    fn (array $service) => $this->serviceFields($category, $service)
-                )
-            );
-    }
-
-    protected function serviceFields(Category $category, $service)
-    {
-        return Fieldset::make($service['name'])
-            ->hiddenLabel()
-            ->columns(['default' => 1, 'lg' => 2])
-            ->schema(Arr::whereNotNull([
-                Split::make([
-                    Grid::make()->columns(1)->schema(Arr::whereNotNull([
-                        Toggle::make($service['id'])
-                            ->label($service['name'])
-                            ->disabled($service['category'] === 'essential')
-                            ->helperText($service['description'])
-                            ->live()
-                            ->afterStateUpdated(function (?bool $state, Component $livewire, Set $set, Get $get) use ($category) {
-                                if ($state === null) return;
-                                if (!$state) {
-                                    $set('_categories.' . $category->name, false);
-                                } else if (
-                                    !Arr::first(
-                                        $livewire->services[$category->name],
-                                        fn (array $service) => !$get($service['id'])
-                                    )
-                                ) {
-                                    $set('_categories.' . $category->name, true);
-                                }
-                            }),
-                        array_key_exists('provider', $service) ? Livewire::make(
-                            ProviderDetails::class,
-                            ['provider' => $service['provider']]
-                        )->key($service['id'] . '-provider') : null
-                    ]))
-                ]),
-                array_key_exists('cookies', $service) && !empty($service['cookies']) ? Livewire::make(
-                    CookieDetails::class,
-                    ['cookies' => $service['cookies']]
-                )->key($service['id'] . '-details') : null
-            ]));
-    }
-
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Placeholder::make('intro')
-                    ->hiddenLabel()
-                    ->content(new Markdown(__("Diese Anwendung verwendet Cookies und ähnliche Technologien und verarbeitet personenbezogene Daten von Ihnen (z.B. IP-Adresse), um Inhalte und Funktionen zur Verfügung zu stellen oder Zugriffe zu analysieren.\n\nSie haben an dieser Stelle die Möglichkeit, Ihre Einwilligung in die Verarbeitung Ihrer personenbezogenen Daten zu bestimmten Zwecken zu erteilen. Sie können diese Einwilligung jederzeit widerrufen. Weitere Informationen zu Ihren Rechten und zur Verwendung Ihrer Daten finden Sie in der [Datenschutzerklärung](/privacy)."))),
-                $this->categoriesCheckboxes(),
-                Tabs::make()
-                    ->tabs(Arr::map(
-                        Category::cases(),
-                        fn (Category $category) => $this->categoryTab($category)
-                    ))
-            ])
-            ->statePath('data');
-    }
-
-    public function save(bool $acceptAll = false): void
-    {
-        $data = $this->form->getState();
-
-        dd([
-            'data' => $this->data,
-            'state' => $data,
-            'acceptAll' => $acceptAll
+                    fn (Category $category) => array_key_exists($category->name, $this->services)
+                ),
+                fn (Category $category) => [$category->name => $category->label()]
+            ),
+            'selected' => $this->selected,
+            'services' => $this->services
         ]);
-    }
-
-    public function render(): View
-    {
-        return view('consent::livewire.cookie-consent');
     }
 }

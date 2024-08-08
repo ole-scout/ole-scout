@@ -2,7 +2,7 @@
 
 -   [x] Disable cookies before consent
 -   [ ] Cookie consent modal <-
-    -   [x] Implement filament form
+    -   [x] Implement filament form without Livewire
     -   [ ] i18n-ify legal basis field
     -   [ ] convert duration into machine-readable format
     -   [ ] Load cookie definitions from db (with translations!)
