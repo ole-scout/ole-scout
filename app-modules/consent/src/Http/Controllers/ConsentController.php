@@ -1,6 +1,6 @@
 <?php
 
-namespace FossUndHaas\Consent\Http\Controllers;
+namespace FossHaas\Consent\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;

@@ -1,7 +1,7 @@
 <?php
 
-use FossUndHaas\Consent\Http\Controllers\ConsentController;
-use FossUndHaas\Consent\Http\Middleware\ConsensualCookies;
+use FossHaas\Consent\Http\Controllers\ConsentController;
+use FossHaas\Consent\Http\Middleware\ConsensualCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 

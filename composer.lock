@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3ac7d21c0578bd79cd996b006f56132",
+    "content-hash": "f9ec67992a515123ec1dfca44aa9361f",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2247,23 +2247,30 @@
             "dist": {
                 "type": "path",
                 "url": "app-modules/consent",
-                "reference": "9c40d492aed41103ac7f79f3afdb1aa579c89f0d"
+                "reference": "bfdeb72cc419d2d3d54c171a498b42d25f036d39"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "FossUndHaas\\Consent\\Providers\\ConsentServiceProvider"
+                        "FossHaas\\Consent\\Providers\\ConsentServiceProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "FossUndHaas\\Consent\\": "src/",
-                    "FossUndHaas\\Consent\\Tests\\": "tests/",
-                    "FossUndHaas\\Consent\\Database\\Factories\\": "database/factories/",
-                    "FossUndHaas\\Consent\\Database\\Seeders\\": "database/seeders/"
+                    "FossHaas\\Consent\\": "src/",
+                    "FossHaas\\Consent\\Tests\\": "tests/",
+                    "FossHaas\\Consent\\Database\\Factories\\": "database/factories/",
+                    "FossHaas\\Consent\\Database\\Seeders\\": "database/seeders/"
                 }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
             },
             "license": [
                 "proprietary"

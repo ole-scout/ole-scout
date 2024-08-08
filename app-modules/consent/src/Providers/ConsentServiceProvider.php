@@ -1,6 +1,6 @@
 <?php
 
-namespace FossUndHaas\Consent\Providers;
+namespace FossHaas\Consent\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;

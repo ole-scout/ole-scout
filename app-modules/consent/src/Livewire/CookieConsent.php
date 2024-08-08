@@ -1,6 +1,6 @@
 <?php
 
-namespace FossUndHaas\Consent\Livewire;
+namespace FossHaas\Consent\Livewire;
 
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\Checkbox;
@@ -18,7 +18,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Support\Markdown;
-use FossUndHaas\Consent\Category;
+use FossHaas\Consent\Category;
 use Livewire\Component;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;

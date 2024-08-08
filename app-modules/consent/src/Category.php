@@ -1,6 +1,6 @@
 <?php
 
-namespace FossUndHaas\Consent;
+namespace FossHaas\Consent;
 
 use Illuminate\Support\Arr;
 

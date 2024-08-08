@@ -18,7 +18,7 @@ return [
 	|
 	*/
 
-	'modules_namespace' => 'FossUndHaas',
+	'modules_namespace' => 'FossHaas',
 
 	/*
 	|--------------------------------------------------------------------------

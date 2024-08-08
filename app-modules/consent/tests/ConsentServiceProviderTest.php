@@ -1,6 +1,6 @@
 <?php
 
-namespace FossUndHaas\Consent\Tests;
+namespace FossHaas\Consent\Tests;
 
 class ConsentServiceProviderTest extends TestCase
 {

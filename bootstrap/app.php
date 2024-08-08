@@ -1,6 +1,6 @@
 <?php
 
-use FossUndHaas\Consent\Http\Middleware\ConsensualCookies;
+use FossHaas\Consent\Http\Middleware\ConsensualCookies;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

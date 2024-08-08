@@ -1,6 +1,6 @@
 <?php
 
-namespace FossUndHaas\Consent\Livewire;
+namespace FossHaas\Consent\Livewire;
 
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
