@@ -1,6 +1,6 @@
 <?php
 
-namespace FossHaas\Consent\View\Components;
+namespace FossHaas\Consent\View\Components\ConsentForm;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -38,7 +38,7 @@ class ProviderDetails extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('consent::components.provider-details', [
+        return view('consent::components.consent-form.provider-details', [
             'formatPhone' => fn (string $phone) => $this::formatPhone($phone),
             'url' => fn (string $url) => $this::url($url),
         ]);

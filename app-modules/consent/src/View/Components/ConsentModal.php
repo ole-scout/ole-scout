@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class CookieList extends Component
+class ConsentModal extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class CookieList extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('consent::components.cookie-list');
+        return view('consent::components.consent-modal');
     }
 }

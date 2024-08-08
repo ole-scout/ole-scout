@@ -1,6 +1,6 @@
 <?php
 
-namespace FossHaas\Consent\View\Components;
+namespace FossHaas\Consent\View\Components\ConsentForm;
 
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -21,6 +21,6 @@ class CookieDetails extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('consent::components.cookie-details');
+        return view('consent::components.consent-form.cookie-details');
     }
 }

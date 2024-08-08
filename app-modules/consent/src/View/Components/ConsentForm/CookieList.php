@@ -1,12 +1,12 @@
 <?php
 
-namespace FossHaas\Consent\View\Components;
+namespace FossHaas\Consent\View\Components\ConsentForm;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class Modal extends Component
+class CookieList extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class Modal extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('consent::components.modal');
+        return view('consent::components.consent-form.cookie-list');
     }
 }
