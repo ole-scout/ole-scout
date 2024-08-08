@@ -328,6 +328,7 @@ class CookieConsent extends Component implements HasForms
     protected function serviceFields(Category $category, $service)
     {
         return Fieldset::make($service['name'])
+            ->hiddenLabel()
             ->columns(['default' => 1, 'lg' => 2])
             ->schema(Arr::whereNotNull([
                 Split::make([
