@@ -1,0 +1,24 @@
+{
+	"name": "foss-haas/util",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"FossHaas\\Util\\": "src/",
+			"FossHaas\\Util\\Tests\\": "tests/",
+			"FossHaas\\Util\\Database\\Factories\\": "database/factories/",
+			"FossHaas\\Util\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"FossHaas\\Util\\Providers\\UtilServiceProvider"
+			]
+		}
+	}
+}

@@ -13,6 +13,7 @@ class ConsentController
      */
     public function __invoke(Request $request)
     {
+
         Cookie::queue('consent', 'ok', 60 * 24 * 30);
         $payload = $request->all();
         $request->session()->put('consent', [

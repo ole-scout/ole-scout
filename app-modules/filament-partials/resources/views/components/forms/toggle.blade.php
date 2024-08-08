@@ -10,19 +10,19 @@
             ? '{{
                 \Filament\Support\get_color_css_variables(
                     'primary',
-                    shades: [600],
+                    shades: [600, 900],
                     alias: 'forms::components.toggle.on',
                 )
             }}'
             : '{{
                 \Filament\Support\get_color_css_variables(
                     'gray',
-                    shades: [600],
+                    shades: [600, 900],
                     alias: 'forms::components.toggle.off',
                 )
             }}'
     "
-    {{ $disabled ? 'disabled' : '' }}
+    @disabled($disabled)
     aria-checked="{{ $initialChecked ? 'true' : 'false' }}"
     role="switch"
     type="button"
@@ -55,6 +55,13 @@
                 'opacity-0 ease-out duration-100': ! {{ $alpineActive }},
             }"
         >
+            @if($disabled)
+            <x-filament::icon
+                icon="heroicon-s-lock-closed"
+                x-cloak="x-cloak"
+                class="w-3 h-3 text-custom-900 fi-fo-toggle-on-icon"
+            />
+            @endif
         </span>
     </span>
 </button>

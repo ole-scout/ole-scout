@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9ec67992a515123ec1dfca44aa9361f",
+    "content-hash": "aee9477adc64767531d71cbd541adf24",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2295,6 +2295,38 @@
                     "FossHaas\\FilamentPartials\\Tests\\": "tests/",
                     "FossHaas\\FilamentPartials\\Database\\Factories\\": "database/factories/",
                     "FossHaas\\FilamentPartials\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "foss-haas/util",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/util",
+                "reference": "a9726c6643c928d5bb29f5130844208ed55d9652"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FossHaas\\Util\\Providers\\UtilServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FossHaas\\Util\\": "src/",
+                    "FossHaas\\Util\\Tests\\": "tests/",
+                    "FossHaas\\Util\\Database\\Factories\\": "database/factories/",
+                    "FossHaas\\Util\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [
