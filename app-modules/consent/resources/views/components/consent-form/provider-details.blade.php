@@ -1,4 +1,4 @@
-@use('FossHaas\Util\PhoneNumber')
+@use('FossHaas\Support\PhoneNumber')
 @props([ 'provider' ])
 <x-filament::section collapsible collapsed compact>
     <x-slot:heading>{{ $provider['name'] }}</x-slot:heading>

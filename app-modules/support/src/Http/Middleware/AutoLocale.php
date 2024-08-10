@@ -1,6 +1,6 @@
 <?php
 
-namespace FossHaas\Util\Http\Middleware;
+namespace FossHaas\Support\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
@@ -16,7 +16,7 @@ class AutoLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $available = array_keys(config('util.locales'));
+        $available = array_keys(config('support.locales'));
         $lang = $request->getPreferredLanguage($available);
         if ($lang) App::setLocale($lang);
         return $next($request);

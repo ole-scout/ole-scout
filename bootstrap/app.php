@@ -1,7 +1,7 @@
 <?php
 
 use FossHaas\Consent\Http\Middleware\ConsensualCookies;
-use FossHaas\Util\Http\Middleware\AutoLocale;
+use FossHaas\Support\Http\Middleware\AutoLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;

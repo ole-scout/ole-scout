@@ -1,6 +1,6 @@
 @use('FossHaas\Consent\CookieType')
 @use('FossHaas\Consent\LegalBasis')
-@use('FossHaas\Util\Duration')
+@use('FossHaas\Support\Duration')
 @props([ 'cookie' ])
 <x-filament-partials::forms.component-container class="sm:grid-cols-5">
     <x-filament-partials::infolist.text-entry class="col-span-2">

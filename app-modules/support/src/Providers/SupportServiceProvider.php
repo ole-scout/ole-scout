@@ -1,11 +1,11 @@
 <?php
 
-namespace FossHaas\Util\Providers;
+namespace FossHaas\Support\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class UtilServiceProvider extends ServiceProvider
+class SupportServiceProvider extends ServiceProvider
 {
     protected string $base_dir;
 
@@ -17,13 +17,13 @@ class UtilServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->mergeConfigFrom("{$this->base_dir}/config.php", 'util');
+        $this->mergeConfigFrom("{$this->base_dir}/config.php", 'support');
     }
 
     public function boot(): void
     {
         Blade::directive('markdown', function ($expression) {
-            return "<?php echo FossHaas\Util\Markdown::markdown($expression); ?>";
+            return "<?php echo FossHaas\Support\Markdown::markdown($expression); ?>";
         });
     }
 }

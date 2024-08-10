@@ -1,6 +1,6 @@
 <?php
 
-namespace FossHaas\Util;
+namespace FossHaas\Support;
 
 use Carbon\CarbonInterval;
 use Illuminate\Support\Arr;

@@ -1,6 +1,6 @@
 <?php
 
-namespace FossHaas\Util;
+namespace FossHaas\Support;
 
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;

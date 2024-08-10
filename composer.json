@@ -12,7 +12,7 @@
         "filament/filament": "^3.2",
         "foss-haas/consent": "*",
         "foss-haas/filament-partials": "*",
-        "foss-haas/util": "*",
+        "foss-haas/support": "*",
         "giggsey/libphonenumber-for-php": "^8.13",
         "internachi/modular": "^2.2",
         "laravel/framework": "^11.9",

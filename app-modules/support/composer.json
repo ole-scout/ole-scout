@@ -1,0 +1,24 @@
+{
+    "name": "foss-haas/support",
+    "description": "",
+    "type": "library",
+    "version": "1.0",
+    "license": "proprietary",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "FossHaas\\Support\\": "src/",
+            "FossHaas\\Support\\Tests\\": "tests/",
+            "FossHaas\\Support\\Database\\Factories\\": "database/factories/",
+            "FossHaas\\Support\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FossHaas\\Support\\Providers\\SupportServiceProvider"
+            ]
+        }
+    }
+}
