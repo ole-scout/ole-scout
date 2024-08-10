@@ -84,30 +84,10 @@
     <div class="text-sm leading-6 prose max-w-none dark:prose-invert [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
         @markdown(__("Diese Anwendung verwendet Cookies und ähnliche Technologien und verarbeitet personenbezogene Daten von Ihnen (z.B. IP-Adresse), um Inhalte und Funktionen zur Verfügung zu stellen oder Zugriffe zu analysieren.\n\nSie haben an dieser Stelle die Möglichkeit, Ihre Einwilligung in die Verarbeitung Ihrer personenbezogenen Daten zu bestimmten Zwecken zu erteilen. Sie können diese Einwilligung jederzeit widerrufen. Weitere Informationen zu Ihren Rechten und zur Verwendung Ihrer Daten finden Sie in der [Datenschutzerklärung](/privacy)."))
     </div>
-    <x-filament-partials::forms.component-container class="px-4 sm:grid-cols-2 md:grid-cols-5">
-        <x-filament-partials::forms.actions>
-            <x-filament-partials::actions.link
-                button
-                x-on:click="selectAll()"
-                x-show="!isSelected()"
-            >
-                {{ __('Alle auswählen') }}
-            </x-filament-partials::actions.link>
-        </x-filament-partials::forms.actions>
-        @foreach($categories as $name => $label)
-        <x-filament-forms::field-wrapper>
-            <x-slot:label>{{ $label }}</x-slot:label>
-            <x-slot:labelPrefix>
-                <x-filament::input.checkbox
-                    :$name
-                    :disabled="$name === 'essential'"
-                    x-bind:checked="isSelected($el.name)"
-                    x-on:change="toggleAll($el.name)"
-                />
-            </x-slot:labelPrefix>
-        </x-filament-forms::field-wrapper>
-        @endforeach
-    </x-filament-partials::forms.component-container>
+    <x-consent::consent-form.category-list
+        :$categories
+        class="px-4"
+    />
     <x-filament-partials::forms.tabs>
         <x-slot:tablist>
             @foreach($categories as $name => $label)
@@ -122,39 +102,17 @@
             </x-filament-partials::forms.tabs.tab>
             @endforeach
         </x-slot:tablist>
-        @foreach($services as $cat => $serviceList)
+        @foreach($services as $category => $serviceList)
         <x-filament-partials::forms.tabs.panel
-            :name="$cat"
+            :name="$category"
             prefix="consent"
             alpineState="activeCategory"
         >
             @foreach($serviceList as $service)
-            <x-filament::fieldset :label="$service['name']" label-hidden>
-                <x-filament-partials::forms.component-container class="sm:grid-cols-2">
-                    <div class="space-y-6">
-                        <x-filament-forms::field-wrapper>
-                            <x-slot:labelPrefix>
-                                <x-filament-partials::forms.toggle
-                                    alpineActive="isSelected('{{ $cat }}', '{{ $service['id'] }}')"
-                                    :initialChecked="$cat === 'essential'"
-                                    :disabled="$cat === 'essential'"
-                                    x-on:click="toggle('{{ $cat }}', '{{ $service['id'] }}')"
-                                />
-                            </x-slot:labelPrefix>
-                            <x-slot:label>{{ $service['name'] }}</x-slot:label>
-                            <x-slot:helperText>{{ $service['description'] }}</x-slot:helperText>
-                        </x-filament-forms::field-wrapper>
-                        @if(isset($service['provider']) && !empty($service['provider']))
-                        <x-consent::consent-form.provider-details :provider="$service['provider']" />
-                        @endif
-                    </div>
-                    @if(isset($service['cookies']) && !empty($service['cookies']))
-                    <div>
-                        <x-consent::consent-form.cookie-list :cookies="$service['cookies']" />
-                    </div>
-                    @endif
-                </x-filament-partials::forms.component-container>
-            </x-filament::fieldset>
+            <x-consent::consent-form.service-details
+                :$service
+                :$category
+            />
             @endforeach
         </x-filament-partials::forms.tabs.panel>
         @endforeach
