@@ -4,13 +4,16 @@
 -   [ ] Cookie consent modal <-
     -   [x] Implement filament form without Livewire
     -   [x] Show cookie consent form in a modal
-    -   [ ] i18n-ify legal basis field
-    -   [ ] convert duration into machine-readable format
+    -   [x] i18n-ify legal basis field
+    -   [x] convert duration into machine-readable format
     -   [ ] Load cookie definitions from db (with translations!)
     -   [ ] Hard-code dfns for system cookies & functional for YT/Vimeo (others too?)
     -   [ ] Create seeder for dummy cookies
     -   [ ] Load app's provider details for system cookies from db (settings?)
-    -   [ ] Persist consent on login (with timestamps)
+    -   [ ] Store copy of full dfn to allow tracking which version was used
+    -   [ ] Record viewport size, submission event & used version
+    -   [ ] Persist consent on login (with timestamps, etc)
+    -   [ ] Validate consent request body
 
 # Auth
 

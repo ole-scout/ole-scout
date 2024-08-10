@@ -18,16 +18,9 @@ class ProviderDetails extends Component
         //
     }
 
-    static function formatPhone(string $phone): string
+    public function url($url): string
     {
-        $phoneUtil = PhoneNumberUtil::getInstance();
-        $parsed = $phoneUtil->parse($phone);
-        return $phoneUtil->format($parsed, PhoneNumberFormat::INTERNATIONAL);
-    }
-
-    static function url(string $url): string
-    {
-        if (str_starts_with($url, '/')) {
+        if (substr($url, 0, 1) === '/') {
             return url($url);
         }
         return $url;
@@ -38,9 +31,6 @@ class ProviderDetails extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('consent::components.consent-form.provider-details', [
-            'formatPhone' => fn (string $phone) => $this::formatPhone($phone),
-            'url' => fn (string $url) => $this::url($url),
-        ]);
+        return view('consent::components.consent-form.provider-details');
     }
 }

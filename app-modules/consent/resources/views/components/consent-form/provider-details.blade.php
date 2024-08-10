@@ -15,7 +15,7 @@
         @isset($provider['phone'])
         <x-filament-partials::infolist.text-entry>
             <x-slot:label>{{ __('Telefonnummer') }}</x-slot:label>
-            <a href="tel:{{ $provider['phone'] }}">{{ PhoneNumber::format($provider['phone']) }}</a>
+            <a href="{{ PhoneNumber::formatUri($provider['phone']) }}">{{ PhoneNumber::format($provider['phone']) }}</a>
         </x-filament-partials::infolist.text-entry>
         @endisset
         @isset($provider['privacyPolicy'])
