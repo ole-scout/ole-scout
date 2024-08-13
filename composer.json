@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.2",
+        "filament/spatie-laravel-translatable-plugin": "^3.2",
         "foss-haas/consent": "*",
         "foss-haas/filament-partials": "*",
         "foss-haas/support": "*",
