@@ -20,6 +20,8 @@ class ServiceCookie extends Model
     protected $fillable = [
         'type',
         'name',
+        'content',
+        'purpose',
         'duration',
         'legalBasis',
         'service_definition_id',

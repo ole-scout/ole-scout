@@ -8,8 +8,8 @@
     -   [x] convert duration into machine-readable format
     -   [x] Load cookie definitions from db (with translations!)
     -   [x] Create seeder for dummy cookies
+    -   [x] Load app's provider details for system cookies from db (settings)
     -   [ ] Hard-code dfns for system cookies & functional for YT/Vimeo (others too?)
-    -   [ ] Load app's provider details for system cookies from db (settings?)
     -   [ ] Store copy of full dfn to allow tracking which version was used
     -   [ ] Record viewport size, submission event & used version
     -   [ ] Persist consent on login (with timestamps, etc)

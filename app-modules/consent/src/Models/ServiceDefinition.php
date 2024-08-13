@@ -15,6 +15,8 @@ class ServiceDefinition extends Model
 
     protected $fillable = [
         'category',
+        'name',
+        'description',
         'service_provider_id',
     ];
 

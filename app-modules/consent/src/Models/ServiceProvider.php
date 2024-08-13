@@ -14,6 +14,11 @@ class ServiceProvider extends Model
     protected $fillable = [
         'name',
         'address',
+        'email',
+        'phone',
+        'privacy_policy',
+        'imprint',
+        'contact',
     ];
 
     public $translatable = [
