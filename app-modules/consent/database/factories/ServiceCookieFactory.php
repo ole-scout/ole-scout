@@ -33,6 +33,7 @@ class ServiceCookieFactory extends Factory
      */
     public function definition(): array
     {
+        $locales = array_keys(config('support.locales'));
         $durations = [
             ['minutes', 1], ['minutes', 30],
             ['hours', 1], ['hours', 6], ['hours', 24], ['hours', 48],
@@ -44,6 +45,12 @@ class ServiceCookieFactory extends Factory
         return [
             'type' => $this->faker->randomElement(CookieType::cases()),
             'name' => $this->faker->word,
+            'content' => fn () => Arr::mapWithKeys($locales, fn ($locale) => [
+                $locale => $locale . ': ' . $this->faker->paragraph()
+            ]),
+            'purpose' => fn () => Arr::mapWithKeys($locales, fn ($locale) => [
+                $locale => $locale . ': ' . $this->faker->paragraph()
+            ]),
             'duration' => fn (array $attributes) => match ($attributes['type']) {
                 CookieType::session_storage => 'session',
                 CookieType::local_storage => 'indefinite',

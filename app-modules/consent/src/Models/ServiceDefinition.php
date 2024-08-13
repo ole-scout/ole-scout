@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Facades\App;
+use Spatie\Translatable\HasTranslations;
 
 class ServiceDefinition extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
     protected $fillable = [
         'category',
@@ -22,35 +22,10 @@ class ServiceDefinition extends Model
         'category' => Category::class,
     ];
 
-    public function name(): string|null
-    {
-        return $this->locale()?->name;
-    }
-
-    public function description(): string|null
-    {
-        return $this->locale()?->description;
-    }
-
-    public function locale(?string $locale = null): ?ServiceDefinitionLocale
-    {
-        if (!$locale) {
-            return (
-                $this->locale(App::currentLocale())
-                ?: $this->locale(App::getFallbackLocale())
-                ?: $this->serviceDefinitionLocales()->first()
-                ?: null
-            );
-        }
-        return $this->serviceDefinitionLocales()
-            ->where('locale', $locale)
-            ->first();
-    }
-
-    public function serviceDefinitionLocales(): HasMany
-    {
-        return $this->hasMany(ServiceDefinitionLocale::class);
-    }
+    public $translatable = [
+        'name',
+        'description',
+    ];
 
     public function serviceProvider(): BelongsTo
     {

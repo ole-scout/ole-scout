@@ -15,6 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('address')->nullable();
+            $table->json('email');
+            $table->json('phone');
+            $table->json('privacy_policy');
+            $table->json('imprint');
+            $table->json('contact');
             $table->timestamps();
         });
     }

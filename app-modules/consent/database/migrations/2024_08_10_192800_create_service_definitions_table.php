@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('service_definitions', function (Blueprint $table) {
             $table->id();
             $table->enum('category', Category::names());
+            $table->json('name');
+            $table->json('description');
             $table->timestamps();
             $table->foreignIdFor(ServiceProvider::class)->nullable()
                 ->constrained()->nullOnDelete();

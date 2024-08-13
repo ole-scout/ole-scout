@@ -18,6 +18,8 @@ return new class extends Migration
             $table->id();
             $table->enum('type', CookieType::names());
             $table->string('name');
+            $table->json('content');
+            $table->json('purpose');
             $table->json('duration');
             $table->enum('legalBasis', LegalBasis::names());
             $table->timestamps();

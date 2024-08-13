@@ -27,6 +27,7 @@ class ServiceDefinitionFactory extends Factory
      */
     public function definition(): array
     {
+        $locales = array_keys(config('support.locales'));
         return [
             'category' => fn () => $this->faker->randomElement(
                 Arr::where(
@@ -34,6 +35,14 @@ class ServiceDefinitionFactory extends Factory
                     fn (Category $case) => $case !== Category::essential
                 )
             ),
+            'name' => fn () => Arr::mapWithKeys($locales, fn ($locale) => [
+                $locale => $locale . ': ' . ucwords(
+                    $this->faker->words($this->faker->numberBetween(1, 3), true)
+                )
+            ]),
+            'description' => fn () => Arr::mapWithKeys($locales, fn ($locale) => [
+                $locale => $locale . ': ' . $this->faker->paragraph
+            ]),
             'service_provider_id' => ServiceProvider::factory(),
         ];
     }
