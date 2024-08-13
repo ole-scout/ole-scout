@@ -14,7 +14,6 @@ class FakeServicesSeeder extends Seeder
      */
     public function run(): void
     {
-        $locales = array_keys(config('support.locales'));
         $operator = ServiceProvider::factory()
             ->create();
 

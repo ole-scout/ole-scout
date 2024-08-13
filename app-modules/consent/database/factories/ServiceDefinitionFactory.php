@@ -37,7 +37,7 @@ class ServiceDefinitionFactory extends Factory
             ),
             'name' => fn () => Arr::mapWithKeys($locales, fn ($locale) => [
                 $locale => $locale . ': ' . ucwords(
-                    $this->faker->words($this->faker->numberBetween(1, 3), true)
+                    $this->faker->words($this->faker->numberBetween(2, 3), true)
                 )
             ]),
             'description' => fn () => Arr::mapWithKeys($locales, fn ($locale) => [
