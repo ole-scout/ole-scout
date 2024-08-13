@@ -12,13 +12,12 @@ enum LegalBasis: string
   case vital_interest = 'vital_interest';
   case public_interest = 'public_interest';
   case legitimate_interest = 'legitimate_interest';
+
   public static function names(): array
   {
-    return Arr::map(
-      self::cases(),
-      fn (LegalBasis $legalBasis) => $legalBasis->name
-    );
+    return Arr::map(self::cases(), fn (LegalBasis $case) => $case->name);
   }
+
   public function label(): string
   {
     return match ($this) {
@@ -30,6 +29,7 @@ enum LegalBasis: string
       self::legitimate_interest => __('DSGVO Art. 6 Abs. 1 lit. f'),
     };
   }
+
   public function description(): string
   {
     return match ($this) {

@@ -6,9 +6,9 @@
     -   [x] Show cookie consent form in a modal
     -   [x] i18n-ify legal basis field
     -   [x] convert duration into machine-readable format
-    -   [ ] Load cookie definitions from db (with translations!)
+    -   [x] Load cookie definitions from db (with translations!)
+    -   [x] Create seeder for dummy cookies
     -   [ ] Hard-code dfns for system cookies & functional for YT/Vimeo (others too?)
-    -   [ ] Create seeder for dummy cookies
     -   [ ] Load app's provider details for system cookies from db (settings?)
     -   [ ] Store copy of full dfn to allow tracking which version was used
     -   [ ] Record viewport size, submission event & used version

@@ -10,13 +10,12 @@ enum Category: string
   case functional = 'functional';
   case analytics = 'analytics';
   case marketing = 'marketing';
+
   public static function names(): array
   {
-    return Arr::map(
-      self::cases(),
-      fn (Category $category) => $category->name
-    );
+    return Arr::map(self::cases(), fn (Category $case) => $case->name);
   }
+
   public function label(): string
   {
     return match ($this) {
