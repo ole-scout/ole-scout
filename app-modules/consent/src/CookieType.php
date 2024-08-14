@@ -9,6 +9,7 @@ enum CookieType: string
   case cookie = 'cookie';
   case local_storage = 'local_storage';
   case session_storage = 'session_storage';
+  case indexed_db = 'indexed_db';
 
   public static function names(): array
   {
@@ -21,6 +22,7 @@ enum CookieType: string
       self::cookie => __('Cookie'),
       self::local_storage => __('Local Storage'),
       self::session_storage => __('Session Storage'),
+      self::indexed_db => __('IndexedDB'),
     };
   }
 }

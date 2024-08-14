@@ -14,28 +14,27 @@ class ServiceCookie extends Model
     use HasFactory, HasTranslations;
 
     protected $attributes = [
-        'legalBasis' => LegalBasis::consent,
+        'legal_basis' => LegalBasis::consent,
     ];
 
     protected $fillable = [
         'type',
         'name',
-        'content',
-        'purpose',
+        'host',
+        'description',
         'duration',
-        'legalBasis',
+        'legal_basis',
         'service_definition_id',
     ];
 
     protected $casts = [
         'type' => CookieType::class,
         'duration' => 'json',
-        'legalBasis' => LegalBasis::class,
+        'legal_basis' => LegalBasis::class,
     ];
 
     public $translatable = [
-        'content',
-        'purpose',
+        'description',
     ];
 
     public function serviceDefinition(): BelongsTo

@@ -17,10 +17,10 @@ class ServiceCookieFactory extends Factory
     public function essential(): self
     {
         return $this->state([
-            'legalBasis' => fn () => $this->faker->randomElement(
+            'legal_basis' => fn() => $this->faker->randomElement(
                 Arr::where(
                     LegalBasis::cases(),
-                    fn (LegalBasis $case) => $case !== LegalBasis::consent
+                    fn(LegalBasis $case) => $case !== LegalBasis::consent
                 )
             ),
         ]);
@@ -35,28 +35,40 @@ class ServiceCookieFactory extends Factory
     {
         $locales = array_keys(config('support.locales'));
         $durations = [
-            ['minutes', 1], ['minutes', 30],
-            ['hours', 1], ['hours', 6], ['hours', 24], ['hours', 48],
-            ['days', 5], ['days', 14], ['days', 28], ['days', 30],
-            ['days', 90], ['days', 180], ['days', 365],
-            ['months', 1], ['months', 2], ['months', 3], ['months', 6],
-            ['years', 1], ['years', 2], ['years', 3],
+            ['minutes', 1],
+            ['minutes', 30],
+            ['hours', 1],
+            ['hours', 6],
+            ['hours', 24],
+            ['hours', 48],
+            ['days', 5],
+            ['days', 14],
+            ['days', 28],
+            ['days', 30],
+            ['days', 90],
+            ['days', 180],
+            ['days', 365],
+            ['months', 1],
+            ['months', 2],
+            ['months', 3],
+            ['months', 6],
+            ['years', 1],
+            ['years', 2],
+            ['years', 3],
         ];
         return [
             'type' => $this->faker->randomElement(CookieType::cases()),
             'name' => $this->faker->word,
-            'content' => fn () => Arr::mapWithKeys($locales, fn ($locale) => [
+            'host' => $this->faker->domainName,
+            'description' => fn() => Arr::mapWithKeys($locales, fn($locale) => [
                 $locale => $locale . ': ' . $this->faker->paragraph()
             ]),
-            'purpose' => fn () => Arr::mapWithKeys($locales, fn ($locale) => [
-                $locale => $locale . ': ' . $this->faker->paragraph()
-            ]),
-            'duration' => fn (array $attributes) => match ($attributes['type']) {
+            'duration' => fn(array $attributes) => match ($attributes['type']) {
                 CookieType::session_storage => 'session',
                 CookieType::local_storage => 'indefinite',
                 default => $this->faker->randomElement($durations),
             },
-            'legalBasis' => LegalBasis::consent,
+            'legal_basis' => LegalBasis::consent,
             'service_definition_id' => ServiceDefinition::factory(),
         ];
     }

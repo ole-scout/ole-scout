@@ -12,13 +12,11 @@
                     />
                 </x-slot:labelPrefix>
                 <x-slot:label>{{ $service->name }}</x-slot:label>
-                <x-slot:helperText>{{ $service->description }}</x-slot:helperText>
+                <x-slot:helperText>@markdown($service->description)</x-slot:helperText>
             </x-filament-forms::field-wrapper>
-            @if(isset($service->serviceProvider) && !empty($service->serviceProvider))
             <x-consent::consent-form.provider-details :provider="$service->serviceProvider" />
-            @endif
         </div>
-        @if(isset($service->serviceCookies) && !empty($service->serviceCookies))
+        @if($service->serviceCookies->count())
         <div>
             <x-consent::consent-form.cookie-list :cookies="$service->serviceCookies" />
         </div>

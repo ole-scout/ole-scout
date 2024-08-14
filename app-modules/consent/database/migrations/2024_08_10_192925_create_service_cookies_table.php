@@ -18,10 +18,10 @@ return new class extends Migration
             $table->id();
             $table->enum('type', CookieType::names());
             $table->string('name');
-            $table->json('content');
-            $table->json('purpose');
+            $table->string('host');
+            $table->json('description');
             $table->json('duration');
-            $table->enum('legalBasis', LegalBasis::names());
+            $table->enum('legal_basis', LegalBasis::names());
             $table->timestamps();
             $table->foreignIdFor(ServiceDefinition::class)
                 ->constrained()->cascadeOnDelete();

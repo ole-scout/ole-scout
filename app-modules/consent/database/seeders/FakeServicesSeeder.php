@@ -16,15 +16,6 @@ class FakeServicesSeeder extends Seeder
      */
     public function run(ServiceProviderSettings $settings): void
     {
-        $appService = ServiceDefinition::factory()
-            ->state((['service_provider_id' => null]))
-            ->essential()
-            ->create();
-        ServiceCookie::factory(fake()->numberBetween(3, 7))
-            ->recycle($appService)
-            ->essential()
-            ->create();
-
         $settings->name = fake()->company();
         $settings->address = fake()->address();
         $settings->email = fake()->email();
@@ -40,7 +31,7 @@ class FakeServicesSeeder extends Seeder
                 ->state(['service_provider_id' => $provider])
                 ->create();
             foreach ($services as $service) {
-                ServiceCookie::factory(fake()->numberBetween(2, 7))
+                ServiceCookie::factory(fake()->numberBetween(0, 7))
                     ->recycle($service)
                     ->create();
             }

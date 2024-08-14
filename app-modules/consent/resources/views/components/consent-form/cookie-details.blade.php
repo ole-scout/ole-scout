@@ -9,21 +9,23 @@
         <x-slot:label>{{ __('Name') }}</x-slot:label>
         <span class="font-mono">{{ $cookie->name }}</span>
     </x-filament-partials::infolist.text-entry>
-    <x-filament-partials::infolist.text-entry class="col-span-5">
-        <x-slot:label>{{ __('Daten') }}</x-slot:label>
-        {{ $cookie->content }}
+    <x-filament-partials::infolist.text-entry class="col-span-3">
+        <x-slot:label>{{ __('Host') }}</x-slot:label>
+        <span class="font-mono">{{ $cookie->host }}</span>
     </x-filament-partials::infolist.text-entry>
+    @if($cookie->description)
     <x-filament-partials::infolist.text-entry class="col-span-5">
-        <x-slot:label>{{ __('Zweck') }}</x-slot:label>
-        {{ $cookie->purpose }}
+        <x-slot:label>{{ __('Beschreibung') }}</x-slot:label>
+        @markdown($cookie->description)
     </x-filament-partials::infolist.text-entry>
+    @endif
     <x-filament-partials::infolist.text-entry class="col-span-2">
         <x-slot:label>{{ __('Laufzeit') }}</x-slot:label>
         {{ Duration::format($cookie->duration) }}
     </x-filament-partials::infolist.text-entry>
     <x-filament-partials::infolist.text-entry class="col-span-3">
         <x-slot:label>{{ __('Rechtsgrundlage') }}</x-slot:label>
-        {{ $cookie->legalBasis->description() }}
-        <div>{{ $cookie->legalBasis->label() }}</div>
+        {{ $cookie->legal_basis->description() }}
+        <div>{{ $cookie->legal_basis->label() }}</div>
     </x-filament-partials::infolist.text-entry>
 </x-filament-partials::forms.component-container>
