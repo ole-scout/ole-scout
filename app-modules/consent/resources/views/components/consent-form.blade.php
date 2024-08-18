@@ -122,5 +122,8 @@
     {{ $wrapper($content) }}
     @else
     {{ $content() }}
+    <x-filament::button type="button" x-on:click="submit()">
+        {{ __('Auswahl speichern') }}
+    </x-filament::button>
     @endif
 </form>
