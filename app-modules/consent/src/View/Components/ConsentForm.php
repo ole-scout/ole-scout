@@ -7,6 +7,7 @@ use FossHaas\Consent\Category;
 use FossHaas\Consent\Models\ServiceDefinition;
 use FossHaas\Consent\Settings\ServiceProviderSettings;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
@@ -23,7 +24,9 @@ class ConsentForm extends Component
      */
     public function __construct(
         ServiceProviderSettings $settings,
+        Request $request,
     ) {
+        $selected = $request->consentCookie() ?: [];
         $operator = $settings->asServiceProvider();
         $this->services = ServiceDefinition::with([
             'serviceProvider',
@@ -37,7 +40,10 @@ class ConsentForm extends Component
                 if (!$service->serviceProvider) {
                     $service->serviceProvider = $operator;
                 }
-                $this->selected[$categoryName][$service->id] = $categoryName === 'essential';
+                $this->selected[$categoryName][$service->id] = (
+                    $categoryName === 'essential'
+                    ?: array_key_exists($service->id, $selected)
+                );
             }
         }
     }
