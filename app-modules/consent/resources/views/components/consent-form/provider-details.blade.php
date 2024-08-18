@@ -21,19 +21,19 @@
         @if($provider->privacy_policy)
         <x-filament-partials::infolist.text-entry class="col-span-3">
             <x-slot:label>{{ __('Datenschutz') }}</x-slot:label>
-            <a class="underline" href="{{ $url($provider->privacy_policy) }}" rel="noopener noreferrer" target="_blank">{{ $url($provider->privacy_policy) }}</a>
+            <a class="underline" href="{{ $provider->privacy_policy }}" rel="noopener noreferrer" target="_blank">{{ $provider->privacy_policy }}</a>
         </x-filament-partials::infolist.text-entry>
         @endif
         @if($provider->imprint)
         <x-filament-partials::infolist.text-entry class="col-span-3">
             <x-slot:label>{{ __('Impressum') }}</x-slot:label>
-            <a class="underline" href="{{ $url($provider->imprint) }}" rel="noopener noreferrer" target="_blank">{{ $url($provider->imprint) }}</a>
+            <a class="underline" href="{{ $provider->imprint }}" rel="noopener noreferrer" target="_blank">{{ $provider->imprint }}</a>
         </x-filament-partials::infolist.text-entry>
         @endif
         @if($provider->contact)
         <x-filament-partials::infolist.text-entry class="col-span-3">
             <x-slot:label>{{ __('Kontaktformular') }}</x-slot:label>
-            <a class="underline" href="{{ $url($provider->contact) }}" rel="noopener noreferrer" target="_blank">{{ $url($provider->contact) }}</a>
+            <a class="underline" href="{{ $provider->contact }}" rel="noopener noreferrer" target="_blank">{{ $provider->contact }}</a>
         </x-filament-partials::infolist.text-entry>
         @endif
     </div>

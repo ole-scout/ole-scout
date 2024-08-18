@@ -21,9 +21,10 @@ class ConsentForm extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
-        $operator = app(ServiceProviderSettings::class)->asServiceProvider();
+    public function __construct(
+        ServiceProviderSettings $settings,
+    ) {
+        $operator = $settings->asServiceProvider();
         $this->services = ServiceDefinition::with([
             'serviceProvider',
             'serviceCookies',
@@ -50,9 +51,9 @@ class ConsentForm extends Component
             'categories' => Arr::mapWithKeys(
                 Arr::where(
                     Category::cases(),
-                    fn (Category $category) => $this->services->has($category->name)
+                    fn(Category $category) => $this->services->has($category->name)
                 ),
-                fn (Category $category) => [$category->name => $category->label()]
+                fn(Category $category) => [$category->name => $category->label()]
             ),
             'selected' => $this->selected,
             'services' => $this->services

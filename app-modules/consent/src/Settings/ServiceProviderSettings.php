@@ -2,6 +2,7 @@
 
 namespace FossHaas\Consent\Settings;
 
+use FossHaas\Consent\Settings\AppConsentSettings;
 use FossHaas\Consent\Models\ServiceProvider;
 use Spatie\LaravelSettings\Settings;
 
@@ -19,13 +20,14 @@ class ServiceProviderSettings extends Settings
 
     public function asServiceProvider()
     {
+        $settings = app(AppConsentSettings::class);
         return new ServiceProvider([
             'name' => $this->name,
             'address' => $this->address,
             'email' => $this->email,
             'phone' => $this->phone,
-            'privacy_policy' => url('/privacy'),
-            'imprint' => url('/imprint'),
+            'privacy_policy' => $settings->privacyPolicy(),
+            'imprint' => $settings->imprint(),
         ]);
     }
 }
