@@ -22,14 +22,13 @@ class ConsensualCookies
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $sessionCookie = Config::get('session.cookie');
         if (
             $request->cookies->has('consent') ||
-            $request->cookies->has($sessionCookie) ||
             $this->inExceptArray($request)
         ) {
             return $next($request);
         }
+        $sessionCookie = Config::get('session.cookie');
         Config::set('session.driver', 'array');
         $response = $next($request);
         $response->headers->removeCookie('XSRF-TOKEN');
