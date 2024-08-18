@@ -36,7 +36,9 @@
 
     <body class="min-h-screen antialiased font-normal bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-white">
         {{ $slot }}
+        @unlessconsentgiven
         <x-consent::consent-modal />
+        @endconsentgiven
         @filamentScripts
         @vite('resources/js/app.js')
         @stack('scripts')

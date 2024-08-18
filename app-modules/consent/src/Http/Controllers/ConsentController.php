@@ -13,20 +13,18 @@ class ConsentController
      */
     public function __invoke(Request $request)
     {
-
-        Cookie::queue('consent', 'ok', 60 * 24 * 365);
         $payload = $request->all();
-        $request->session()->put('consent', [
-            'services' => Arr::mapWithKeys(
-                $payload,
-                fn ($services, $key) => [
-                    $key => Arr::map(
-                        $services,
-                        fn ($value) => $value === true ? time() : null
-                    )
-                ]
-            )
-        ]);
+        $now = time();
+        $previous = $request->consentCookie() ?: [];
+        $consent = Arr::mapWithKeys(
+            $payload,
+            fn($service) => [$service => (
+                array_key_exists($service, $previous)
+                ? $previous[$service]
+                : $now
+            )]
+        );
+        Cookie::queue('consent', json_encode($consent), 60 * 24 * 365);
         return response(status: 204);
     }
 }

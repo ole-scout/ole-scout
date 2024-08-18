@@ -69,7 +69,13 @@
                             headers: {
                                 'Content-Type': 'application/json',
                             },
-                            body: JSON.stringify(this.services),
+                            body: JSON.stringify(
+                                Object.values(this.services).flatMap(
+                                    services => Object.keys(services).filter(
+                                        key => services[key]
+                                    )
+                                )
+                            ),
                         });
                     } catch (error) {
                         console.error(error);
