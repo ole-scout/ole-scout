@@ -30,10 +30,10 @@ class ConsensualCookies
         ) {
             return $next($request);
         }
-        // Config::set('session.driver', 'array');
+        Config::set('session.driver', 'array');
         $response = $next($request);
-        // $response->headers->removeCookie('XSRF-TOKEN');
-        // $response->headers->removeCookie($sessionCookie);
+        $response->headers->removeCookie('XSRF-TOKEN');
+        $response->headers->removeCookie($sessionCookie);
         return $response;
     }
 
