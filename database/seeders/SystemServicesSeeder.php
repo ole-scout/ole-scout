@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Settings\SystemSettings;
 use FossHaas\Consent\Category;
 use FossHaas\Consent\CookieType;
 use FossHaas\Consent\Models\ServiceCookie;
 use FossHaas\Consent\Models\ServiceDefinition;
 use FossHaas\Consent\Models\ServiceProvider;
+use FossHaas\Consent\Settings\AppConsentSettings;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
@@ -18,10 +18,10 @@ class SystemServicesSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(SystemSettings $settings): void
+    public function run(AppConsentSettings $settings): void
     {
         $modified = false;
-        if (!$settings->core_service_id) {
+        if (!array_key_exists('core', $settings->service_ids)) {
             $coreService = new ServiceDefinition([
                 'category' => Category::essential,
                 'service_provider_id' => null,
@@ -32,11 +32,11 @@ class SystemServicesSeeder extends Seeder
             $coreService->setTranslation('description', 'fr', '');
             $coreService->setTranslation('description', 'it', '');
             $coreService->save();
-            $settings->core_service_id = $coreService->id;
+            $settings->service_ids['core'] = $coreService->id;
             $modified = true;
         }
 
-        if (!$settings->youtube_service_id) {
+        if (!array_key_exists('youtube', $settings->service_ids)) {
             $youTubeProvider = new ServiceProvider([
                 'name' => 'Google Ireland Limited',
                 'address' => 'Gordon House, Barrow Street, Dublin 4, Ireland',
@@ -139,7 +139,7 @@ class SystemServicesSeeder extends Seeder
                 'service_definition_id' => $youTubeService->id,
             ]))->create();
 
-            $settings->youtube_service_id = $youTubeService->id;
+            $settings->service_ids['youtube'] = $youTubeService->id;
             $modified = true;
         }
 

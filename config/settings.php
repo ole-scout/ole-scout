@@ -11,9 +11,7 @@ return [
      * Each settings class used in your application must be registered, you can
      * put them (manually) here.
      */
-    'settings' => [
-        ServiceProviderSettings::class
-    ],
+    'settings' => [],
 
     /*
      * The path where the settings classes will be created.
@@ -29,7 +27,7 @@ return [
         database_path('settings'),
         ...Arr::map(
             array_diff(scandir($appModulesPath), ['.', '..']),
-            fn ($moduleName) => $appModulesPath . '/' . $moduleName . '/database/settings'
+            fn($moduleName) => $appModulesPath . '/' . $moduleName . '/database/settings'
         )
     ],
 
@@ -95,7 +93,7 @@ return [
         app_path('Settings'),
         ...Arr::map(
             array_diff(scandir($appModulesPath), ['.', '..']),
-            fn ($moduleName) => $appModulesPath . '/' . $moduleName . '/src/Settings'
+            fn($moduleName) => $appModulesPath . '/' . $moduleName . '/src/Settings'
         )
     ],
 
