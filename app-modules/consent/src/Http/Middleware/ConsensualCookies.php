@@ -3,8 +3,8 @@
 namespace FossHaas\Consent\Http\Middleware;
 
 use Closure;
+use FossHaas\Consent\Settings\AppConsentSettings;
 use Illuminate\Foundation\Http\Middleware\Concerns\ExcludesPaths;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +44,16 @@ class ConsensualCookies
      */
     public function getExcludedPaths()
     {
-        return $this::$except ?? [];
+        return static::getExceptedPaths();
+    }
+
+    protected static function getExceptedPaths(): array
+    {
+        $settings = app(AppConsentSettings::class);
+        return array_merge(
+            $settings->excludedUrls(),
+            static::$except
+        );
     }
 
     /**
@@ -60,5 +69,20 @@ class ConsensualCookies
             return;
         }
         static::$except[] = $path;
+    }
+
+    public static function isExcluded(Request $request): bool
+    {
+        foreach (static::getExceptedPaths() as $except) {
+            if ($except !== '/') {
+                $except = trim($except, '/');
+            }
+
+            if ($request->fullUrlIs($except) || $request->is($except)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
