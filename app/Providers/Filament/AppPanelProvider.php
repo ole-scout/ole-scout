@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Settings\BrandingSettings;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -24,11 +25,20 @@ class AppPanelProvider extends PanelProvider
     {
         return $panel
             ->id('app')
+            ->bootUsing(function (Panel $panel) {
+                $settings = app(BrandingSettings::class);
+                \Filament\Support\Facades\FilamentColor::register([
+                    'brand' => Color::hex($settings->color)
+                ]);
+                $panel->brandLogo($settings->logo);
+                $panel->brandName($settings->name);
+            })
             ->path('')
             ->login() // TODO replace this
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->brandLogoHeight('auto')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
