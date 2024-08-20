@@ -1,3 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "/vendor/filament/filament/resources/css/theme.css";
+
+.fi-logo {
+    color: inherit !important;
+}
+.fi-simple-main {
+    @apply mt-0;
+}
+.fi-simple-header {
+    @apply -mt-12 bg-brand-200 dark:bg-brand-800 -mx-12 sm:rounded-t-xl h-24 pt-4;
+    > .fi-logo {
+        display: none !important;
+    }
+}

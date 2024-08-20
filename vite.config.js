@@ -20,6 +20,8 @@ export default defineConfig({
                 "app-modules/*/src/Providers/Filament/**",
                 "app-modules/*/src/Tables/Columns/**",
                 "app-modules/*/resources/**",
+                "resources/css/**",
+                "resources/js/**",
             ],
         }),
     ],

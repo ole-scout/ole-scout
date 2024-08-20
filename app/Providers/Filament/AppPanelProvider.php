@@ -21,6 +21,35 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AppPanelProvider extends PanelProvider
 {
+    public function register(): void
+    {
+        parent::register();
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::SCRIPTS_AFTER,
+            fn(): string => \Illuminate\Support\Facades\Blade::render(
+                "@unlessconsentgiven\n<x-consent::consent-modal />\n@endconsentgiven"
+            ),
+        );
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::SCRIPTS_AFTER,
+            fn(): string => \Illuminate\Support\Facades\Blade::render(
+                "@vite('resources/js/app.js')"
+            ),
+        );
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::STYLES_AFTER,
+            fn(): string => \Illuminate\Support\Facades\Blade::render(
+                "@vite('resources/css/app.css')"
+            ),
+        );
+        \Filament\Support\Facades\FilamentView::registerRenderHook(
+            \Filament\View\PanelsRenderHook::FOOTER,
+            fn(): string => \Illuminate\Support\Facades\Blade::render(
+                "<x-core.footer />"
+            ),
+        );
+    }
+
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -34,11 +63,12 @@ class AppPanelProvider extends PanelProvider
                 $panel->brandName($settings->name);
             })
             ->path('')
-            ->login() // TODO replace this
-            ->colors([
-                'primary' => Color::Amber,
-            ])
+            ->login()
+            ->registration()
+            ->topNavigation()
             ->brandLogoHeight('auto')
+            ->colors(['primary' => Color::Indigo])
+            ->viteTheme('resources/css/app.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
