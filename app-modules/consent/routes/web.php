@@ -1,9 +1,14 @@
 <?php
 
 use FossHaas\Consent\Http\Controllers\ConsentController;
+use FossHaas\Consent\Settings\AppConsentSettings;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/consent', ConsentController::class)
-  ->withoutMiddleware(VerifyCsrfToken::class)
-  ->name('consent');
+Route::name('consent.')
+  ->group(function () {
+    $settings = app(AppConsentSettings::class);
+    Route::post($settings->consent_url, ConsentController::class)
+      ->withoutMiddleware(VerifyCsrfToken::class)
+      ->name('store');
+  });

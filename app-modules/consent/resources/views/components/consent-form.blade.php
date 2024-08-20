@@ -2,7 +2,7 @@
 <form
     id="consent"
     method="post"
-    action="{{ route('consent') }}"
+    action="{{ route('consent.store') }}"
     x-data="consent"
     x-on:submit="submit($event)"
 >
