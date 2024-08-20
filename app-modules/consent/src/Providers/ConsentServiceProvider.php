@@ -30,10 +30,10 @@ class ConsentServiceProvider extends ServiceProvider
          */
         Request::macro('consent', function (mixed $service = null): bool {
             $request = request();
+            $settings = app(AppConsentSettings::class);
 
             if (is_string($service)) {
                 // resolve service name to id
-                $settings = app(AppConsentSettings::class);
                 if (array_key_exists($service, $settings->service_ids)) {
                     $service = $settings->service_ids[$service];
                 } else {
