@@ -6,6 +6,24 @@
 .fi-simple-main {
     @apply mt-0;
 }
+.fi-topbar {
+    @apply bg-brand-500 text-white dark:bg-brand-500 sm:pb-32 static z-[initial];
+    > nav {
+        @apply !bg-transparent;
+    }
+    + main {
+        @apply sm:-mt-16 xl:rounded-xl bg-gray-50 shadow-sm ring-1 ring-gray-950/5 dark:bg-gray-950 dark:ring-white/10;
+        .fi-page > section:first-child {
+            @apply py-0;
+            > .fi-header {
+                @apply bg-brand-300 dark:bg-brand-600/80 -mx-8 xl:rounded-t-lg sm:h-16 p-8;
+                .fi-header-heading {
+                    @apply text-base font-normal;
+                }
+            }
+        }
+    }
+}
 .fi-simple-header {
     @apply -mt-12 bg-brand-300 dark:bg-brand-600/80 -mx-12 sm:rounded-t-lg h-24 pt-4;
     > .fi-logo {
