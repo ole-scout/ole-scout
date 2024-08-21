@@ -7,7 +7,7 @@
     @apply mt-0;
 }
 .fi-simple-header {
-    @apply -mt-12 bg-brand-200 dark:bg-brand-800 -mx-12 sm:rounded-t-xl h-24 pt-4;
+    @apply -mt-12 bg-brand-300 dark:bg-brand-600/80 -mx-12 sm:rounded-t-lg h-24 pt-4;
     > .fi-logo {
         display: none !important;
     }
