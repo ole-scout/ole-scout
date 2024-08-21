@@ -10,6 +10,7 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Filament\Widgets;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -17,39 +18,11 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class AppPanelProvider extends PanelProvider
 {
-    public function register(): void
-    {
-        parent::register();
-        \Filament\Support\Facades\FilamentView::registerRenderHook(
-            \Filament\View\PanelsRenderHook::SCRIPTS_AFTER,
-            fn(): string => \Illuminate\Support\Facades\Blade::render(
-                "@unlessconsentgiven\n<x-consent::consent-modal />\n@endconsentgiven"
-            ),
-        );
-        \Filament\Support\Facades\FilamentView::registerRenderHook(
-            \Filament\View\PanelsRenderHook::SCRIPTS_AFTER,
-            fn(): string => \Illuminate\Support\Facades\Blade::render(
-                "@vite('resources/js/app.js')"
-            ),
-        );
-        \Filament\Support\Facades\FilamentView::registerRenderHook(
-            \Filament\View\PanelsRenderHook::STYLES_AFTER,
-            fn(): string => \Illuminate\Support\Facades\Blade::render(
-                "@vite('resources/css/app.css')"
-            ),
-        );
-        \Filament\Support\Facades\FilamentView::registerRenderHook(
-            \Filament\View\PanelsRenderHook::FOOTER,
-            fn(): string => \Illuminate\Support\Facades\Blade::render(
-                "<x-core.footer />"
-            ),
-        );
-    }
-
     public function panel(Panel $panel): Panel
     {
         return $panel
@@ -67,17 +40,46 @@ class AppPanelProvider extends PanelProvider
             ->registration()
             ->topNavigation()
             ->brandLogoHeight('auto')
-            ->colors(['primary' => Color::Indigo])
+            ->colors([
+                'primary' => Color::Indigo
+            ])
             ->viteTheme('resources/css/app.css')
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverResources(
+                in: app_path('Filament/Resources'),
+                for: 'App\\Filament\\Resources'
+            )
+            ->discoverPages(
+                in: app_path('Filament/Pages'),
+                for: 'App\\Filament\\Pages'
+            )
+            ->discoverWidgets(
+                in: app_path('Filament/Widgets'),
+                for: 'App\\Filament\\Widgets'
+            )
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
             ])
+            ->renderHook(
+                PanelsRenderHook::SCRIPTS_AFTER,
+                fn(): string => Blade::render(
+                    "@unlessconsentgiven\n<x-consent::consent-modal />\n@endconsentgiven"
+                ),
+            )
+            ->renderHook(
+                PanelsRenderHook::SCRIPTS_AFTER,
+                fn(): string => Blade::render("@vite('resources/js/app.js')"),
+            )
+            ->renderHook(
+                PanelsRenderHook::STYLES_AFTER,
+                fn(): string => Blade::render("@vite('resources/css/app.css')"),
+            )
+            ->renderHook(
+                PanelsRenderHook::FOOTER,
+                fn(): string => Blade::render("<x-core.footer />"),
+            )
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
