@@ -43,16 +43,11 @@ class ConsensualCookies
      */
     public function getExcludedPaths()
     {
-        return static::getExceptedPaths();
-    }
-
-    protected static function getExceptedPaths(): array
-    {
         $settings = app(AppConsentSettings::class);
-        return array_merge(
-            $settings->excludedUrls(),
-            static::$except
-        );
+        return [
+            $settings->consent_url,
+            ...static::$except
+        ];
     }
 
     /**
@@ -68,20 +63,5 @@ class ConsensualCookies
             return;
         }
         static::$except[] = $path;
-    }
-
-    public static function isExcluded(Request $request): bool
-    {
-        foreach (static::getExceptedPaths() as $except) {
-            if ($except !== '/') {
-                $except = trim($except, '/');
-            }
-
-            if ($request->fullUrlIs($except) || $request->is($except)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

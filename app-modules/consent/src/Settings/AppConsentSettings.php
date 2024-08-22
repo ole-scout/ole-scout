@@ -43,7 +43,7 @@ class AppConsentSettings extends Settings
     }
 
     /** @return array<string> */
-    public function excludedUrls(): array
+    public function exemptUrls(): array
     {
         return array_filter([
             $this->privacy_url,

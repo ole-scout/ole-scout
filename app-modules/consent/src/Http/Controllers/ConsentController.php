@@ -2,6 +2,7 @@
 
 namespace FossHaas\Consent\Http\Controllers;
 
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
