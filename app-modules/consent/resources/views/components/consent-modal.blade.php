@@ -37,4 +37,4 @@
     </x-filament-partials::forms.component-container>
 </x-filament:modal>
 @endcapture
-<x-consent::consent-form :$wrapper />
+<x-consent::consent-form :$wrapper alpineAfterSubmit="window.location.reload()" />

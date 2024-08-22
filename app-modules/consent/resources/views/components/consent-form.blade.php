@@ -1,4 +1,7 @@
-@props([ 'wrapper' => null ])
+@props([
+    'wrapper' => null,
+    'alpineAfterSubmit' => null
+])
 <form
     id="consent"
     method="post"
@@ -81,7 +84,7 @@
                         console.error(error);
                         return;
                     }
-                    window.location.reload();
+                    {{ $alpineAfterSubmit }};
                 }
             }));
         });
