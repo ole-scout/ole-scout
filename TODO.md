@@ -1,6 +1,6 @@
 # Basics
 
--   [x] Disable cookies before consent <-
+-   [x] Disable cookies before consent
 -   [ ] Cookie consent modal
     -   [x] Implement filament form without Livewire
     -   [x] Show cookie consent form in a modal
@@ -27,10 +27,10 @@
 
 # Admin panel
 
--   [ ] Manage site config
+-   [ ] Manage site config <-
     -   [ ] Cookie consent options
     -   [ ] Toggle video providers (YT/Vimeo)
-    -   [ ] Edit site title
+    -   [x] Edit site title
     -   [ ] Audit log
 -   [ ] Manage users
     -   [ ] Edit user data

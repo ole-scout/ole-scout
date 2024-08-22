@@ -34,7 +34,7 @@ class AppPanelProvider extends PanelProvider
                 \Filament\Support\Facades\FilamentColor::register([
                     'brand' => Color::hex($settings->color)
                 ]);
-                $panel->brandLogo($settings->logo);
+                $panel->brandLogo($settings->logo ? asset('storage/' . $settings->logo) : null);
                 $panel->brandName($settings->name);
             })
             ->path('')
