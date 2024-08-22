@@ -1,5 +1,6 @@
 # Basics
 
+-   [x] Disable cookies before consent <-
 -   [ ] Cookie consent modal
     -   [x] Implement filament form without Livewire
     -   [x] Show cookie consent form in a modal

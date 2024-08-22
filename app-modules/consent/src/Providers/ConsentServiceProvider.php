@@ -3,6 +3,7 @@
 namespace FossHaas\Consent\Providers;
 
 use FossHaas\Consent\Settings\AppConsentSettings;
+use FossHaas\Consent\Http\Middleware\ConsensualCookies;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -48,15 +49,9 @@ class ConsentServiceProvider extends ServiceProvider
             if ($consent !== null) return true;
 
             // check whether URL is exempt from consent
-            $exemptUrls = $settings->excludedUrls();
-            foreach ($exemptUrls as $url) {
-                if ($url !== '/') {
-                    $url = trim($url, '/');
-                }
-
-                if ($request->fullUrlIs($url) || $request->is($url)) {
-                    return true;
-                }
+            if (ConsensualCookies::isExcluded($request)) {
+                if (!$service) return true;
+                return false;
             }
             return false;
         });

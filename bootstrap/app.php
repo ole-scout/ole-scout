@@ -1,5 +1,6 @@
 <?php
 
+use FossHaas\Consent\Http\Middleware\ConsensualCookies;
 use FossHaas\Support\Http\Middleware\AutoLocale;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->prependToGroup("web", AutoLocale::class);
+        $middleware->prependToGroup("web", ConsensualCookies::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

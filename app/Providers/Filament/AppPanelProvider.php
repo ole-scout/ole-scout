@@ -12,6 +12,8 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\View\PanelsRenderHook;
 use Filament\Widgets;
+use FossHaas\Consent\Http\Middleware\ConsensualCookies;
+use FossHaas\Support\Http\Middleware\AutoLocale;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -81,6 +83,8 @@ class AppPanelProvider extends PanelProvider
                 fn(): string => Blade::render("<x-core.footer />"),
             )
             ->middleware([
+                ConsensualCookies::class,
+                AutoLocale::class,
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
