@@ -9,7 +9,7 @@
         'subheading' => null,
     ])
     <div class="flex flex-col items-center min-h-screen fi-simple-layout">
-<x-core.simple-header />
+<a href="/" class="x-fi-simple-topbar"><x-filament-panels::logo /></a>
 {{-- {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_LAYOUT_START, scopes: $livewire->getRenderHookScopes()) }} --}}
         @if (($hasTopbar ?? true) && filament()->auth()->check())
             <div
