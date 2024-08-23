@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages;
 
+use App\HasIconHeading;
 use App\Settings\BrandingSettings;
 use Filament\Forms\Form;
 use Filament\Forms\Components as Forms;
@@ -16,6 +17,8 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class EditAppSettings extends Page
 {
+    use HasIconHeading;
+
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
     protected static string $view = 'filament.pages.edit-app-settings';
@@ -23,11 +26,6 @@ class EditAppSettings extends Page
     public static function getNavigationLabel(): string
     {
         return __('Einstellungen');
-    }
-
-    public function getTitle(): string
-    {
-        return static::getNavigationLabel();
     }
 
     protected function getServiceProviderSettings(): array
@@ -103,8 +101,8 @@ class EditAppSettings extends Page
                     ->headerActions([
                         Infolists\Actions\Action::make('edit')
                             ->label(__('Bearbeiten'))
-                            ->hiddenLabel()
                             ->icon('heroicon-o-pencil')
+                            ->size('sm')
                             ->fillForm($state)
                             ->form(fn(Form $form) => $this->serviceProviderForm($form))
                             ->action(function (array $data) {
@@ -189,8 +187,8 @@ class EditAppSettings extends Page
                     ->headerActions([
                         Infolists\Actions\Action::make('edit')
                             ->label(__('Bearbeiten'))
-                            ->hiddenLabel()
                             ->icon('heroicon-o-pencil')
+                            ->size('sm')
                             ->fillForm($state)
                             ->form(fn(Form $form) => $this->brandingForm($form))
                             ->action(function (array $data) {

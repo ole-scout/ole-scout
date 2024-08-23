@@ -28,17 +28,17 @@
             @apply flex-shrink-0;
         }
     }
-    + main {
-        @apply bg-gray-50 dark:bg-gray-950 xl:rounded-xl shadow-sm;
-        @apply ring-1 ring-gray-950/5 dark:ring-white/10 xl:-mt-16;
-        .fi-page > section:first-child {
-            @apply py-0;
-            > .fi-header {
-                @apply bg-brand-300 dark:bg-brand-600/80 xl:rounded-t-lg;
-                @apply md:h-16 p-4 md:p-8 -mx-4 md:-mx-8;
-                .fi-header-heading {
-                    @apply text-base font-normal;
-                }
+}
+.fi-main {
+    @apply bg-gray-50 dark:bg-gray-950 xl:rounded-xl shadow-sm;
+    @apply ring-1 ring-gray-950/5 dark:ring-white/10 xl:-mt-16;
+    .fi-page > section:first-child {
+        @apply py-0;
+        > .fi-header {
+            @apply bg-brand-300 dark:bg-brand-600/80 xl:rounded-t-lg;
+            @apply md:h-16 p-4 md:pt-5 md:pb-3 -mx-4 md:-mx-8;
+            .fi-header-heading {
+                @apply text-base font-normal px-2 md:px-3 lg:px-4;
             }
         }
     }
