@@ -8,7 +8,55 @@
     action="{{ route('consent.store') }}"
     x-data="consent"
     x-on:submit="submit($event)"
+    {{ $attributes }}
 >
+    @capture($content)
+    <div class="text-sm leading-6 prose max-w-none dark:prose-invert [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
+        @markdown(__("Diese Anwendung verwendet Cookies und ähnliche Technologien und verarbeitet personenbezogene Daten von Ihnen (z.B. IP-Adresse), um Inhalte und Funktionen zur Verfügung zu stellen oder Zugriffe zu analysieren.\n\nSie haben an dieser Stelle die Möglichkeit, Ihre Einwilligung in die Verarbeitung Ihrer personenbezogenen Daten zu bestimmten Zwecken zu erteilen. Sie können diese Einwilligung jederzeit widerrufen. Weitere Informationen zu Ihren Rechten und zur Verwendung Ihrer Daten finden Sie in der [Datenschutzerklärung](/privacy)."))
+    </div>
+    <x-consent::consent-form.category-list
+        :$categories
+        class="px-4"
+    />
+    <x-filament-partials::forms.tabs>
+        <x-slot:tablist>
+            @foreach($categories as $name => $label)
+            <x-filament-partials::forms.tabs.tab
+                :$name
+                :badge="count($services[$name])"
+                prefix="consent"
+                alpineState="activeCategory"
+                x-effect="updateBadge('{{ $name }}', selectedCount('{{ $name }}'))"
+            >
+                {{ $label }}
+            </x-filament-partials::forms.tabs.tab>
+            @endforeach
+        </x-slot:tablist>
+        @foreach($services as $category => $serviceList)
+        <x-filament-partials::forms.tabs.panel
+            :name="$category"
+            prefix="consent"
+            alpineState="activeCategory"
+            :x-cloak="$category !== 'essential'"
+        >
+            @foreach($serviceList as $i => $service)
+            <x-consent::consent-form.service-details
+                :$service
+                :$category
+            />
+            @endforeach
+        </x-filament-partials::forms.tabs.panel>
+        @endforeach
+    </x-filament-partials::forms.tabs>
+    @endcapture
+    @if($wrapper)
+    {{ $wrapper($content) }}
+    @else
+    {{ $content() }}
+    <x-filament::button type="button" x-on:click="submit()">
+        {{ __('Auswahl speichern') }}
+    </x-filament::button>
+    @endif
     <script>
         "use strict";
         document.addEventListener('alpine:init', () => {
@@ -89,50 +137,4 @@
             }));
         });
     </script>
-    @capture($content)
-    <div class="text-sm leading-6 prose max-w-none dark:prose-invert [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
-        @markdown(__("Diese Anwendung verwendet Cookies und ähnliche Technologien und verarbeitet personenbezogene Daten von Ihnen (z.B. IP-Adresse), um Inhalte und Funktionen zur Verfügung zu stellen oder Zugriffe zu analysieren.\n\nSie haben an dieser Stelle die Möglichkeit, Ihre Einwilligung in die Verarbeitung Ihrer personenbezogenen Daten zu bestimmten Zwecken zu erteilen. Sie können diese Einwilligung jederzeit widerrufen. Weitere Informationen zu Ihren Rechten und zur Verwendung Ihrer Daten finden Sie in der [Datenschutzerklärung](/privacy)."))
-    </div>
-    <x-consent::consent-form.category-list
-        :$categories
-        class="px-4"
-    />
-    <x-filament-partials::forms.tabs>
-        <x-slot:tablist>
-            @foreach($categories as $name => $label)
-            <x-filament-partials::forms.tabs.tab
-                :$name
-                :badge="count($services[$name])"
-                prefix="consent"
-                alpineState="activeCategory"
-                x-effect="updateBadge('{{ $name }}', selectedCount('{{ $name }}'))"
-            >
-                {{ $label }}
-            </x-filament-partials::forms.tabs.tab>
-            @endforeach
-        </x-slot:tablist>
-        @foreach($services as $category => $serviceList)
-        <x-filament-partials::forms.tabs.panel
-            :name="$category"
-            prefix="consent"
-            alpineState="activeCategory"
-        >
-            @foreach($serviceList as $service)
-            <x-consent::consent-form.service-details
-                :$service
-                :$category
-            />
-            @endforeach
-        </x-filament-partials::forms.tabs.panel>
-        @endforeach
-    </x-filament-partials::forms.tabs>
-    @endcapture
-    @if($wrapper)
-    {{ $wrapper($content) }}
-    @else
-    {{ $content() }}
-    <x-filament::button type="button" x-on:click="submit()">
-        {{ __('Auswahl speichern') }}
-    </x-filament::button>
-    @endif
 </form>

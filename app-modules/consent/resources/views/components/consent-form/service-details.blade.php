@@ -1,5 +1,5 @@
 @props([ 'service', 'category' ])
-<x-filament::fieldset :label="$service->name" label-hidden>
+<x-filament::fieldset :label="$service->name" label-hidden {{ $attributes }}>
     <x-filament-partials::forms.component-container class="sm:grid-cols-2">
         <div class="space-y-6">
             <x-filament-forms::field-wrapper>
