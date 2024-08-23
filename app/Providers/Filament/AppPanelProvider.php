@@ -32,7 +32,8 @@ class AppPanelProvider extends PanelProvider
             ->bootUsing(function (Panel $panel) {
                 $settings = app(BrandingSettings::class);
                 \Filament\Support\Facades\FilamentColor::register([
-                    'brand' => Color::hex($settings->color)
+                    'brand' => Color::hex($settings->brandColor),
+                    'primary' => Color::hex($settings->primaryColor),
                 ]);
                 $panel->brandLogo($settings->logo ? asset('storage/' . $settings->logo) : null);
                 $panel->brandName($settings->name);
@@ -42,9 +43,6 @@ class AppPanelProvider extends PanelProvider
             ->registration()
             ->topNavigation()
             ->brandLogoHeight('auto')
-            ->colors([
-                'primary' => Color::Indigo
-            ])
             ->viteTheme('resources/css/app.css')
             ->discoverResources(
                 in: app_path('Filament/Resources'),
