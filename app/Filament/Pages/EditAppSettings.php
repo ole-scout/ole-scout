@@ -19,7 +19,7 @@ class EditAppSettings extends Page
 {
     use HasIconHeading;
 
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'fluentui-content-settings-20';
 
     protected static string $view = 'filament.pages.edit-app-settings';
 
