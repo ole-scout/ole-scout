@@ -13,7 +13,7 @@ class EditConsent extends Page
 
     protected static string $view = 'filament.pages.edit-consent';
 
-    protected static ?string $slug = "consent";
+    protected static ?string $slug = 'consent';
 
     protected static bool $shouldRegisterNavigation = false;
 

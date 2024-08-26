@@ -2,10 +2,12 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\EditConsent;
 use App\Settings\BrandingSettings;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -61,6 +63,12 @@ class AppPanelProvider extends PanelProvider
             ])
             ->widgets([
                 Widgets\AccountWidget::class,
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label(__('Datenschutz-Einstellungen'))
+                    ->url(fn(): string => EditConsent::getUrl())
+                    ->icon(fn(): string => EditConsent::getNavigationIcon()),
             ])
             ->renderHook(
                 PanelsRenderHook::SCRIPTS_AFTER,

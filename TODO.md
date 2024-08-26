@@ -14,6 +14,7 @@
     -   [ ] Record viewport size, submission event & used version
     -   [ ] Persist consent on login (with timestamps, etc)
     -   [ ] Validate consent request body
+    -   [ ] Move EditConsent out of filament panel to allow guest access
 
 # Auth
 
