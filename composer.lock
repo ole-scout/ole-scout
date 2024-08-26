@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc37050a5a303bf9ff2a28373888db9a",
+    "content-hash": "ee8557a1fd7ef907039d351e6b16af5b",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2238,6 +2238,38 @@
                     "FossHaas\\Consent\\Tests\\": "tests/",
                     "FossHaas\\Consent\\Database\\Factories\\": "database/factories/",
                     "FossHaas\\Consent\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "foss-haas/courses",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/courses",
+                "reference": "825802b6007686d5c7f550e0dc69ebcb5b2d7f23"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FossHaas\\Courses\\Providers\\CoursesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FossHaas\\Courses\\": "src/",
+                    "FossHaas\\Courses\\Tests\\": "tests/",
+                    "FossHaas\\Courses\\Database\\Factories\\": "database/factories/",
+                    "FossHaas\\Courses\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [
