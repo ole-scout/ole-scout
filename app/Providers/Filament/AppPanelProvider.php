@@ -37,7 +37,7 @@ class AppPanelProvider extends PanelProvider
                     'brand' => Color::hex($settings->brandColor),
                     'primary' => Color::hex($settings->primaryColor),
                 ]);
-                $panel->brandLogo($settings->logo ? asset('storage/' . $settings->logo) : null);
+                $panel->brandLogo($settings->logo);
                 $panel->brandName($settings->name);
             })
             ->path('')

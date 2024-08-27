@@ -2,7 +2,13 @@
 
 namespace App\Providers;
 
+use App\Filesystem\FakeAdapter;
+use FossHaas\FlysystemModelFields\SettingsAdapter;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
+use League\Flysystem\Filesystem;
 use Spatie\Translatable\Facades\Translatable;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,5 +29,13 @@ class AppServiceProvider extends ServiceProvider
         Translatable::fallback(
             fallbackAny: true,
         );
+        Storage::extend('fake', function (Application $app, array $config) {
+            $adapter = new FakeAdapter();
+            return new FilesystemAdapter(
+                new Filesystem($adapter, $config),
+                $adapter,
+                $config
+            );
+        });
     }
 }

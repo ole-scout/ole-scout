@@ -2329,6 +2329,9 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
                 "psr-4": {
                     "FossHaas\\Support\\": "src/",
                     "FossHaas\\Support\\Tests\\": "tests/",

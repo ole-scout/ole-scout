@@ -153,8 +153,9 @@ class EditAppSettings extends Page
                             ->imageResizeTargetWidth('288')
                             ->imageResizeTargetHeight('80')
                             ->imagePreviewHeight('80')
+                            ->disk('fake')
                             ->getUploadedFileNameForStorageUsing(
-                                fn(TemporaryUploadedFile $file): string => 'logo.' . $file->guessExtension() ?? 'png'
+                                fn(TemporaryUploadedFile $file): string => data_uri($file)
                             )
                             ->required(false),
                     ]),
