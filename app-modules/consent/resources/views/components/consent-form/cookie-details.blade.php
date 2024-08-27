@@ -16,7 +16,7 @@
     @if($cookie->description)
     <x-filament-partials::infolist.text-entry class="col-span-5">
         <x-slot:label>{{ __('Beschreibung') }}</x-slot:label>
-        @markdown($cookie->description)
+        {!! markdown($cookie->description) !!}
     </x-filament-partials::infolist.text-entry>
     @endif
     <x-filament-partials::infolist.text-entry class="col-span-2">

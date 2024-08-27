@@ -2,7 +2,6 @@
 
 namespace FossHaas\Support\Providers;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class SupportServiceProvider extends ServiceProvider
@@ -20,10 +19,5 @@ class SupportServiceProvider extends ServiceProvider
         $this->mergeConfigFrom("{$this->base_dir}/config.php", 'support');
     }
 
-    public function boot(): void
-    {
-        Blade::directive('markdown', function ($expression) {
-            return "<?php echo FossHaas\Support\Markdown::markdown($expression); ?>";
-        });
-    }
+    public function boot(): void {}
 }

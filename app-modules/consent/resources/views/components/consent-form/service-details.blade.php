@@ -12,7 +12,7 @@
                     />
                 </x-slot:labelPrefix>
                 <x-slot:label>{{ $service->name }}</x-slot:label>
-                <x-slot:helperText>@markdown($service->description)</x-slot:helperText>
+                <x-slot:helperText>{!! markdown($service->description) !!}</x-slot:helperText>
             </x-filament-forms::field-wrapper>
             <x-consent::consent-form.provider-details :provider="$service->serviceProvider" />
         </div>
