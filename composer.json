@@ -21,6 +21,7 @@
         "foss-haas/ui": "*",
         "giggsey/libphonenumber-for-php": "^8.13",
         "laravel/framework": "^11.9",
+        "laravel/pail": "^1.1",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "spatie/laravel-settings": "^3.3",
