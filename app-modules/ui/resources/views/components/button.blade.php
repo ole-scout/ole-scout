@@ -3,6 +3,9 @@
     'small' => false,
     'intent' => null,
     'variant' => null,
+    'icon' => null,
+    'iconTrailing' => null,
+    'hiddenLabel' => false,
 ])
 @php
     if (!$intent) {
@@ -12,10 +15,14 @@
     if (!$variant && $attributes->has('href')) {
         $variant = 'link';
     }
+    if ($icon) $icon = 'fluentui-' . $icon . ($small ? '-16' : '-20');
+    if ($iconTrailing) $iconTrailing = 'fluentui-' . $iconTrailing . ($small ? '-16' : '-20');
+    $slotClass = $hiddenLabel ? 'sr-only' : '';
     $classes = ['btn', 'btn-sm' => $small];
     $classes[] = match ($variant) {
         'alt' => 'btn-alt',
         'ghost' => 'btn-ghost',
+        'overlay' => 'btn-overlay',
         'link' => 'btn-link',
         default => null,
     };
@@ -35,15 +42,27 @@
         'disabled' => $disabled,
         'type' => $attributes->get('type') ?: 'button',
     ]
-) }}>{{ $slot }}</button>
+) }}>
+    @if($icon) @svg($icon) @endif
+    @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
+    @if($iconTrailing) @svg($iconTrailing) @endif
+</button>
 @elseif(!$disabled)
 <a {{ $attributes->class(
     [...$classes, 'disabled' => $disabled]
-) }}>{{ $slot }}</a>
+) }}>
+    @if($icon) @svg($icon) @endif
+    @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
+    @if($iconTrailing) @svg($iconTrailing) @endif
+</a>
 @else
 <span {{ $attributes->filter(
     fn (string $value, string $key) => !in_array($key, $linkProps)
 )->class(
     [...$classes, 'disabled' => $disabled]
-) }}>{{ $slot }}</span>
+) }}>
+    @if($icon) @svg($icon) @endif
+    @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
+    @if($iconTrailing) @svg($iconTrailing) @endif
+</span>
 @endif

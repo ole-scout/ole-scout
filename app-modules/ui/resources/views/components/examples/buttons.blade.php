@@ -1,81 +1,195 @@
  <div class="space-y-4">
 
-    <div class="grid max-w-lg grid-cols-5 gap-4 p-8 mx-auto text-sm bg-gray-100 rounded-lg shadow dark:bg-gray-900">
+    <div class="grid max-w-xl grid-cols-5 gap-4 p-8 mx-auto text-sm bg-gray-100 rounded-lg shadow place-items-center dark:bg-gray-900">
         <x-ui::button>Default</x-ui::button>
-        <x-ui::button intent="primary">Primary</x-ui::button>
-        <x-ui::button intent="danger">Danger</x-ui::button>
-        <x-ui::button intent="success">Success</x-ui::button>
-        <x-ui::button disabled>Disabled</x-ui::button>
+        <x-ui::button intent="primary" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled icon="lock-closed">Disabled</x-ui::button>
         
         <x-ui::button variant="alt">Default</x-ui::button>
-        <x-ui::button intent="primary" variant="alt">Primary</x-ui::button>
-        <x-ui::button intent="danger" variant="alt">Danger</x-ui::button>
-        <x-ui::button intent="success" variant="alt">Success</x-ui::button>
-        <x-ui::button disabled variant="alt">Disabled</x-ui::button>
+        <x-ui::button intent="primary" variant="alt" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="alt" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" variant="alt" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled variant="alt" icon="lock-closed">Disabled</x-ui::button>
         
         <x-ui::button variant="ghost">Default</x-ui::button>
-        <x-ui::button intent="primary" variant="ghost">Primary</x-ui::button>
-        <x-ui::button intent="danger" variant="ghost">Danger</x-ui::button>
-        <x-ui::button intent="success" variant="ghost">Success</x-ui::button>
-        <x-ui::button disabled variant="ghost">Disabled</x-ui::button>
+        <x-ui::button intent="primary" variant="ghost" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="ghost" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" variant="ghost" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled variant="ghost" icon="lock-closed">Disabled</x-ui::button>
         
         <x-ui::button variant="link">Default</x-ui::button>
-        <x-ui::button intent="primary" variant="link">Primary</x-ui::button>
-        <x-ui::button intent="danger" variant="link">Danger</x-ui::button>
-        <x-ui::button intent="success" variant="link">Success</x-ui::button>
-        <x-ui::button disabled variant="link">Disabled</x-ui::button>
+        <x-ui::button intent="primary" variant="link" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="link" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" variant="link" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled variant="link" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button variant="overlay" icon="info" hidden-label>Default</x-ui::button>
+        <x-ui::button intent="primary" variant="overlay" icon="save" hidden-label>Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="overlay" icon="warning" hidden-label>Danger</x-ui::button>
+        <x-ui::button intent="success" variant="overlay" icon="checkmark-circle" hidden-label>Success</x-ui::button>
+        <x-ui::button disabled variant="overlay" icon="lock-closed" hidden-label>Disabled</x-ui::button>
     </div>
 
-    <div class="grid max-w-lg grid-cols-5 gap-4 p-8 mx-auto text-sm rounded-lg shadow bg-gray-50 dark:bg-gray-950">
-        <x-ui::button>Default</x-ui::button>
-        <x-ui::button intent="primary">Primary</x-ui::button>
-        <x-ui::button intent="danger">Danger</x-ui::button>
-        <x-ui::button intent="success">Success</x-ui::button>
-        <x-ui::button disabled>Disabled</x-ui::button>
+    <div class="grid max-w-xl grid-cols-5 gap-4 p-8 mx-auto text-sm bg-gray-100 rounded-lg shadow place-items-center dark:bg-gray-900">
+        <x-ui::button small>Default</x-ui::button>
+        <x-ui::button small intent="primary" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled icon="lock-closed">Disabled</x-ui::button>
         
-        <x-ui::button variant="alt">Default</x-ui::button>
-        <x-ui::button intent="primary" variant="alt">Primary</x-ui::button>
-        <x-ui::button intent="danger" variant="alt">Danger</x-ui::button>
-        <x-ui::button intent="success" variant="alt">Success</x-ui::button>
-        <x-ui::button disabled variant="alt">Disabled</x-ui::button>
+        <x-ui::button small variant="alt">Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="alt" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="alt" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="alt" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled variant="alt" icon="lock-closed">Disabled</x-ui::button>
         
-        <x-ui::button variant="ghost">Default</x-ui::button>
-        <x-ui::button intent="primary" variant="ghost">Primary</x-ui::button>
-        <x-ui::button intent="danger" variant="ghost">Danger</x-ui::button>
-        <x-ui::button intent="success" variant="ghost">Success</x-ui::button>
-        <x-ui::button disabled variant="ghost">Disabled</x-ui::button>
+        <x-ui::button small variant="ghost">Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="ghost" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="ghost" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="ghost" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled variant="ghost" icon="lock-closed">Disabled</x-ui::button>
         
-        <x-ui::button variant="link">Default</x-ui::button>
-        <x-ui::button intent="primary" variant="link">Primary</x-ui::button>
-        <x-ui::button intent="danger" variant="link">Danger</x-ui::button>
-        <x-ui::button intent="success" variant="link">Success</x-ui::button>
-        <x-ui::button disabled variant="link">Disabled</x-ui::button>
+        <x-ui::button small variant="link">Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="link" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="link" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="link" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled variant="link" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button small variant="overlay" icon="info" hidden-label>Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="overlay" icon="save" hidden-label>Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="overlay" icon="warning" hidden-label>Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="overlay" icon="checkmark-circle" hidden-label>Success</x-ui::button>
+        <x-ui::button small disabled variant="overlay" icon="lock-closed" hidden-label>Disabled</x-ui::button>
     </div>
 
-    <div class="grid max-w-lg grid-cols-5 gap-4 p-8 mx-auto text-sm bg-white rounded-lg shadow dark:bg-black">
+    <div class="grid max-w-xl grid-cols-5 gap-4 p-8 mx-auto text-sm rounded-lg shadow place-items-center bg-gray-50 dark:bg-gray-950">
         <x-ui::button>Default</x-ui::button>
-        <x-ui::button intent="primary">Primary</x-ui::button>
-        <x-ui::button intent="danger">Danger</x-ui::button>
-        <x-ui::button intent="success">Success</x-ui::button>
-        <x-ui::button disabled>Disabled</x-ui::button>
+        <x-ui::button intent="primary" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled icon="lock-closed">Disabled</x-ui::button>
         
         <x-ui::button variant="alt">Default</x-ui::button>
-        <x-ui::button intent="primary" variant="alt">Primary</x-ui::button>
-        <x-ui::button intent="danger" variant="alt">Danger</x-ui::button>
-        <x-ui::button intent="success" variant="alt">Success</x-ui::button>
-        <x-ui::button disabled variant="alt">Disabled</x-ui::button>
+        <x-ui::button intent="primary" variant="alt" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="alt" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" variant="alt" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled variant="alt" icon="lock-closed">Disabled</x-ui::button>
         
         <x-ui::button variant="ghost">Default</x-ui::button>
-        <x-ui::button intent="primary" variant="ghost">Primary</x-ui::button>
-        <x-ui::button intent="danger" variant="ghost">Danger</x-ui::button>
-        <x-ui::button intent="success" variant="ghost">Success</x-ui::button>
-        <x-ui::button disabled variant="ghost">Disabled</x-ui::button>
+        <x-ui::button intent="primary" variant="ghost" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="ghost" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" variant="ghost" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled variant="ghost" icon="lock-closed">Disabled</x-ui::button>
         
         <x-ui::button variant="link">Default</x-ui::button>
-        <x-ui::button intent="primary" variant="link">Primary</x-ui::button>
-        <x-ui::button intent="danger" variant="link">Danger</x-ui::button>
-        <x-ui::button intent="success" variant="link">Success</x-ui::button>
-        <x-ui::button disabled variant="link">Disabled</x-ui::button>
+        <x-ui::button intent="primary" variant="link" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="link" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" variant="link" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled variant="link" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button variant="overlay" icon="info" hidden-label>Default</x-ui::button>
+        <x-ui::button intent="primary" variant="overlay" icon="save" hidden-label>Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="overlay" icon="warning" hidden-label>Danger</x-ui::button>
+        <x-ui::button intent="success" variant="overlay" icon="checkmark-circle" hidden-label>Success</x-ui::button>
+        <x-ui::button disabled variant="overlay" icon="lock-closed" hidden-label>Disabled</x-ui::button>
+    </div>
+
+    <div class="grid max-w-xl grid-cols-5 gap-4 p-8 mx-auto text-sm rounded-lg shadow place-items-center bg-gray-50 dark:bg-gray-950">
+        <x-ui::button small>Default</x-ui::button>
+        <x-ui::button small intent="primary" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button small variant="alt">Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="alt" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="alt" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="alt" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled variant="alt" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button small variant="ghost">Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="ghost" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="ghost" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="ghost" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled variant="ghost" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button small variant="link">Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="link" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="link" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="link" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled variant="link" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button small variant="overlay" icon="info" hidden-label>Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="overlay" icon="save" hidden-label>Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="overlay" icon="warning" hidden-label>Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="overlay" icon="checkmark-circle" hidden-label>Success</x-ui::button>
+        <x-ui::button small disabled variant="overlay" icon="lock-closed" hidden-label>Disabled</x-ui::button>
+    </div>
+
+    <div class="grid max-w-xl grid-cols-5 gap-4 p-8 mx-auto text-sm bg-white rounded-lg shadow place-items-center dark:bg-black">
+        <x-ui::button>Default</x-ui::button>
+        <x-ui::button intent="primary" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button variant="alt">Default</x-ui::button>
+        <x-ui::button intent="primary" variant="alt" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="alt" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" variant="alt" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled variant="alt" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button variant="ghost">Default</x-ui::button>
+        <x-ui::button intent="primary" variant="ghost" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="ghost" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" variant="ghost" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled variant="ghost" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button variant="link">Default</x-ui::button>
+        <x-ui::button intent="primary" variant="link" icon="save">Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="link" icon="warning">Danger</x-ui::button>
+        <x-ui::button intent="success" variant="link" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button disabled variant="link" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button variant="overlay" icon="info" hidden-label>Default</x-ui::button>
+        <x-ui::button intent="primary" variant="overlay" icon="save" hidden-label>Primary</x-ui::button>
+        <x-ui::button intent="danger" variant="overlay" icon="warning" hidden-label>Danger</x-ui::button>
+        <x-ui::button intent="success" variant="overlay" icon="checkmark-circle" hidden-label>Success</x-ui::button>
+        <x-ui::button disabled variant="overlay" icon="lock-closed" hidden-label>Disabled</x-ui::button>
+    </div>
+
+    <div class="grid max-w-xl grid-cols-5 gap-4 p-8 mx-auto text-sm bg-white rounded-lg shadow place-items-center dark:bg-black">
+        <x-ui::button small>Default</x-ui::button>
+        <x-ui::button small intent="primary" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button small variant="alt">Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="alt" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="alt" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="alt" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled variant="alt" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button small variant="ghost">Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="ghost" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="ghost" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="ghost" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled variant="ghost" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button small variant="link">Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="link" icon="save">Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="link" icon="warning">Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="link" icon="checkmark-circle">Success</x-ui::button>
+        <x-ui::button small disabled variant="link" icon="lock-closed">Disabled</x-ui::button>
+        
+        <x-ui::button small variant="overlay" icon="info" hidden-label>Default</x-ui::button>
+        <x-ui::button small intent="primary" variant="overlay" icon="save" hidden-label>Primary</x-ui::button>
+        <x-ui::button small intent="danger" variant="overlay" icon="warning" hidden-label>Danger</x-ui::button>
+        <x-ui::button small intent="success" variant="overlay" icon="checkmark-circle" hidden-label>Success</x-ui::button>
+        <x-ui::button small disabled variant="overlay" icon="lock-closed" hidden-label>Disabled</x-ui::button>
     </div>
 
 </div>

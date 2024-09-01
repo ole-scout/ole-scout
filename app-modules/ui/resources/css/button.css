@@ -1,5 +1,5 @@
 .btn {
-    @apply inline-flex items-center;
+    @apply inline-flex items-center space-x-1;
     &:is(:disabled, .disabled) {
         @apply cursor-not-allowed;
     }
@@ -9,17 +9,32 @@
 }
 .btn:is(.btn-normal, .btn-primary, .btn-danger, .btn-success) {
     @apply font-semibold;
-    &:is(.btn-link) {
-        @apply text-sm;
+    &:has(> svg) > span {
+        @apply -mt-0.5;
     }
-    &:not(.btn-link) {
+    &:is(.btn-sm) {
+        @apply text-xs;
+        & > svg {
+            @apply w-4 h-4;
+        }
+    }
+    &:not(.btn-sm) {
+        @apply text-sm;
+        & > svg {
+            @apply w-5 h-5;
+        }
+    }
+    &:not(.btn-link, .btn-overlay) {
         @apply leading-tight hover:no-underline rounded-md;
         &:is(.btn-sm) {
-            @apply px-2 py-1 text-xs;
+            @apply px-2 py-1;
         }
         &:not(.btn-sm) {
-            @apply px-3 py-2 text-sm;
+            @apply px-3 py-2;
         }
+    }
+    &:is(.btn-overlay) {
+        @apply p-1 leading-none rounded;
     }
     &:is(:disabled, .disabled) {
         @apply text-neutral-400 dark:text-neutral-500;
@@ -29,24 +44,27 @@
         &:is(.btn-link, .btn-ghost) {
             @apply bg-transparent;
         }
+        &:is(.btn-overlay) {
+            @apply bg-neutral-50/70 dark:bg-neutral-950/70;
+        }
     }
     &:not(:disabled, .disabled) {
-        &:not(.btn-alt, .btn-ghost, .btn-link) {
-            @apply text-white shadow-sm dark:shadow-sheen-none;
+        &:not(.btn-alt, .btn-ghost, .btn-overlay, .btn-link) {
+            @apply text-white shadow-sm;
             &:is(.btn-normal) {
-                @apply dark:text-gray-950 bg-gray-600 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 shadow-sheen-gray-900/50;
+                @apply dark:text-gray-950 bg-gray-600 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 shadow-sheen-gray-900/50 dark:shadow-sheen-none;
             }
             &:is(.btn-primary) {
-                @apply bg-primary-600 hover:bg-primary-800 shadow-sheen-primary-900/50;
+                @apply bg-primary-600 hover:bg-primary-800 shadow-sheen-primary-900/50 dark:shadow-sheen-none;
             }
             &:is(.btn-danger) {
-                @apply bg-danger-600 hover:bg-danger-800 shadow-sheen-danger-900/50;
+                @apply bg-danger-600 hover:bg-danger-800 shadow-sheen-danger-900/50 dark:shadow-sheen-none;
             }
             &:is(.btn-success) {
-                @apply bg-success-600 hover:bg-success-800 shadow-sheen-success-900/50;
+                @apply bg-success-600 hover:bg-success-800 shadow-sheen-success-900/50 dark:shadow-sheen-none;
             }
         }
-        &:is(.btn-alt, .btn-ghost, .btn-link) {
+        &:is(.btn-alt, .btn-ghost, .btn-overlay, .btn-link) {
             &:is(.btn-normal) {
                 @apply text-gray-600 dark:text-gray-200;
             }
@@ -60,8 +78,7 @@
                 @apply text-success-600 dark:text-success-500;
             }
         }
-        &:is(.btn-alt, .btn-ghost) {
-            @apply hover:bg-gray-50 dark:hover:bg-gray-800;
+        &:is(.btn-alt, .btn-ghost, .btn-overlay) {
             &:is(.btn-normal) {
                 @apply dark:hover:text-gray-100;
             }
@@ -75,11 +92,17 @@
                 @apply dark:hover:text-success-400;
             }
         }
+        &:is(.btn-alt, .btn-ghost) {
+            @apply hover:bg-gray-50 dark:hover:bg-gray-800;
+        }
         &:is(.btn-alt) {
             @apply bg-white dark:bg-gray-900 shadow-sm shadow-border-gray-900 dark:shadow-border-gray-50;
         }
         &:is(.btn-ghost) {
             @apply bg-transparent hover:shadow-sm hover:shadow-border-gray-900 dark:hover:shadow-border-gray-50;
+        }
+        &:is(.btn-overlay) {
+            @apply bg-white/70 dark:bg-gray-950/70 hover:bg-gray-50/90 dark:hover:bg-gray-800/90 shadow-sm shadow-border-gray-700 dark:shadow-border-gray-200;
         }
         &:is(.btn-link) {
             @apply bg-transparent hover:underline;
