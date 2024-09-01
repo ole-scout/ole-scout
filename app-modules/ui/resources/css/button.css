@@ -38,7 +38,7 @@
     }
     &:is(:disabled, .disabled) {
         @apply text-neutral-400 dark:text-neutral-500;
-        &:not(.btn-link, .btn-ghost) {
+        &:not(.btn-link, .btn-ghost, .btn-overlay) {
             @apply bg-neutral-100 dark:bg-neutral-900;
         }
         &:is(.btn-link, .btn-ghost) {

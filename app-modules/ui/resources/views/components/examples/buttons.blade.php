@@ -1,7 +1,15 @@
  <div class="space-y-4">
 
-    <div class="max-w-xl p-8 mx-auto text-sm bg-gray-100 rounded-lg shadow dark:bg-gray-900">
-        <x-ui::file-picker variant="alt">Datei wählen …</x-ui::file-picker>
+    <div class="grid max-w-xl grid-cols-4 gap-4 p-8 mx-auto text-sm bg-gray-100 rounded-lg shadow place-items-center dark:bg-gray-900">
+        <x-ui::file-picker variant="alt" class="col-span-full">Datei wählen …</x-ui::file-picker>
+        <x-ui::checkbox />
+        <x-ui::checkbox checked />
+        <x-ui::checkbox disabled />
+        <x-ui::checkbox disabled checked />
+        <x-ui::radio name="x" value="1" />
+        <x-ui::radio name="x" value="2" checked />
+        <x-ui::radio name="y" value="1" disabled />
+        <x-ui::radio name="y" value="2" disabled checked />
     </div>
 
     <div class="grid max-w-xl grid-cols-5 gap-4 p-8 mx-auto text-sm bg-gray-100 rounded-lg shadow place-items-center dark:bg-gray-900">
