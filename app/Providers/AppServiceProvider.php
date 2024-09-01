@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Filesystem\FakeAdapter;
-use FossHaas\FlysystemModelFields\SettingsAdapter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Facades\Storage;

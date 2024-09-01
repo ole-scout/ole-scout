@@ -28,7 +28,7 @@
 
 # Admin panel
 
--   [ ] Manage site config <-
+-   [ ] Manage site config
     -   [ ] Cookie consent options
     -   [ ] Toggle video providers (YT/Vimeo)
     -   [x] Edit site title
