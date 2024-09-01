@@ -92,6 +92,8 @@ export default {
                             [
                                 value !== "none" &&
                                     `inset 0 0 0 1px ${setAlpha(value, 0.15)}`,
+                                "var(--tw-ring-offset-shadow)",
+                                "var(--tw-ring-shadow)",
                                 "var(--tw-shadow)",
                             ].filter(Boolean)
                         ),
@@ -113,6 +115,8 @@ export default {
                                     `inset 0 1px ${setAlpha(value[0], 0.25)}`,
                                     `inset 0 2px ${setAlpha(value[1], 0.15)}`,
                                 ],
+                                "var(--tw-ring-offset-shadow)",
+                                "var(--tw-ring-shadow)",
                                 "var(--tw-shadow)",
                             ].filter(Boolean)
                         ),
