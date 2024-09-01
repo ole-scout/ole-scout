@@ -1,4 +1,5 @@
 @props([
+    'as' => null,
     'disabled' => false,
     'small' => false,
     'intent' => null,
@@ -37,7 +38,15 @@
 
     $linkProps = ['href', 'target', 'rel'];
 @endphp
-@if(!$attributes->has('href'))
+@if($as)
+<{{ $as }} {{ $attributes->class(
+    [...$classes, 'disabled' => $disabled]
+) }}>
+    @if($icon) @svg($icon) @endif
+    @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
+    @if($iconTrailing) @svg($iconTrailing) @endif
+</{{ $as }}>
+@elseif(!$attributes->has('href'))
 <button {{ $attributes->class($classes)->merge([
         'disabled' => $disabled,
         'type' => $attributes->get('type') ?: 'button',

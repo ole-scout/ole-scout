@@ -1,5 +1,9 @@
  <div class="space-y-4">
 
+    <div class="max-w-xl p-8 mx-auto text-sm bg-gray-100 rounded-lg shadow dark:bg-gray-900">
+        <x-ui::file-picker variant="alt">Datei wählen …</x-ui::file-picker>
+    </div>
+
     <div class="grid max-w-xl grid-cols-5 gap-4 p-8 mx-auto text-sm bg-gray-100 rounded-lg shadow place-items-center dark:bg-gray-900">
         <x-ui::button>Default</x-ui::button>
         <x-ui::button intent="primary" icon="save">Primary</x-ui::button>
