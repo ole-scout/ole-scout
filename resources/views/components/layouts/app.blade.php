@@ -1,3 +1,7 @@
+@use('Filament\Support\Colors\Color')
+@php
+    $branding = app(\App\Settings\BrandingSettings::class);
+@endphp
 <!DOCTYPE html>
 <html
     lang="{{ str_replace('_', '-', app()->getLocale()) }}"
@@ -11,15 +15,22 @@
 
         <title>{{ config('app.name') }}</title>
 
+        @filamentStyles
+        @vite('resources/css/app.css')
+        @stack('styles')
         <style>
             [x-cloak] {
                 display: none !important;
             }
+            :root {
+                @foreach(Color::hex($branding->primaryColor) as $shade => $value)
+                --primary-{{ $shade }}: {{ $value }};
+                @endforeach
+                @foreach(Color::hex($branding->brandColor) as $shade => $value)
+                --brand-{{ $shade }}: {{ $value }};
+                @endforeach
+            }
         </style>
-
-        @filamentStyles
-        @vite('resources/css/app.css')
-        @stack('styles')
         <script>
             const theme = localStorage.getItem('theme') ?? 'system';
 

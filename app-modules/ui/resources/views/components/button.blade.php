@@ -7,47 +7,43 @@
 @php
     if (!$intent) {
         $isSubmit = $attributes->has('type') && $attributes->get('type') === 'submit';
-        $intent = $isSubmit ? 'primary' : 'default';
+        $intent = $isSubmit ? 'primary' : 'normal';
     }
-    if ($variant === 'disabled') {
-        $variant = null;
-        $disabled = true;
+    if (!$variant && $attributes->has('href')) {
+        $variant = 'link';
     }
-    if (!$variant) {
-        $variant = $attributes->has('href') ? 'link' : 'normal';
+    $classes = ['btn', 'btn-sm' => $small];
+    $classes[] = match ($variant) {
+        'alt' => 'btn-alt',
+        'ghost' => 'btn-ghost',
+        'link' => 'btn-link',
+        default => null,
+    };
+    if ($variant !== 'neutral') {
+        $classes[] = match($intent) {
+            'primary' => 'btn-primary',
+            'danger' => 'btn-danger',
+            'success' => 'btn-success',
+            default => 'btn-normal',
+        };
     }
+
     $linkProps = ['href', 'target', 'rel'];
 @endphp
 @if(!$attributes->has('href'))
-<button {{ $attributes->merge([
-        'class' => \FossHaas\Ui\buttonStyles(
-            intent: $intent,
-            variant: $variant,
-            disabled: $disabled,
-            small: $small,
-        ),
+<button {{ $attributes->class($classes)->merge([
         'disabled' => $disabled,
         'type' => $attributes->get('type') ?: 'button',
     ]
 ) }}>{{ $slot }}</button>
 @elseif(!$disabled)
-<a {{ $attributes-merge([
-    'class' => \FossHaas\Ui\buttonStyles(
-        intent: $intent,
-        variant: $variant,
-        disabled: false,
-        small: $small,
-    )
-]) }}>{{ $slot }}</a>
+<a {{ $attributes->class(
+    [...$classes, 'disabled' => $disabled]
+) }}>{{ $slot }}</a>
 @else
 <span {{ $attributes->filter(
     fn (string $value, string $key) => !in_array($key, $linkProps)
-)->merge([
-    'class' => \FossHaas\Ui\buttonStyles(
-        intent: $intent,
-        variant: $variant,
-        disabled: true,
-        small: $small,
-    )
-]) }}>{{ $slot }}</span>
+)->class(
+    [...$classes, 'disabled' => $disabled]
+) }}>{{ $slot }}</span>
 @endif

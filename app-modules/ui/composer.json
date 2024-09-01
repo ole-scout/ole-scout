@@ -6,9 +6,7 @@
     "license": "proprietary",
     "require": {},
     "autoload": {
-        "files": [
-            "src/helpers.php"
-        ],
+        "files": [],
         "psr-4": {
             "FossHaas\\Ui\\": "src/",
             "FossHaas\\Ui\\Tests\\": "tests/",
