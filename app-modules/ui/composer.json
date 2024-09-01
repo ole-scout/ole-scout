@@ -1,0 +1,27 @@
+{
+    "name": "foss-haas/ui",
+    "description": "",
+    "type": "library",
+    "version": "1.0",
+    "license": "proprietary",
+    "require": {},
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "FossHaas\\Ui\\": "src/",
+            "FossHaas\\Ui\\Tests\\": "tests/",
+            "FossHaas\\Ui\\Database\\Factories\\": "database/factories/",
+            "FossHaas\\Ui\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FossHaas\\Ui\\Providers\\UiServiceProvider"
+            ]
+        }
+    }
+}
