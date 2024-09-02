@@ -1,12 +1,17 @@
 @layer components {
     .input {
         @apply border border-transparent placeholder-gray-400 dark:placeholder-gray-500 leading-tight;
+        &:where(textarea) {
+            @apply resize-y;
+            field-sizing: content;
+        }
         &.input-toggle {
+            @apply transition-colors duration-200 ease-in-out;
             &:where(:focus ~ .input) {
                 @apply ring;
             }
             &:where(:not(:disabled ~ .input)) {
-                @apply bg-white dark:bg-gray-950 text-gray-600 dark:text-gray-100 border-gray-800/25 dark:border-gray-50/35 shadow-inner cursor-pointer;
+                @apply bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-100 border-gray-800/25 dark:border-gray-50/35 shadow-inner cursor-pointer;
                 &:where(:invalid ~ .input) {
                     @apply border-red-500 dark:border-red-600;
                 }
