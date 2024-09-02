@@ -1,7 +1,7 @@
 @props([
     'as' => null,
     'disabled' => false,
-    'small' => false,
+    'size' => 'md',
     'intent' => null,
     'variant' => null,
     'icon' => null,
@@ -16,10 +16,18 @@
     if (!$variant && $attributes->has('href')) {
         $variant = 'link';
     }
-    if ($icon) $icon = 'fluentui-' . $icon . ($small ? '-16' : '-20');
-    if ($iconTrailing) $iconTrailing = 'fluentui-' . $iconTrailing . ($small ? '-16' : '-20');
+    if ($icon) $icon = 'fluentui-' . $icon . '-' . (match($size) {
+        'sm' => '16',
+        default => '20',
+        'lg' => '24',
+    });
+    if ($iconTrailing) $iconTrailing = 'fluentui-' . $iconTrailing . '-' . (match($size) {
+        'sm' => '16',
+        default => '20',
+        'lg' => '24',
+    });
     $slotClass = $hiddenLabel ? 'sr-only' : '';
-    $classes = ['btn', 'btn-sm' => $small];
+    $classes = ['btn', 'btn-sm' => $size === 'sm', 'btn-lg' => $size === 'lg'];
     $classes[] = match ($variant) {
         'alt' => 'btn-alt',
         'ghost' => 'btn-ghost',
@@ -42,9 +50,9 @@
 <{{ $as }} {{ $attributes->class(
     [...$classes, 'disabled' => $disabled]
 ) }}>
-    @if($icon) @svg($icon) @endif
+    @if($icon) @svg($icon, ['class' => 'icon']) @endif
     @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
-    @if($iconTrailing) @svg($iconTrailing) @endif
+    @if($iconTrailing) @svg($iconTrailing, ['class' => 'icon']) @endif
 </{{ $as }}>
 @elseif(!$attributes->has('href'))
 <button {{ $attributes->class($classes)->merge([
@@ -52,17 +60,17 @@
         'type' => $attributes->get('type') ?: 'button',
     ]
 ) }}>
-    @if($icon) @svg($icon) @endif
+    @if($icon) @svg($icon, ['class' => 'icon']) @endif
     @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
-    @if($iconTrailing) @svg($iconTrailing) @endif
+    @if($iconTrailing) @svg($iconTrailing, ['class' => 'icon']) @endif
 </button>
 @elseif(!$disabled)
 <a {{ $attributes->class(
     [...$classes, 'disabled' => $disabled]
 ) }}>
-    @if($icon) @svg($icon) @endif
+    @if($icon) @svg($icon, ['class' => 'icon']) @endif
     @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
-    @if($iconTrailing) @svg($iconTrailing) @endif
+    @if($iconTrailing) @svg($iconTrailing, ['class' => 'icon']) @endif
 </a>
 @else
 <span {{ $attributes->filter(
@@ -70,8 +78,8 @@
 )->class(
     [...$classes, 'disabled' => $disabled]
 ) }}>
-    @if($icon) @svg($icon) @endif
+    @if($icon) @svg($icon, ['class' => 'icon']) @endif
     @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
-    @if($iconTrailing) @svg($iconTrailing) @endif
+    @if($iconTrailing) @svg($iconTrailing, ['class' => 'icon']) @endif
 </span>
 @endif

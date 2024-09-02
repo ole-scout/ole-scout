@@ -1,74 +1,69 @@
-.input {
-    @apply border placeholder-gray-500 leading-tight;
-    &:is(input:focus),
-    &:not(input):is(:focus ~ .input) {
-        @apply ring;
-    }
-    &:is(input):not(:invalid),
-    &:not(input):not(:invalid ~ .input) {
-        @apply border-gray-300;
-    }
-    &:is(input:invalid),
-    &:not(input):is(:invalid ~ .input) {
-        @apply border-red-500;
-    }
-    &:not(.input-toggle) {
-        @apply bg-white text-gray-800;
-        &:is(.input-sm) {
-            @apply text-sm px-2 py-1;
-        }
-        &:not(.input-sm) {
-            @apply text-base px-3 py-2;
-        }
-    }
-    &:is(.input-toggle) {
-        @apply shadow-inner;
-        &:is(input):not(:disabled),
-        &:not(input):not(:disabled ~ .input) {
-            @apply cursor-pointer;
-            &:is(input:checked),
-            &:not(input):is(:checked ~ .input) {
-                @apply bg-primary-600 text-white;
+@layer components {
+    .input {
+        @apply border border-transparent placeholder-gray-400 dark:placeholder-gray-500 leading-tight;
+        &:is(.input-toggle) {
+            &:not(:invalid ~ .input, :disabled ~ .input, :checked ~ .input) {
+                @apply bg-white dark:bg-gray-200 text-gray-600 border-gray-600/25 dark:border-gray-50 dark:shadow-border-gray-950/25;
             }
-            &:is(input):not(:checked),
-            &:not(input):not(:checked ~ .input) {
-                @apply bg-white text-gray-600;
+            &:is(:focus ~ .input) {
+                @apply ring;
             }
-        }
-        &:is(input:disabled),
-        &:not(input):is(:disabled ~ .input) {
-            @apply text-neutral-50 dark:text-neutral-100 bg-neutral-400 dark:bg-neutral-500;
-        }
-        .if-checked,
-        .if-unchecked {
-            @apply motion-safe:transition-opacity motion-safe:duration-100;
-        }
-        &:not(input):is(:checked ~ .input) {
-            .if-checked {
-                @apply opacity-100;
+            &:not(:disabled ~ .input) {
+                @apply cursor-pointer;
+                &:is(:invalid ~ .input) {
+                    @apply border-red-600 dark:border-gray-50 dark:shadow-border-red-600;
+                }
+                &:is(:checked ~ .input) {
+                    @apply bg-primary-600 text-white;
+                }
             }
+            &:is(:disabled ~ .input) {
+                @apply text-neutral-50 dark:text-neutral-100 bg-neutral-400 dark:bg-neutral-500;
+            }
+            .if-checked,
             .if-unchecked {
-                @apply opacity-0;
+                @apply motion-safe:transition-opacity motion-safe:duration-100;
+            }
+            &:is(:checked ~ .input) {
+                .if-checked {
+                    @apply opacity-100;
+                }
+                .if-unchecked {
+                    @apply opacity-0;
+                }
+            }
+            &:not(:checked ~ .input) {
+                .if-checked {
+                    @apply opacity-0;
+                }
+                .if-unchecked {
+                    @apply opacity-100;
+                }
             }
         }
-        &:not(input):not(:checked ~ .input) {
-            .if-checked {
-                @apply opacity-0;
+        &:not(.input-toggle) {
+            @apply rounded-md w-full;
+            &:is(.input-sm) {
+                @apply text-xs px-2 py-1;
             }
-            .if-unchecked {
-                @apply opacity-100;
+            &:not(.input-sm, .input-lg) {
+                @apply text-sm px-3 py-2;
             }
-        }
-    }
-    &.not(.input-toggle) {
-        @apply rounded;
-        &:is(input):not(:disabled),
-        &:not(input):not(:disabled ~ .input) {
-            @apply bg-gray-200 text-gray-800 hover:border-gray-500;
-        }
-        &:is(input:disabled),
-        &:not(input):is(:disabled ~ .input) {
-            @apply text-neutral-500 dark:text-neutral-500 bg-neutral-100 dark:bg-neutral-500;
+            &:is(.input-lg) {
+                @apply text-base px-3 py-2;
+            }
+            &:is(:focus) {
+                @apply ring;
+            }
+            &:not(:invalid, :disabled) {
+                @apply bg-white dark:bg-gray-200 text-gray-600 border-gray-600/25 dark:border-gray-50 dark:shadow-border-gray-950/25;
+            }
+            &:is(:invalid):not(:disabled) {
+                @apply border-red-600;
+            }
+            &:is(:disabled) {
+                @apply placeholder-transparent bg-neutral-100 dark:bg-neutral-400 text-neutral-400 dark:text-neutral-600 border-neutral-500/25 dark:border-transparent;
+            }
         }
     }
 }
