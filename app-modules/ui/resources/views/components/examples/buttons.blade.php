@@ -1,33 +1,5 @@
  <div class="space-y-4">
 
-    <div class="grid max-w-2xl grid-cols-4 gap-4 p-8 mx-auto bg-gray-100 rounded-lg shadow place-items-center dark:bg-gray-900">
-        <x-ui::file-picker variant="alt" class="col-span-full">Datei wählen …</x-ui::file-picker>
-        <x-ui::input type="text" placeholder="Platzhalter" class="col-span-full" />
-        <x-ui::input type="text" value="Textfeld" class="col-span-full" />
-        <x-ui::input type="text" value="Textfeld" disabled class="col-span-full" />
-        <x-ui::input type="textarea" value="Volltextfeld" class="col-span-full" />
-        <div class="flex w-full gap-2 col-span-full">
-            <x-ui::input type="text" placeholder="Platzhalter" class="col-span-4" />
-            <x-ui::button intent="primary" icon="save">Speichern</x-ui::input>
-        </div>
-        <div class="flex w-full gap-2 col-span-full">
-            <x-ui::input size="sm" type="text" placeholder="Platzhalter" class="col-span-4" />
-            <x-ui::button size="sm" intent="primary" icon="save">Speichern</x-ui::input>
-        </div>
-        <div class="flex w-full gap-2 col-span-full">
-            <x-ui::input size="lg" type="text" placeholder="Platzhalter" class="col-span-4" />
-            <x-ui::button size="lg" intent="primary" icon="save">Speichern</x-ui::input>
-        </div>
-        <x-ui::checkbox />
-        <x-ui::checkbox checked />
-        <x-ui::checkbox disabled />
-        <x-ui::checkbox disabled checked />
-        <x-ui::radio name="x" value="1" />
-        <x-ui::radio name="x" value="2" checked />
-        <x-ui::radio name="y" value="1" disabled />
-        <x-ui::radio name="y" value="2" disabled checked />
-    </div>
-
     <div class="grid max-w-2xl grid-cols-5 gap-4 p-8 mx-auto bg-gray-100 rounded-lg shadow place-items-center dark:bg-gray-900">
         <x-ui::button>Default</x-ui::button>
         <x-ui::button intent="primary" icon="save">Primary</x-ui::button>

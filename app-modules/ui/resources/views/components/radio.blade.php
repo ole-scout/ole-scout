@@ -1,3 +1,6 @@
+@props([
+    'size' => null,
+])
 @php
     $inputAttributes = [
         'name',
@@ -16,7 +19,19 @@
 ) }}>
 <div {{ $attributes->filter(
     fn (string $value, string $key) => !in_array($key, $inputAttributes)
-)->class(['relative', 'input', 'input-toggle', 'w-4', 'h-4', 'rounded-full']) }}>
-    <x-fluentui-circle-12 class="absolute inset-1 if-checked" />
+)->class(['relative', 'input', 'input-toggle', match($size) {
+    'sm' => 'w-3 h-3',
+    default => 'w-4 h-4',
+    'lg' => 'w-5 h-5',
+}, 'rounded-full']) }}>
+    @svg('fluentui-circle-' . match($size) {
+        'sm' => '12',
+        default => '16',
+        'lg' => '16',
+    }, ['class' => 'absolute if-checked ' . match($size) {
+        'sm' => 'inset-0.5',
+        default => 'inset-0.5',
+        'lg' => 'inset-1',
+    }])
 </div>
 </label>

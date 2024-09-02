@@ -2,23 +2,20 @@
     .input {
         @apply border border-transparent placeholder-gray-400 dark:placeholder-gray-500 leading-tight;
         &:is(.input-toggle) {
-            &:not(:invalid ~ .input, :disabled ~ .input, :checked ~ .input) {
-                @apply bg-white dark:bg-gray-200 text-gray-600 border-gray-600/25 dark:border-gray-50 dark:shadow-border-gray-950/25;
-            }
             &:is(:focus ~ .input) {
                 @apply ring;
             }
             &:not(:disabled ~ .input) {
-                @apply cursor-pointer;
+                @apply bg-white dark:bg-gray-950 text-gray-600 dark:text-gray-100 border-gray-800/25 dark:border-gray-50/35 shadow-inner cursor-pointer;
                 &:is(:invalid ~ .input) {
-                    @apply border-red-600 dark:border-gray-50 dark:shadow-border-red-600;
+                    @apply border-red-500 dark:border-red-600;
                 }
                 &:is(:checked ~ .input) {
                     @apply bg-primary-600 text-white;
                 }
             }
             &:is(:disabled ~ .input) {
-                @apply text-neutral-50 dark:text-neutral-100 bg-neutral-400 dark:bg-neutral-500;
+                @apply text-neutral-50 dark:text-neutral-200 bg-neutral-400/50 dark:bg-neutral-500/50;
             }
             .if-checked,
             .if-unchecked {
@@ -55,14 +52,14 @@
             &:is(:focus) {
                 @apply ring;
             }
-            &:not(:invalid, :disabled) {
-                @apply bg-white dark:bg-gray-200 text-gray-600 border-gray-600/25 dark:border-gray-50 dark:shadow-border-gray-950/25;
+            &:not(:disabled) {
+                @apply bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-100 border-gray-800/25 dark:border-gray-50/35;
             }
             &:is(:invalid):not(:disabled) {
-                @apply border-red-600;
+                @apply border-red-500 dark:border-red-600;
             }
             &:is(:disabled) {
-                @apply placeholder-transparent bg-neutral-100 dark:bg-neutral-400 text-neutral-400 dark:text-neutral-600 border-neutral-500/25 dark:border-transparent;
+                @apply placeholder-transparent bg-neutral-100 dark:bg-neutral-900 text-neutral-400 dark:text-neutral-500 border-neutral-500/25 dark:border-transparent;
             }
         }
     }
