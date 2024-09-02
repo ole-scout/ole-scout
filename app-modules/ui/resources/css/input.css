@@ -1,27 +1,27 @@
 @layer components {
     .input {
         @apply border border-transparent placeholder-gray-400 dark:placeholder-gray-500 leading-tight;
-        &:is(.input-toggle) {
-            &:is(:focus ~ .input) {
+        &.input-toggle {
+            &:where(:focus ~ .input) {
                 @apply ring;
             }
-            &:not(:disabled ~ .input) {
+            &:where(:not(:disabled ~ .input)) {
                 @apply bg-white dark:bg-gray-950 text-gray-600 dark:text-gray-100 border-gray-800/25 dark:border-gray-50/35 shadow-inner cursor-pointer;
-                &:is(:invalid ~ .input) {
+                &:where(:invalid ~ .input) {
                     @apply border-red-500 dark:border-red-600;
                 }
-                &:is(:checked ~ .input) {
+                &:where(:checked ~ .input) {
                     @apply bg-primary-600 text-white;
                 }
             }
-            &:is(:disabled ~ .input) {
+            &:where(:disabled ~ .input) {
                 @apply text-neutral-50 dark:text-neutral-200 bg-neutral-400/50 dark:bg-neutral-500/50;
             }
             .if-checked,
             .if-unchecked {
                 @apply motion-safe:transition-opacity motion-safe:duration-100;
             }
-            &:is(:checked ~ .input) {
+            &:where(:checked ~ .input) {
                 .if-checked {
                     @apply opacity-100;
                 }
@@ -29,7 +29,7 @@
                     @apply opacity-0;
                 }
             }
-            &:not(:checked ~ .input) {
+            &:where(:not(:checked ~ .input)) {
                 .if-checked {
                     @apply opacity-0;
                 }
@@ -40,25 +40,25 @@
         }
         &:not(.input-toggle) {
             @apply rounded-md w-full;
-            &:is(.input-sm) {
+            &:where(.input-sm) {
                 @apply text-xs px-2 py-1;
             }
-            &:not(.input-sm, .input-lg) {
+            &:where(:not(.input-sm, .input-lg)) {
                 @apply text-sm px-3 py-2;
             }
-            &:is(.input-lg) {
+            &:where(.input-lg) {
                 @apply text-base px-3 py-2;
             }
-            &:is(:focus) {
+            &:where(:focus) {
                 @apply ring;
             }
-            &:not(:disabled) {
+            &:where(:not(:disabled)) {
                 @apply bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-100 border-gray-800/25 dark:border-gray-50/35;
             }
-            &:is(:invalid):not(:disabled) {
+            &:where(:invalid:not(:disabled)) {
                 @apply border-red-500 dark:border-red-600;
             }
-            &:is(:disabled) {
+            &:where(:disabled) {
                 @apply placeholder-transparent bg-neutral-100 dark:bg-neutral-900 text-neutral-400 dark:text-neutral-500 border-neutral-500/25 dark:border-transparent;
             }
         }

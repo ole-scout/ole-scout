@@ -19,7 +19,7 @@
 ) }}>
 <div {{ $attributes->filter(
     fn (string $value, string $key) => !in_array($key, $inputAttributes)
-)->class(['relative', 'input', 'input-toggle', match($size) {
+)->class(['relative', 'input', 'input-toggle', 'mx-px', match($size) {
     'sm' => 'w-3 h-3',
     default => 'w-4 h-4',
     'lg' => 'w-5 h-5',

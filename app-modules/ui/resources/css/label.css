@@ -1,0 +1,88 @@
+@layer components {
+    .label {
+        @apply inline-flex items-center select-none touch-none font-semibold;
+        &:where(:not(label)) {
+            @apply cursor-default;
+        }
+        &:where(
+                :not(:has(:invalid)),
+                :not(:has(+ :invalid)),
+                :not(:has(+ .input:has(:invalid))),
+                :not(:invalid + .label),
+                :not(.input:has(:invalid) + .label),
+                :not(:has(:disabled)),
+                :not(:has(+ :disabled)),
+                :not(:has(+ .input:has(:disabled))),
+                :not(:disabled + .label),
+                :not(.input:has(:disabled) + .label)
+            ) {
+            @apply text-gray-700 dark:text-gray-100;
+            &:where(label) {
+                @apply cursor-pointer;
+            }
+        }
+        &:where(
+                :has(:invalid),
+                .input:has(:invalid) + .label,
+                :has(+ :invalid),
+                :has(+ .input:has(:invalid)),
+                :invalid + .label
+            ) {
+            @apply text-red-500 dark:text-red-600;
+            &:where(label) {
+                @apply cursor-pointer;
+            }
+        }
+        &:where(
+                :has(:disabled),
+                .input:has(:disabled) + .label,
+                :has(+ :disabled),
+                :has(+ .input:has(:disabled)),
+                :disabled + .label
+            ) {
+            @apply text-neutral-400 dark:text-neutral-500 cursor-default;
+        }
+        &:where(.label-sm) {
+            @apply text-sm space-x-0.5;
+            & > .icon {
+                @apply w-4 h-4;
+            }
+            & > .wrap {
+                &:first-child + *,
+                &:last-child {
+                    @apply ml-1;
+                }
+            }
+        }
+        &:where(:not(.label-sm, .label-lg)) {
+            @apply text-base space-x-1;
+            & > .icon {
+                @apply w-4 h-4;
+            }
+            & > .wrap {
+                &:first-child + *,
+                &:last-child {
+                    @apply ml-1.5;
+                }
+            }
+        }
+        &:where(.label-lg) {
+            @apply text-lg space-x-1;
+            & > .icon {
+                @apply w-5 h-5;
+            }
+            & > .wrap {
+                &:first-child + *,
+                &:last-child {
+                    @apply ml-2;
+                }
+            }
+        }
+        & > .icon {
+            @apply -mb-px;
+        }
+        &:has(> .wrap, > .icon) > span:not(.wrap) {
+            @apply -mt-0.5;
+        }
+    }
+}
