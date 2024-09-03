@@ -4,6 +4,10 @@
         &:where(:not(label)) {
             @apply cursor-default;
         }
+        &,
+        & > .wrap {
+            @apply leading-[0];
+        }
         &:where(
                 :not(:has(:invalid)),
                 :not(:has(+ :invalid)),
@@ -43,46 +47,31 @@
             @apply text-neutral-400 dark:text-neutral-500 cursor-default;
         }
         &:where(.label-sm) {
-            @apply text-sm space-x-0.5;
+            @apply space-x-[4px];
             & > .icon {
                 @apply w-4 h-4;
             }
-            & > .wrap {
-                &:first-child + *,
-                &:last-child {
-                    @apply ml-1;
-                }
+            & > span:not(.wrap) {
+                @apply text-xs;
             }
         }
         &:where(:not(.label-sm, .label-lg)) {
-            @apply text-base space-x-1;
-            & > .icon {
-                @apply w-4 h-4;
-            }
-            & > .wrap {
-                &:first-child + *,
-                &:last-child {
-                    @apply ml-1.5;
-                }
-            }
-        }
-        &:where(.label-lg) {
-            @apply text-lg space-x-1;
+            @apply space-x-[5px];
             & > .icon {
                 @apply w-5 h-5;
             }
-            & > .wrap {
-                &:first-child + *,
-                &:last-child {
-                    @apply ml-2;
-                }
+            & > span:not(.wrap) {
+                @apply text-sm;
             }
         }
-        & > .icon {
-            @apply -mb-px;
-        }
-        &:has(> .wrap, > .icon) > span:not(.wrap) {
-            @apply -mt-0.5;
+        &:where(.label-lg) {
+            @apply space-x-[6px];
+            & > .icon {
+                @apply w-6 h-6;
+            }
+            & > span:not(.wrap) {
+                @apply text-base;
+            }
         }
     }
 }

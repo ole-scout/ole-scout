@@ -12,9 +12,6 @@
             &:where(:focus) {
                 @apply ring outline-none;
             }
-            &:where(:has(> .icon)) > span {
-                @apply -mt-px;
-            }
             &:where(.btn-sm) {
                 @apply text-xs;
                 & > .icon {
