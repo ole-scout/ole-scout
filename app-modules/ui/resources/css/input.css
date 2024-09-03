@@ -1,20 +1,19 @@
 @layer components {
     .input {
-        @apply border border-transparent placeholder-gray-400 dark:placeholder-gray-500 leading-tight;
-        &:where(textarea) {
-            @apply resize-y;
-            field-sizing: content;
-        }
+        @apply inline-block;
         &:where([type="checkbox"] ~ .input),
         &:where([type="radio"] ~ .input) {
-            @apply transition-colors duration-200 ease-in-out;
+            @apply border border-transparent transition-colors duration-200 ease-in-out;
             &:where(:focus ~ .input) {
                 @apply ring;
             }
             &:not(:disabled ~ .input) {
                 @apply bg-white dark:bg-gray-900 border-gray-800/25 dark:border-gray-50/35 shadow-inner cursor-pointer;
                 &:is(:invalid ~ .input) {
-                    @apply border-red-500 dark:border-red-600;
+                    @apply ring-red-500 dark:ring-red-600;
+                    &:not(:focus ~ .input) {
+                        @apply border-red-500 dark:border-red-600;
+                    }
                 }
                 &:is(:checked ~ .input) {
                     @apply bg-primary-500 dark:bg-primary-600 text-white;
@@ -120,28 +119,68 @@
                 }
             }
         }
-        &:where(:not([type="checkbox"] ~ .input, [type="radio"] ~ .input)) {
-            @apply rounded-md w-full;
-            &:where(.input-sm) {
+        &:has(.input-area) {
+            @apply flex rounded-md w-full;
+            & > .action {
+                @apply flex items-stretch;
+                & > .btn {
+                    @apply flex;
+                }
+                &:first-child > .btn {
+                    @apply rounded-r-none;
+                }
+                &:last-child > .btn {
+                    @apply rounded-l-none;
+                }
+                &:not(:first-child, :last-child) {
+                    @apply rounded-none;
+                }
+            }
+            & > .input-area {
+                @apply block w-full bg-transparent border-none text-inherit placeholder-gray-400 dark:placeholder-gray-500;
+                &:where(textarea) {
+                    @apply resize-y;
+                    field-sizing: content;
+                }
+            }
+            &:where(.input-sm) > .input-area {
                 @apply text-xs px-2 py-1;
             }
-            &:where(:not(.input-sm, .input-lg)) {
+            &:where(:not(.input-sm, .input-lg)) > .input-area {
                 @apply text-sm px-3 py-2;
             }
-            &:where(.input-lg) {
+            &:where(.input-lg) > .input-area {
                 @apply text-base px-3 py-2;
             }
-            &:where(:focus) {
+            &:where(:has(.input-area:focus)) {
                 @apply ring;
+                > .input-area {
+                    @apply ring-transparent;
+                }
             }
-            &:not(:disabled) {
-                @apply bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-100 border-gray-800/25 dark:border-gray-50/35;
+            &:not(:has(.input-area:disabled)) {
+                @apply bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-100 shadow-border-gray-800/25 dark:shadow-border-gray-50/35;
+                & > .action > .btn {
+                    @apply shadow-transparent;
+                }
+                & > .action > .btn:where(.btn-alt, .btn-overlay) {
+                    @apply shadow-border-gray-800/25 dark:shadow-border-gray-50/35;
+                }
+                & > .action > .btn:where(.btn-ghost) {
+                    @apply hover:shadow-transparent hover:shadow-border-gray-800/25 dark:hover:shadow-border-gray-50/35;
+                }
             }
-            &:invalid:not(:disabled) {
-                @apply border-red-500 dark:border-red-600;
+            &:has(.input-area:invalid:not(:disabled)) {
+                @apply ring-red-500 dark:ring-red-600;
+                &:not(:has(.input-area:focus)) {
+                    @apply shadow-border-red-500 dark:shadow-border-red-600;
+                }
             }
-            &:disabled {
-                @apply placeholder-transparent bg-neutral-100 dark:bg-neutral-900 text-neutral-400 dark:text-neutral-500 border-neutral-500/25 dark:border-transparent;
+            &:has(.input-area:disabled) {
+                & > .input-area {
+                    @apply placeholder-transparent;
+                }
+                @apply bg-neutral-100 dark:bg-neutral-900 text-neutral-400 dark:text-neutral-500 shadow-border-neutral-500/25 dark:shadow-border-transparent;
             }
         }
     }

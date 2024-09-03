@@ -1,31 +1,19 @@
 @props([
     'size' => null,
     'wrapped' => false,
+    'proxyAttributes' => [],
 ])
-@php
-    $as = $wrapped ? 'div' : 'label';
-    $inputAttributes = [
-        'name',
-        'value',
-        'checked',
-        'disabled',
-        'wire:model',
-        'wire:model.defer',
-        'wire:model.lazy',
-        'wire:model.defer.lazy',
-    ];
-@endphp
-<{{ $as }}>
-    <input type="checkbox" class="sr-only" {{ $attributes->filter(
-        fn (string $value, string $key) => in_array($key, $inputAttributes)
+@if(!$wrapped)<label>@endif
+    <input {{ $attributes->except(['class'])->merge(
+        ['type' => 'checkbox', 'class' => 'sr-only']
     ) }}>
-    <div {{ $attributes->filter(
-        fn (string $value, string $key) => !in_array($key, $inputAttributes)
-    )->class(['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']) }}>
+    <span {{ $attributes->only(['class'])->merge($proxyAttributes)->class(
+        ['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']
+    ) }}>
         @svg('fluentui-checkmark-' . match($size) {
             'sm' => '12',
             default => '16',
             'lg' => '16',
         }, ['class' => 'toggle'])
-    </div>
-</{{ $as }}>
+    </span>
+@if(!$wrapped)</label>@endif

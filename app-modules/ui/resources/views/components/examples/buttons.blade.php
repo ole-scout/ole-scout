@@ -16,6 +16,9 @@
         <x-ui::button :$size :$variant :$hiddenLabel intent="success" icon="checkmark-circle">Success</x-ui::button>
         <x-ui::button :$size :$variant :$hiddenLabel disabled icon="lock-closed">Disabled</x-ui::button>
         @endforeach
+        @foreach(['normal', 'alt', 'ghost', 'link', 'overlay'] as $variant)
+        <x-ui::button :$size :$variant :hiddenLabel="$variant === 'overlay'" icon="globe" href="#" target="_blank" rel="noopner noreferrer">Link</x-ui::button>
+        @endforeach
     </div>
     @endforeach
     @endforeach

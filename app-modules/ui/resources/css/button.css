@@ -7,8 +7,11 @@
         &:where(:not(:disabled, .disabled)) {
             @apply cursor-pointer;
         }
-        &:where(.btn-normal, .btn-primary, .btn-danger, .btn-success) {
+        &:is(.btn-normal, .btn-primary, .btn-danger, .btn-success) {
             @apply font-semibold;
+            &:where(:focus) {
+                @apply ring outline-none;
+            }
             &:where(:has(> .icon)) > span {
                 @apply -mt-px;
             }
@@ -30,8 +33,8 @@
                     @apply w-5 h-5;
                 }
             }
-            &:where(:not(.btn-link, .btn-overlay)) {
-                @apply leading-tight hover:no-underline rounded-md;
+            &:not(.btn-link:not(.input .btn), .btn-overlay) {
+                @apply leading-tight rounded-md;
                 &:where(.btn-sm) {
                     @apply px-2 py-1;
                 }
@@ -47,19 +50,22 @@
             }
             &:where(:disabled, .disabled) {
                 @apply text-neutral-400 dark:text-neutral-500;
-                &:where(:not(.btn-link, .btn-ghost, .btn-overlay)) {
+                &:not(.btn-link, .btn-ghost, .btn-overlay) {
                     @apply bg-neutral-100 dark:bg-neutral-900;
                 }
-                &:where(.btn-link, .btn-ghost) {
+                &:is(.btn-link, .btn-ghost) {
                     @apply bg-transparent;
                 }
-                &:where(.btn-overlay) {
+                &:is(.btn-overlay) {
                     @apply bg-neutral-50/70 dark:bg-neutral-950/70;
                 }
             }
             &:where(:not(:disabled, .disabled)) {
-                &:where(:not(.btn-alt, .btn-ghost, .btn-overlay, .btn-link)) {
-                    @apply text-white shadow-sm;
+                &:not(.btn-alt, .btn-ghost, .btn-overlay, .btn-link) {
+                    @apply text-white;
+                    &:where(:not(.input .btn)) {
+                        @apply shadow;
+                    }
                     &:where(.btn-normal) {
                         @apply dark:text-gray-950 bg-gray-600 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 shadow-sheen-gray dark:shadow-sheen-none;
                     }
@@ -73,7 +79,7 @@
                         @apply bg-success-600 hover:bg-success-800 shadow-sheen-success dark:shadow-sheen-none;
                     }
                 }
-                &:where(.btn-alt, .btn-ghost, .btn-overlay, .btn-link) {
+                &:is(.btn-alt, .btn-ghost, .btn-overlay, .btn-link) {
                     &:where(.btn-normal) {
                         @apply text-gray-600 dark:text-gray-200;
                     }
@@ -87,7 +93,7 @@
                         @apply text-success-600 dark:text-success-500;
                     }
                 }
-                &:where(.btn-alt, .btn-ghost, .btn-overlay) {
+                &:is(.btn-alt, .btn-ghost, .btn-overlay) {
                     &:where(.btn-normal) {
                         @apply dark:hover:text-gray-100;
                     }
@@ -101,22 +107,22 @@
                         @apply dark:hover:text-success-400;
                     }
                 }
-                &:where(.btn-alt, .btn-ghost) {
+                &:is(.btn-alt, .btn-ghost) {
                     @apply hover:bg-gray-50 dark:hover:bg-gray-800;
                 }
-                &:where(.btn-alt, .btn-overlay) {
-                    @apply shadow-sm shadow-border-gray-900/15 dark:shadow-border-gray-50/15;
+                &:is(.btn-alt, .btn-overlay) {
+                    @apply shadow shadow-border-gray-900/15 hover:shadow-border-gray-900/25 dark:shadow-border-gray-50/15 dark:hover:shadow-border-gray-50/25;
                 }
-                &:where(.btn-alt) {
+                &:is(.btn-alt) {
                     @apply bg-white dark:bg-gray-900;
                 }
-                &:where(.btn-ghost) {
-                    @apply bg-transparent hover:shadow-sm hover:shadow-border-gray-900/15 dark:hover:shadow-border-gray-50/15;
+                &:is(.btn-ghost) {
+                    @apply hover:shadow hover:shadow-border-gray-900/25 dark:hover:shadow-border-gray-50/25;
                 }
-                &:where(.btn-overlay) {
+                &:is(.btn-overlay) {
                     @apply bg-white/70 dark:bg-gray-950/70 hover:bg-gray-50/90 dark:hover:bg-gray-800/90;
                 }
-                &:where(.btn-link) {
+                &:is(.btn-link) {
                     @apply bg-transparent hover:underline;
                 }
             }
