@@ -1,3 +1,12 @@
+@php
+    $asAttributes = fn (array $attributes) => new \Illuminate\View\ComponentAttributeBag($attributes);
+    $toggleAttributeTuples = [
+        [['icon' => 'warning'], []],
+        [['iconTrailing' => 'warning'], ['checked' => true]],
+        [['icon' => 'warning', 'trailing' => true], ['disabled' => true]],
+        [['iconTrailing' => 'warning', 'trailing' => true], ['checked' => true, 'disabled' => true]],
+    ];
+@endphp
 <div class="space-y-4">
     @foreach(['bg-gray-100 dark:bg-gray-900', 'bg-gray-50 dark:bg-gray-950', 'bg-white dark:bg-black'] as $i => $bg)
     @foreach(['sm', 'md', 'lg'] as $size)
@@ -14,20 +23,17 @@
             <x-ui::button :$size intent="primary" icon="save">Speichern</x-ui::input>
         </div>
 
-        <x-ui::label :$size icon="warning">Click<x-slot:wrap><x-ui::checkbox :$size /></x-slot:wrap></x-ui::label>
-        <x-ui::label :$size iconTrailing="warning">Click<x-slot:wrap><x-ui::checkbox :$size checked /></x-slot:wrap></x-ui::label>
-        <x-ui::label :$size icon="warning" trailing>Click<x-slot:wrap><x-ui::checkbox :$size disabled /></x-slot:wrap></x-ui::label>
-        <x-ui::label :$size iconTrailing="warning" trailing>Click<x-slot:wrap><x-ui::checkbox :$size disabled checked /></x-slot:wrap></x-ui::label>
+        @foreach($toggleAttributeTuples as [$labelAttributes, $inputAttributes])
+        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">Click<x-slot:wrap><x-ui::checkbox :$size :attributes="$asAttributes($inputAttributes)" /></x-slot:wrap></x-ui::label>
+        @endforeach
 
-        <x-ui::label :$size icon="warning">Click<x-slot:wrap><x-ui::radio :$size :name="$size . '-a' . $i" value="1" /></x-slot:wrap></x-ui::label>
-        <x-ui::label :$size iconTrailing="warning">Click<x-slot:wrap><x-ui::radio :$size :name="$size . '-a' . $i" value="2" checked /></x-slot:wrap></x-ui::label>
-        <x-ui::label :$size icon="warning" trailing>Click<x-slot:wrap><x-ui::radio :$size :name="$size . '-b' . $i" value="1" disabled /></x-slot:wrap></x-ui::label>
-        <x-ui::label :$size iconTrailing="warning" trailing>Click<x-slot:wrap><x-ui::radio :$size :name="$size . '-b' . $i" value="2" disabled checked /></x-slot:wrap></x-ui::label>
+        @foreach($toggleAttributeTuples as $j => [$labelAttributes, $inputAttributes])
+        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">Click<x-slot:wrap><x-ui::radio :$size :name="join('-', [$size, $i, floor($j / 2)])" :value="strval($j % 2)" :attributes="$asAttributes($inputAttributes)" /></x-slot:wrap></x-ui::label>
+        @endforeach
 
-        <x-ui::label :$size icon="warning">Click<x-slot:wrap><x-ui::switch :$size /></x-slot:wrap></x-ui::label>
-        <x-ui::label :$size iconTrailing="warning">Click<x-slot:wrap><x-ui::switch :$size checked /></x-slot:wrap></x-ui::label>
-        <x-ui::label :$size icon="warning" trailing>Click<x-slot:wrap><x-ui::switch :$size disabled /></x-slot:wrap></x-ui::label>
-        <x-ui::label :$size iconTrailing="warning" trailing>Click<x-slot:wrap><x-ui::switch :$size disabled checked /></x-slot:wrap></x-ui::label>
+        @foreach($toggleAttributeTuples as [$labelAttributes, $inputAttributes])
+        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">Click<x-slot:wrap><x-ui::switch :$size :attributes="$asAttributes($inputAttributes)" /></x-slot:wrap></x-ui::label>
+        @endforeach
     </div>
     @endforeach
     @endforeach
