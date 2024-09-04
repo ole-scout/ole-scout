@@ -48,31 +48,13 @@
             @apply text-neutral-400 dark:text-neutral-500 cursor-default;
         }
         &:where(.label-sm) {
-            @apply space-x-[4px] leading-4;
-            & > .icon {
-                @apply w-4 h-4;
-            }
-            & > span:not(.wrap) {
-                @apply text-xs;
-            }
+            @apply text-xs gap-1.5 leading-4;
         }
         &:where(:not(.label-sm, .label-lg)) {
-            @apply space-x-[5px] leading-5;
-            & > .icon {
-                @apply w-5 h-5;
-            }
-            & > span:not(.wrap) {
-                @apply text-sm;
-            }
+            @apply text-sm gap-2 leading-5;
         }
         &:where(.label-lg) {
-            @apply space-x-[6px] leading-6;
-            & > .icon {
-                @apply w-6 h-6;
-            }
-            & > span:not(.wrap) {
-                @apply text-base;
-            }
+            @apply text-base gap-2.5 leading-6;
         }
     }
 }

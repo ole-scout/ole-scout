@@ -47,7 +47,10 @@
 <div {{ $attributes->class(['field', 'field-sm' => $size === 'sm', 'field-lg' => $size === 'lg']) }}>
     @if($label)<x-ui::label :attributes="$labelAttributes">{{ $label }}</x-ui::label>@endif
     @isset($hintComponent)
-    <x-dynamic-component :component="$hintComponent" :attributes="$hintAttributes">{{ $hint }}</x-dynamic-component>
+    <x-dynamic-component
+        :component="$hintComponent"
+        :attributes="$hintAttributes"
+    >{{ $hint }}</x-dynamic-component>
     @else
     <div {{ $hintAttributes }}>{{ $hint }}</div>
     @endif

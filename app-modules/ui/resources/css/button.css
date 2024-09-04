@@ -1,6 +1,6 @@
 @layer components {
     .btn {
-        @apply inline-flex items-center space-x-1;
+        @apply inline-flex items-center gap-1;
         &:where(:disabled, .disabled) {
             @apply cursor-not-allowed;
         }
@@ -13,21 +13,12 @@
             }
             &:where(.btn-sm) {
                 @apply text-xs;
-                & > .icon {
-                    @apply w-4 h-4;
-                }
             }
             &:where(:not(.btn-sm, .btn-lg)) {
                 @apply text-sm;
-                & > .icon {
-                    @apply w-5 h-5;
-                }
             }
             &:where(.btn-lg) {
                 @apply text-base;
-                & > .icon {
-                    @apply w-6 h-6;
-                }
             }
             &:not(.btn-link) {
                 @apply font-semibold;

@@ -33,22 +33,28 @@
 <span {{ $attributes->only(['class'])->class(
     ['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']
 ) }}>
-@isset($actionComponent)
-<x-dynamic-component :component="$actionComponent" :attributes="$actionAttributes">{{ $action }}</x-dynamic-component>
-@else
-@if($action)<span {{ $actionAttributes }}>{{ $action }}</span>@endif
-@endisset
-@if($attributes->get('type') === 'textarea')
-<textarea {{ $attributes->except(['class', 'value'])->class(['input-area']) }}>{{
-    $attributes->get('value')
-}}</textarea>
-@else
-<input {{ $attributes->except(['class'])->class(['input-area']) }}>
-@endif
-@isset($actionTrailingComponent)
-<x-dynamic-component :component="$actionTrailingComponent" :attributes="$actionTrailingAttributes">{{ $actionTrailing }}</x-dynamic-component>
-@else
-@if($actionTrailing)<span {{ $actionTrailingAttributes }}>{{ $actionTrailing }}</span>@endif
-@endisset
+    @isset($actionComponent)
+    <x-dynamic-component
+        :component="$actionComponent"
+        :attributes="$actionAttributes"
+    >{{ $action }}</x-dynamic-component>
+    @else
+    @if($action)<span {{ $actionAttributes }}>{{ $action }}</span>@endif
+    @endisset
+    @if($attributes->get('type') === 'textarea')
+    <textarea {{ $attributes->except(['class', 'value'])->class(['input-area']) }}>{{
+        $attributes->get('value')
+    }}</textarea>
+    @else
+    <input {{ $attributes->except(['class'])->class(['input-area']) }}>
+    @endif
+    @isset($actionTrailingComponent)
+    <x-dynamic-component
+        :component="$actionTrailingComponent"
+        :attributes="$actionTrailingAttributes"
+    >{{ $actionTrailing }}</x-dynamic-component>
+    @else
+    @if($actionTrailing)<span {{ $actionTrailingAttributes }}>{{ $actionTrailing }}</span>@endif
+    @endisset
 </span>
 @endif

@@ -24,11 +24,11 @@
         <x-ui::input :$size type="text" value="Text field" class="col-span-full" />
         <x-ui::input :$size type="text" value="Text field" disabled class="col-span-full" />
         <x-ui::input :$size type="textarea" value="Text area" class="col-span-full" />
-        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing><x-ui::button :$size variant="link">Search</x-ui::button></x-slot:actionTrailing></x-ui::input>
-        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing><x-ui::button :$size variant="alt" icon="search" hiddenLabel>Search</x-ui::button></x-slot:actionTrailing></x-ui::input>
-        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:action><x-ui::button :$size variant="ghost" icon="search" hiddenLabel>Search</x-ui::button></x-slot:action></x-ui::input>
-        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing><x-ui::button :$size icon="search" hiddenLabel>Search</x-ui::button></x-slot:actionTrailing></x-ui::input>
-        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing><x-ui::button :$size intent="primary" icon="search" hiddenLabel>Search</x-ui::button></x-slot:actionTrailing></x-ui::input>
+        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" variant="link">Search</x-slot:actionTrailing></x-ui::input>
+        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" variant="alt" icon="search" hiddenLabel>Search</x-slot:actionTrailing></x-ui::input>
+        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:action component="ui::button" variant="ghost" icon="search" hiddenLabel>Search</x-slot:action></x-ui::input>
+        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" icon="search" hiddenLabel>Search</x-slot:actionTrailing></x-ui::input>
+        <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" intent="primary" icon="search" hiddenLabel>Search</x-slot:actionTrailing></x-ui::input>
 
         <div class="flex w-full gap-2 col-span-full">
             <x-ui::input :$size type="text" placeholder="Placeholder" class="col-span-4" />
@@ -36,15 +36,32 @@
         </div>
 
         @foreach($toggleAttributeTuples as [$labelAttributes, $inputAttributes])
-        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">Click<x-slot:wrap><x-ui::checkbox wrapped :$size :attributes="$asAttributes($inputAttributes)" /></x-slot:wrap></x-ui::label>
+        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">
+            Click
+            <x-slot:wrap :attributes="$asAttributes($inputAttributes)->merge([
+                'component' => 'ui::checkbox',
+            ])"></x-slot:wrap>
+        </x-ui::label>
         @endforeach
 
         @foreach($toggleAttributeTuples as $j => [$labelAttributes, $inputAttributes])
-        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">Click<x-slot:wrap><x-ui::radio wrapped :$size :name="join('-', [$size, $i, floor($j / 2)])" :value="strval($j % 2)" :attributes="$asAttributes($inputAttributes)" /></x-slot:wrap></x-ui::label>
+        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">
+            Click
+            <x-slot:wrap :attributes="$asAttributes($inputAttributes)->merge([
+                'component' => 'ui::radio',
+                'name' => join('-', [$size, $i, floor($j / 2)]),
+                'value' => strval($j % 2),
+            ])"></x-slot:wrap>
+        </x-ui::label>
         @endforeach
 
         @foreach($toggleAttributeTuples as [$labelAttributes, $inputAttributes])
-        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">Click<x-slot:wrap><x-ui::switch wrapped :$size :attributes="$asAttributes($inputAttributes)" /></x-slot:wrap></x-ui::label>
+        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">
+            Click
+            <x-slot:wrap :attributes="$asAttributes($inputAttributes)->merge([
+                'component' => 'ui::switch',
+            ])"></x-slot:wrap>
+        </x-ui::label>
         @endforeach
     </div>
     @endforeach

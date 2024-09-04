@@ -65,13 +65,13 @@
 <{{ $as }} {{ $attributes }}>
     @foreach($icon as $key => $iconName)
     <x-ui::icon :$size :icon="$iconName" :attributes="$attributes->only([])->merge(
-            is_string($key) ? Arr::get($iconAttributes, $key, []) : []
-        )" />
+        is_string($key) ? Arr::get($iconAttributes, $key, []) : []
+    )" />
     @endforeach
     @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
     @foreach($iconTrailing as $key => $iconName)
     <x-ui::icon :$size :icon="$iconName" :attributes="$attributes->only([])->merge(
-            is_string($key) ? Arr::get($iconAttributes, $key, []) : []
-        )" />
+        is_string($key) ? Arr::get($iconAttributes, $key, []) : []
+    )" />
     @endforeach
 </{{ $as }}>
