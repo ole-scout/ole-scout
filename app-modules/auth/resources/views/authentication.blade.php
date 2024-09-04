@@ -9,6 +9,10 @@
             <x-slot:hint component="ui::button" variant="link">{{ __('Passwort vergessen?') }}</x-slot:hint>
             <x-slot:actionTrailing component="ui::toggle-button" variant="alt" onIcon="eye-off" offIcon="eye" alpineState="$checked" x-on:ui-toggle="$el.closest('.field').querySelector('input').type = $event.detail ? 'text' : 'password'" hiddenLabel>{{ __('Passwort anzeigen') }}</x-slot:actionTrailing>
         </x-ui::field>
+        <x-ui::label class="place-self-start" trailing>
+            {{ __('Remember me') }}
+            <x-slot:wrap component="ui::checkbox" wire:model="loginForm.remember"></x-slot:wrap>
+        </x-ui::label>
         <x-ui::button type="submit" class="place-self-end">Submit</x-ui::button>
     </form>
 </div>
