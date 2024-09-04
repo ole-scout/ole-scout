@@ -8,7 +8,6 @@
     'iconTrailing' => null,
     'iconAttributes' => [],
     'hiddenLabel' => false,
-    'hiddenIcons' => [],
 ])
 @php
     if (!$intent) {

@@ -45,7 +45,7 @@ class AppPanelProvider extends PanelProvider
             ->registration()
             ->topNavigation()
             ->brandLogoHeight('auto')
-            ->viteTheme('resources/css/app.css')
+            ->viteTheme('resources/css/theme.css')
             ->discoverResources(
                 in: app_path('Filament/Resources'),
                 for: 'App\\Filament\\Resources'
@@ -82,7 +82,7 @@ class AppPanelProvider extends PanelProvider
             )
             ->renderHook(
                 PanelsRenderHook::STYLES_AFTER,
-                fn(): string => Blade::render("@vite('resources/css/app.css')"),
+                fn(): string => Blade::render("@vite('resources/css/theme.css')"),
             )
             ->renderHook(
                 PanelsRenderHook::FOOTER,

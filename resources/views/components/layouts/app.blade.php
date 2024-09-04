@@ -15,7 +15,6 @@
 
         <title>{{ config('app.name') }}</title>
 
-        @filamentStyles
         @vite('resources/css/app.css')
         @stack('styles')
         <style>
@@ -23,11 +22,11 @@
                 display: none !important;
             }
             :root {
-                @foreach(Color::hex($branding->primaryColor) as $shade => $value)
-                --primary-{{ $shade }}: {{ $value }};
-                @endforeach
                 @foreach(Color::hex($branding->brandColor) as $shade => $value)
                 --brand-{{ $shade }}: {{ $value }};
+                @endforeach
+                @foreach(Color::hex($branding->primaryColor) as $shade => $value)
+                --primary-{{ $shade }}: {{ $value }};
                 @endforeach
             }
         </style>
@@ -50,7 +49,6 @@
         @unlessconsentgiven
         <x-consent::consent-modal />
         @endconsentgiven
-        @filamentScripts
         @vite('resources/js/app.js')
         @stack('scripts')
     </body>

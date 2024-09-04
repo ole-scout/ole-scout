@@ -1,0 +1,76 @@
+@import "/vendor/filament/filament/resources/css/theme.css";
+
+/* abstract components */
+.x--topbar {
+    @apply bg-brand-500 text-white dark:bg-brand-500;
+    @apply p-2 lg:py-8 lg:px-[calc(50vw/12)];
+}
+
+/* general filament components */
+.fi-logo {
+    @apply object-contain object-left !text-inherit;
+    @apply w-full max-w-36 lg:max-w-72 min-w-24 h-full max-h-12 lg:max-h-20;
+}
+
+/* filament default layout */
+.fi-topbar {
+    @apply x--topbar static z-[initial];
+    @apply lg:pb-8 xl:pb-32;
+    > nav {
+        @apply ring-0 !bg-transparent !items-center;
+        &,
+        div:has(.fi-logo),
+        a:has(.fi-logo) {
+            @apply flex-grow flex-shrink flex justify-stretch;
+            @apply w-full h-full max-h-12 lg:max-h-20;
+        }
+        > ul {
+            @apply flex-shrink-0;
+        }
+    }
+}
+.fi-main {
+    @apply bg-gray-50 dark:bg-gray-950 xl:rounded-xl shadow-sm;
+    @apply ring-1 ring-gray-950/5 dark:ring-white/10 xl:-mt-16;
+    .fi-page > section:first-child {
+        @apply py-0;
+        > .fi-header {
+            @apply bg-brand-300 dark:bg-brand-600/80 xl:rounded-t-lg;
+            @apply md:h-16 p-4 md:pt-5 md:pb-3 -mx-4 md:-mx-8;
+            .fi-header-heading {
+                @apply text-base font-normal px-2 md:px-3 lg:px-4;
+            }
+        }
+    }
+}
+.fi-topbar-open-sidebar-btn {
+    @apply flex-shrink-0;
+}
+.fi-sidebar-nav {
+    @apply py-6;
+}
+.fi-sidebar-header {
+    @apply h-[initial] sm:py-2;
+}
+
+/* filament simple layout */
+.x-fi-simple-topbar {
+    @apply x--topbar flex items-center;
+    @apply flex-grow-0 flex-shrink-0 w-full lg:pb-28;
+    .fi-logo {
+        @apply mx-8;
+    }
+}
+.fi-simple-main-ctn {
+    @apply sm:mt-8 lg:-mt-20 items-start;
+}
+.fi-simple-main {
+    @apply mt-0;
+}
+.fi-simple-header {
+    @apply bg-brand-300 dark:bg-brand-600/80 sm:rounded-t-lg;
+    @apply h-20 -mt-12 -mx-12 justify-center;
+    .fi-logo {
+        @apply !hidden;
+    }
+}

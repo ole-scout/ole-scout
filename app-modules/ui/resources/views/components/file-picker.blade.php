@@ -1,21 +1,27 @@
 @props([
     'disabled' => false,
+    'size' => null,
+    'extra' => [],
 ])
 @php
-    $inputProps = [
-        'accept',
-        'form',
-        'multiple',
-        'name',
-        'required',
-        'tabindex',
+    $buttonProps = [
+        'as',
+        'class',
+        'size',
+        'intent',
+        'variant',
+        'icon',
+        'iconTrailing',
+        'iconAttributes',
+        'hiddenLabel',
+        'hiddenIcons',
     ];
 @endphp
-<x-ui::button as="label" {{ $attributes->filter(
-    fn (string $value, string $key) => !in_array($key, $inputProps)
-)->merge(['disabled' => $disabled])->class(['focus-within:ring']) }}>
-    <input type="file" {{ $attributes->filter(
-        fn (string $value, string $key) => in_array($key, $inputProps)
-    )->merge(['disabled' => $disabled])->class(['sr-only']) }} />
+<x-ui::button {{ $attributes->only($buttonProps)->merge(
+    [...$extra, 'as' => 'label', 'disabled' => $disabled]
+)->class(['focus-within:ring']) }}>
+    <input {{ $attributes->except($buttonProps)->merge(
+        ['disabled' => $disabled, 'type' => 'file']
+    )->class(['sr-only']) }} />
     <span>{{ $slot }}</span>
 </x-ui::button>

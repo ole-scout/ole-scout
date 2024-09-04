@@ -1,17 +1,15 @@
 @props([
-    'input',
+    'id',
     'label' => null,
     'hint' => null,
     'description' => null,
     'error' => null,
-    'id' => null,
     'size' => null,
     'action' => null,
     'actionTrailing' => null,
     'extra' => [],
 ])
 @php
-    $id = $id ?: 'input-' . bin2hex(random_bytes(5));
     $inputAttributes = $attributes->merge([
         'id' => $id,
         'action' => $action,
@@ -54,6 +52,10 @@
     <div {{ $hintAttributes }}>{{ $hint }}</div>
     @endif
     <x-ui::input :attributes="$inputAttributes" />
+    @if($error || $inputAttributes->whereStartsWith('wire:model')->isEmpty())
+    <div {{ $errorAttributes }} blink>{{ $error }}</div>
+    @else
+    <div {{ $errorAttributes }}>@error($inputAttributes->get('name')){{ $message }}@enderror</div>
+    @endif
     <div {{ $descriptionAttributes }}>{{ $description }}</div>
-    <div {{ $errorAttributes }}>{{ $error }}</div>
 </div>
