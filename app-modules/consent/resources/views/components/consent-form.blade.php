@@ -7,7 +7,7 @@
     method="post"
     action="{{ route('consent.store') }}"
     x-data="consent"
-    x-on:submit="submit($event)"
+    x-on:submit.prevent="submit($event)"
     {{ $attributes }}
 >
     @capture($content)
@@ -113,7 +113,6 @@
                 },
                 async submit (evt) {
                     if (!evt) return document.getElementById('consent').requestSubmit();
-                    evt.preventDefault();
                     try {
                         await fetch(evt.target.action, {
                             method: 'POST',

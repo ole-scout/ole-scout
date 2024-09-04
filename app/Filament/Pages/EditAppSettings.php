@@ -169,7 +169,7 @@ class EditAppSettings extends Page
                             ->required(),
                         Forms\ColorPicker::make('primaryColor')
                             ->columnSpan(1)
-                            ->label(__('Interaktionsfarbe'))
+                            ->label(__('Akzentfarbe'))
                             ->required(),
                     ]),
             ]);
