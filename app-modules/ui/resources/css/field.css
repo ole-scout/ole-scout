@@ -1,0 +1,51 @@
+@layer components {
+    .field {
+        @apply relative flex flex-wrap items-end gap-2;
+        > .label {
+            @apply flex-grow flex-shrink-0;
+        }
+        > .hint {
+            @apply flex-shrink-0 text-gray-600 dark:text-gray-500;
+            &:empty {
+                @apply hidden;
+            }
+        }
+        > .description {
+            @apply text-gray-600 dark:text-gray-400;
+            &:empty {
+                @apply hidden;
+            }
+        }
+        > .error {
+            @apply text-danger-700 dark:text-danger-500;
+            &:empty {
+                @apply hidden;
+            }
+        }
+        &:where(.field-sm) {
+            & > .hint,
+            & > .description,
+            & > .error {
+                @apply text-xs;
+            }
+        }
+        &:where(:not(.field-sm, .field-lg)) {
+            & > .hint {
+                @apply text-xs;
+            }
+            & > .description,
+            & > .error {
+                @apply text-sm;
+            }
+        }
+        &:where(.field-lg) {
+            & > .hint {
+                @apply text-sm;
+            }
+            & > .description,
+            & > .error {
+                @apply text-base;
+            }
+        }
+    }
+}

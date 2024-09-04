@@ -8,7 +8,6 @@
             @apply cursor-pointer;
         }
         &:is(.btn-normal, .btn-primary, .btn-danger, .btn-success) {
-            @apply font-semibold;
             &:where(:focus) {
                 @apply ring outline-none;
             }
@@ -27,8 +26,11 @@
             &:where(.btn-lg) {
                 @apply text-base;
                 & > .icon {
-                    @apply w-5 h-5;
+                    @apply w-6 h-6;
                 }
+            }
+            &:not(.btn-link) {
+                @apply font-semibold;
             }
             &:not(.btn-link:not(.input .btn), .btn-overlay) {
                 @apply leading-tight rounded-md;

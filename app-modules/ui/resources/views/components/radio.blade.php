@@ -9,11 +9,5 @@
     ) }}>
     <span {{ $attributes->only(['class'])->merge($proxyAttributes)->class(
         ['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']
-    ) }}>
-        @svg('fluentui-circle-' . match($size) {
-            'sm' => '12',
-            default => '16',
-            'lg' => '16',
-        }, ['class' => 'toggle'])
-    </span>
+    ) }}><span class="toggle"></span></span>
 @if(!$wrapped)</label>@endif

@@ -10,10 +10,6 @@
     <span {{ $attributes->only(['class'])->merge($proxyAttributes)->class(
         ['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']
     ) }}>
-        @svg('fluentui-checkmark-' . match($size) {
-            'sm' => '12',
-            default => '16',
-            'lg' => '16',
-        }, ['class' => 'toggle'])
+        <x-ui::icon :$size icon="checkmark" class="toggle" />
     </span>
 @if(!$wrapped)</label>@endif

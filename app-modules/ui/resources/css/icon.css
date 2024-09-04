@@ -1,0 +1,13 @@
+@layer components {
+    .icon {
+        &:is(.icon-sm) {
+            @apply w-3 h-3;
+        }
+        &:not(.icon-sm, .icon-lg) {
+            @apply w-4 h-4;
+        }
+        &:is(.icon-lg) {
+            @apply w-5 h-5;
+        }
+    }
+}

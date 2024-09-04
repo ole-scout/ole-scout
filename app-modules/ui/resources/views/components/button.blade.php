@@ -6,7 +6,9 @@
     'variant' => null,
     'icon' => null,
     'iconTrailing' => null,
+    'iconAttributes' => [],
     'hiddenLabel' => false,
+    'hiddenIcons' => [],
 ])
 @php
     if (!$intent) {
@@ -16,16 +18,6 @@
     if (!$variant && $attributes->has('href')) {
         $variant = 'link';
     }
-    if ($icon) $icon = 'fluentui-' . $icon . '-' . (match($size) {
-        'sm' => '16',
-        default => '20',
-        'lg' => '24',
-    });
-    if ($iconTrailing) $iconTrailing = 'fluentui-' . $iconTrailing . '-' . (match($size) {
-        'sm' => '16',
-        default => '20',
-        'lg' => '24',
-    });
     $slotClass = $hiddenLabel ? 'sr-only' : '';
     $classes = ['btn', 'btn-sm' => $size === 'sm', 'btn-lg' => $size === 'lg'];
     $classes[] = match ($variant) {
@@ -45,41 +37,42 @@
     }
 
     $linkProps = ['href', 'target', 'rel'];
+    if ($as) {
+        $attributes = $attributes->class(
+            [...$classes, 'disabled' => $disabled]
+        );
+    } else if (!$attributes->has('href')) {
+        $as = 'button';
+        $attributes = $attributes->class($classes)->merge([
+            'disabled' => $disabled,
+            'type' => $attributes->get('type') ?: 'button',
+        ]);
+    } else if (!$disabled) {
+        $as = 'a';
+        $attributes =$attributes->class(
+            [...$classes, 'disabled' => $disabled]
+        );
+    } else {
+        $as = 'span';
+        $attributes = $attributes->filter(
+            fn (string $value, string $key) => !in_array($key, $linkProps)
+        )->class(
+            [...$classes, 'disabled' => $disabled]
+        );
+    }
+    if (!is_array($icon)) $icon = $icon ? [$icon] : [];
+    if (!is_array($iconTrailing)) $iconTrailing = $iconTrailing ? [$iconTrailing] : [];
 @endphp
-@if($as)
-<{{ $as }} {{ $attributes->class(
-    [...$classes, 'disabled' => $disabled]
-) }}>
-    @if($icon) @svg($icon, ['class' => 'icon']) @endif
+<{{ $as }} {{ $attributes }}>
+    @foreach($icon as $key => $iconName)
+    <x-ui::icon :$size :icon="$iconName" :attributes="$attributes->only([])->merge(
+            is_string($key) ? Arr::get($iconAttributes, $key, []) : []
+        )" />
+    @endforeach
     @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
-    @if($iconTrailing) @svg($iconTrailing, ['class' => 'icon']) @endif
+    @foreach($iconTrailing as $key => $iconName)
+    <x-ui::icon :$size :icon="$iconName" :attributes="$attributes->only([])->merge(
+            is_string($key) ? Arr::get($iconAttributes, $key, []) : []
+        )" />
+    @endforeach
 </{{ $as }}>
-@elseif(!$attributes->has('href'))
-<button {{ $attributes->class($classes)->merge([
-        'disabled' => $disabled,
-        'type' => $attributes->get('type') ?: 'button',
-    ]
-) }}>
-    @if($icon) @svg($icon, ['class' => 'icon']) @endif
-    @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
-    @if($iconTrailing) @svg($iconTrailing, ['class' => 'icon']) @endif
-</button>
-@elseif(!$disabled)
-<a {{ $attributes->class(
-    [...$classes, 'disabled' => $disabled]
-) }}>
-    @if($icon) @svg($icon, ['class' => 'icon']) @endif
-    @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
-    @if($iconTrailing) @svg($iconTrailing, ['class' => 'icon']) @endif
-</a>
-@else
-<span {{ $attributes->filter(
-    fn (string $value, string $key) => !in_array($key, $linkProps)
-)->class(
-    [...$classes, 'disabled' => $disabled]
-) }}>
-    @if($icon) @svg($icon, ['class' => 'icon']) @endif
-    @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
-    @if($iconTrailing) @svg($iconTrailing, ['class' => 'icon']) @endif
-</span>
-@endif

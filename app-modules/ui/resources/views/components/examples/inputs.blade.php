@@ -1,5 +1,5 @@
 @php
-    $asAttributes = fn (array $attributes) => new \Illuminate\View\ComponentAttributeBag($attributes);
+    $asAttributes = fn (array $array) => $attributes->only([])->merge($array);
     $toggleAttributeTuples = [
         [[], ['required' => true]],
         [['icon' => 'warning'], []],

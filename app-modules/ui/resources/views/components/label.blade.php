@@ -9,28 +9,26 @@
 ])
 @php
     $as = $fake ? 'span' : 'label';
-    if ($icon) {
-        $icon = 'fluentui-' . $icon . '-' . (match($size) {
-            'sm' => '16',
-            default => '20',
-            'lg' => '24',
-        });
-    }
-    if ($iconTrailing) {
-        $iconTrailing = 'fluentui-' . $iconTrailing . '-' . (match($size) {
-            'sm' => '16',
-            default => '20',
-            'lg' => '24',
-        });
-    }
-    $slotClass = $hiddenLabel ? 'sr-only' : '';
+    $wrapAttributes = (
+        isset($wrap->attributes)
+        ? $wrap->attributes->get('attributes') ?: $wrap->attributes
+        : $attributes->only([])
+    );
 @endphp
 <{{ $as }} {{ $attributes->class(
     ['label', 'label-sm' => $size === 'sm', 'label-lg' => $size === 'lg']
 ) }}>
-@if($trailing)<span class="wrap">{{ $wrap }}</span>@endif
-@if($icon) @svg($icon, ['class' => 'icon']) @endif
-<span class={{ $slotClass }}>{{ $slot }}</span>
-@if($iconTrailing) @svg($iconTrailing, ['class' => 'icon']) @endif
-@if(!$trailing)<span class="wrap">{{ $wrap }}</span>@endif
+    @if($trailing && trim($wrap))
+    <span {{ $wrapAttributes->class(['wrap']) }}>{{ $wrap }}</span>
+    @endif
+    @if($icon)
+    <x-ui::icon :$size :icon="$icon" />
+    @endif
+    <span class={{ $hiddenLabel ? 'sr-only' : '' }}>{{ $slot }}</span>
+    @if($iconTrailing)
+    <x-ui::icon :$size :icon="$iconTrailing" />
+    @endif
+    @if(!$trailing && trim($wrap))
+    <span {{ $wrapAttributes->class(['wrap']) }}>{{ $wrap }}</span>
+    @endif
 </{{ $as }}>

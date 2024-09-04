@@ -38,7 +38,7 @@
         &:where([type="checkbox"]:not([role="switch"]) ~ .input) {
             @apply relative mx-px rounded-[3px];
             & > .toggle {
-                @apply absolute;
+                @apply w-auto h-auto;
             }
             &:where(.input-sm) {
                 @apply w-3 h-3 leading-3;
@@ -59,31 +59,37 @@
                 }
             }
         }
-        &:where([type="radio"] ~ .input) {
+        &:where([type="radio"] ~ .input),
+        &:where([role="switch"] ~ .input) {
             @apply relative rounded-full;
+            & > .toggle {
+                @apply rounded-full bg-current;
+            }
+        }
+        &:where([type="radio"] ~ .input) {
             &:where(.input-sm) {
                 @apply w-3 h-3 leading-3;
                 & > .toggle {
-                    @apply inset-[2px];
+                    @apply inset-[3px];
                 }
             }
             &:where(:not(.input-sm, .input-lg)) {
                 @apply w-4 h-4 leading-4;
                 & > .toggle {
-                    @apply inset-[3px];
+                    @apply inset-[4px];
                 }
             }
             &:where(.input-lg) {
                 @apply w-5 h-5 leading-5;
                 & > .toggle {
-                    @apply inset-[4px];
+                    @apply inset-[5px];
                 }
             }
         }
         &:where([role="switch"] ~ .input) {
-            @apply relative rounded-full flex items-center justify-start;
+            @apply flex items-center justify-start;
             & > .toggle {
-                @apply rounded-full bg-current transform motion-safe:transition-transform duration-200;
+                @apply transform motion-safe:transition-transform duration-200;
             }
             &:not(:disabled ~ .input) {
                 @apply bg-gray-500 dark:bg-gray-950 text-white;
@@ -121,20 +127,24 @@
         }
         &:has(.input-area) {
             @apply flex rounded-md w-full;
-            & > .action {
+            & > .action.btn,
+            & > .action > .btn {
+                @apply flex;
+            }
+            & > .action:not(.btn) {
                 @apply flex items-stretch;
-                & > .btn {
-                    @apply flex;
-                }
-                &:first-child > .btn {
-                    @apply rounded-r-none;
-                }
-                &:last-child > .btn {
-                    @apply rounded-l-none;
-                }
-                &:not(:first-child, :last-child) {
-                    @apply rounded-none;
-                }
+            }
+            & > .action.btn:first-child,
+            & > .action:first-child > .btn {
+                @apply rounded-r-none;
+            }
+            & > .action.btn:last-child,
+            & > .action:last-child > .btn {
+                @apply rounded-l-none;
+            }
+            & > .action.btn:not(:first-child, :last-child),
+            & > .action:not(:first-child, :last-child) > .btn {
+                @apply rounded-none;
             }
             & > .input-area {
                 @apply block w-full bg-transparent border-none text-inherit placeholder-gray-400 dark:placeholder-gray-500;
@@ -160,14 +170,15 @@
             }
             &:not(:has(.input-area:disabled)) {
                 @apply bg-white dark:bg-gray-900 text-gray-600 dark:text-gray-100 shadow-border-gray-800/25 dark:shadow-border-gray-50/35;
+                & > .action.btn,
                 & > .action > .btn {
                     @apply shadow-transparent;
-                }
-                & > .action > .btn:where(.btn-alt, .btn-overlay) {
-                    @apply shadow-border-gray-800/25 dark:shadow-border-gray-50/35;
-                }
-                & > .action > .btn:where(.btn-ghost) {
-                    @apply hover:shadow-transparent hover:shadow-border-gray-800/25 dark:hover:shadow-border-gray-50/35;
+                    &:where(.btn-alt, .btn-overlay) {
+                        @apply shadow-border-gray-800/25 dark:shadow-border-gray-50/35;
+                    }
+                    &:where(.btn-ghost) {
+                        @apply hover:shadow-transparent hover:shadow-border-gray-800/25 dark:hover:shadow-border-gray-50/35;
+                    }
                 }
             }
             &:has(.input-area:invalid:not(:disabled)) {
