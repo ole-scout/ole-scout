@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ee8557a1fd7ef907039d351e6b16af5b",
+    "content-hash": "ae384e0ce428abad262c999b5756cc00",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2290,6 +2290,38 @@
                 "source": "https://github.com/Filefabrik/modular/tree/3.0.4"
             },
             "time": "2024-03-30T05:42:28+00:00"
+        },
+        {
+            "name": "foss-haas/auth",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/auth",
+                "reference": "6bd7db39ee2c965a8e0f4e95f944e6fe77bb3c04"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FossHaas\\Auth\\Providers\\AuthServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FossHaas\\Auth\\": "src/",
+                    "FossHaas\\Auth\\Tests\\": "tests/",
+                    "FossHaas\\Auth\\Database\\Factories\\": "database/factories/",
+                    "FossHaas\\Auth\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "foss-haas/consent",

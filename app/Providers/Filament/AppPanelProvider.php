@@ -41,8 +41,7 @@ class AppPanelProvider extends PanelProvider
                 $panel->brandName($settings->name);
             })
             ->path('')
-            ->login()
-            ->registration()
+            ->login(false)
             ->topNavigation()
             ->brandLogoHeight('auto')
             ->viteTheme('resources/css/theme.css')

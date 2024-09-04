@@ -1,0 +1,24 @@
+{
+	"name": "foss-haas/auth",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"FossHaas\\Auth\\": "src/",
+			"FossHaas\\Auth\\Tests\\": "tests/",
+			"FossHaas\\Auth\\Database\\Factories\\": "database/factories/",
+			"FossHaas\\Auth\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"FossHaas\\Auth\\Providers\\AuthServiceProvider"
+			]
+		}
+	}
+}
