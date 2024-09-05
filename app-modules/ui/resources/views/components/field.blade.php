@@ -56,7 +56,7 @@
     @endif
     <x-ui::input :attributes="$inputAttributes" />
     @if($error || $inputAttributes->whereStartsWith('wire:model')->isEmpty())
-    <div {{ $errorAttributes }} blink>{{ $error }}</div>
+    <div {{ $errorAttributes }}>{{ $error }}</div>
     @else
     <div {{ $errorAttributes }}>@error($inputAttributes->get('name')){{ $message }}@enderror</div>
     @endif
