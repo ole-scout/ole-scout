@@ -42,7 +42,7 @@
         isset($error->attributes)
         ? $error->attributes->get('attributes') ?: $error->attributes
         : $attributes->only([])
-    )->merge(['id' => $id . '-error'])->class(['error']);
+    )->merge(['id' => $id . '-error', 'role' => 'alert'])->class(['error']);
 @endphp
 <div {{ $attributes->class(['field', 'field-sm' => $size === 'sm', 'field-lg' => $size === 'lg']) }}>
     @if($label)<x-ui::label :attributes="$labelAttributes">{{ $label }}</x-ui::label>@endif

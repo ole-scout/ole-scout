@@ -7,7 +7,10 @@
         <x-ui::field :id="$this->id() . '-password'" type="password" name="loginForm.password" wire:model="loginForm.password">
             <x-slot:label>{{ __('Passwort') }}</x-slot:label>
             <x-slot:hint component="ui::button" variant="link">{{ __('Passwort vergessen?') }}</x-slot:hint>
-            <x-slot:actionTrailing component="ui::toggle-button" variant="alt" onIcon="eye-off" offIcon="eye" alpineState="$checked" x-on:ui-toggle="$el.closest('.field').querySelector('input').type = $event.detail ? 'text' : 'password'" hiddenLabel>{{ __('Passwort anzeigen') }}</x-slot:actionTrailing>
+            <x-slot:actionTrailing component="ui::toggle-button" variant="alt" onIcon="eye-off" offIcon="eye" alpineState="$checked" x-on:ui-toggle="$el.closest('.field').querySelector('input').type = $event.detail ? 'text' : 'password'" :onIconTitle="__('Passwort verbergen')" :offIconTitle="__('Passwort anzeigen')" hiddenLabel>
+                <span data-when-checked="show" hidden="hidden">{{ __('Passwort verbergen') }}</span>
+                <span data-when-checked="hide">{{ __('Passwort anzeigen') }}</span>
+            </x-slot:actionTrailing>
         </x-ui::field>
         <x-ui::label class="place-self-start" trailing>
             {{ __('Remember me') }}
