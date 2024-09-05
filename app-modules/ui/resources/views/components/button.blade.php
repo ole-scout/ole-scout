@@ -17,7 +17,15 @@
     if (!$variant && $attributes->has('href')) {
         $variant = 'link';
     }
-    $slotClass = $hiddenLabel ? 'sr-only' : '';
+    $slotAttributes = (
+        isset($slot->attributes)
+        ? $slot->attributes->get('attributes') ?: $slot->attributes
+        : $attributes->only([])
+    )->class(['sr-only' => $hiddenLabel]);
+    if ($slotAttributes->has('component')) {
+        $slotComponent = $slotAttributes->get('component');
+        $slotAttributes = $slotAttributes->except('component')->merge(['size' => $size]);
+    }
     $classes = ['btn', 'btn-sm' => $size === 'sm', 'btn-lg' => $size === 'lg'];
     $classes[] = match ($variant) {
         'alt' => 'btn-alt',
@@ -42,13 +50,22 @@
         );
     } else if (!$attributes->has('href')) {
         $as = 'button';
-        $attributes = $attributes->class($classes)->merge([
+        $attributes = $attributes->merge([
             'disabled' => $disabled,
             'type' => $attributes->get('type') ?: 'button',
-        ]);
+        ])->class($classes);
     } else if (!$disabled) {
         $as = 'a';
-        $attributes =$attributes->class(
+        $href = $attributes->get('href');
+        $attributes = $attributes->except(['href'])->merge(
+            substr($href, 0, 1) === '/' ? [
+                'href' => url($href),
+            ] : [
+                'href' => $href,
+                'target' => '_blank',
+                'rel' => 'noopener noreferrer',
+            ]
+        )->class(
             [...$classes, 'disabled' => $disabled]
         );
     } else {
@@ -68,7 +85,14 @@
         is_string($key) ? Arr::get($iconAttributes, $key, []) : []
     )" />
     @endforeach
-    @if(trim($slot)) <span class="{{ $slotClass }}">{{ $slot }}</span> @endif
+    @if(isset($slotComponent))
+    <x-dynamic-component
+        :component="$slotComponent"
+        :attributes="$slotAttributes"
+    >{{ $slot }}</x-dynamic-component>
+    @else
+    @if(trim($slot))<span {{ $slotAttributes }}>{{ $slot }}</span>@endif
+    @endif
     @foreach($iconTrailing as $key => $iconName)
     <x-ui::icon :$size :icon="$iconName" :attributes="$attributes->only([])->merge(
         is_string($key) ? Arr::get($iconAttributes, $key, []) : []

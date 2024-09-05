@@ -7,18 +7,18 @@
         &:where(:not(:disabled, .disabled)) {
             @apply cursor-pointer;
         }
+        &:where(.btn-sm) {
+            @apply text-xs;
+        }
+        &:where(:not(.btn-sm, .btn-lg)) {
+            @apply text-sm;
+        }
+        &:where(.btn-lg) {
+            @apply text-base;
+        }
         &:is(.btn-normal, .btn-primary, .btn-danger, .btn-success) {
             &:where(:focus) {
                 @apply ring outline-none;
-            }
-            &:where(.btn-sm) {
-                @apply text-xs;
-            }
-            &:where(:not(.btn-sm, .btn-lg)) {
-                @apply text-sm;
-            }
-            &:where(.btn-lg) {
-                @apply text-base;
             }
             &:not(.btn-link) {
                 @apply font-semibold;
