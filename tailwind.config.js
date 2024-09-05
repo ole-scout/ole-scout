@@ -5,6 +5,7 @@ import filament from "./vendor/filament/support/tailwind.config.preset";
  * @type {import('tailwindcss').Config}
  */
 export default {
+    darkMode: "class",
     presets: [filament, ui],
     content: [
         "./app/Filament/**/*.php",

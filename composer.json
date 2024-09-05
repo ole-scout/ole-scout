@@ -16,6 +16,7 @@
         "filefabrik/modular": "^3.0",
         "foss-haas/auth": "*",
         "foss-haas/consent": "*",
+        "foss-haas/core-ui": "*",
         "foss-haas/courses": "*",
         "foss-haas/filament-partials": "*",
         "foss-haas/support": "*",

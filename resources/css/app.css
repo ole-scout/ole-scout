@@ -1,4 +1,5 @@
 @import "/app-modules/ui/resources/css/index.css";
+@import "/app-modules/core-ui/resources/css/index.css";
 
 @tailwind base;
 @tailwind components;
@@ -8,5 +9,14 @@
 @layer base {
     :root.dark {
         color-scheme: dark;
+    }
+}
+
+@layer components {
+    body {
+        @apply flex flex-col min-h-screen antialiased font-normal bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-white;
+    }
+    main {
+        @apply flex-grow flex-shrink-0;
     }
 }

@@ -44,8 +44,9 @@
         </script>
     </head>
 
-    <body class="min-h-screen antialiased font-normal bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-white">
-        {{ $slot }}
+    <body>
+        <main>{{ $slot }}</main>
+        <x-core-ui::footer class="flex-grow-0 flex-shrink-0" />
         @unlessconsentgiven
         <x-consent::consent-modal />
         @endconsentgiven

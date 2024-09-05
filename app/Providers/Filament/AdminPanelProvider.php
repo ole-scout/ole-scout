@@ -2,12 +2,10 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\EditConsent;
 use App\Settings\BrandingSettings;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -25,12 +23,12 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
-class AppPanelProvider extends PanelProvider
+class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->id('app')
+            ->id('admin')
             ->bootUsing(function (Panel $panel) {
                 $settings = app(BrandingSettings::class);
                 \Filament\Support\Facades\FilamentColor::register([
@@ -40,11 +38,11 @@ class AppPanelProvider extends PanelProvider
                 $panel->brandLogo($settings->logo);
                 $panel->brandName($settings->name);
             })
-            ->path('')
+            ->path('admin')
             ->login(false)
             ->topNavigation()
             ->brandLogoHeight('auto')
-            ->viteTheme('resources/css/theme.css')
+            ->viteTheme('resources/css/filament.css')
             ->discoverResources(
                 in: app_path('Filament/Resources'),
                 for: 'App\\Filament\\Resources'
@@ -63,12 +61,6 @@ class AppPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
             ])
-            ->userMenuItems([
-                MenuItem::make()
-                    ->label(__('Datenschutz-Einstellungen'))
-                    ->url(fn(): string => EditConsent::getUrl())
-                    ->icon(fn(): string => EditConsent::getNavigationIcon()),
-            ])
             ->renderHook(
                 PanelsRenderHook::SCRIPTS_AFTER,
                 fn(): string => Blade::render(
@@ -76,16 +68,12 @@ class AppPanelProvider extends PanelProvider
                 ),
             )
             ->renderHook(
-                PanelsRenderHook::SCRIPTS_AFTER,
-                fn(): string => Blade::render("@vite('resources/js/app.js')"),
-            )
-            ->renderHook(
                 PanelsRenderHook::STYLES_AFTER,
-                fn(): string => Blade::render("@vite('resources/css/theme.css')"),
+                fn(): string => Blade::render("@vite('resources/css/filament.css')"),
             )
             ->renderHook(
                 PanelsRenderHook::FOOTER,
-                fn(): string => Blade::render("<x-core.footer />"),
+                fn(): string => Blade::render("<x-core-ui::footer />"),
             )
             ->middleware([
                 ConsensualCookies::class,

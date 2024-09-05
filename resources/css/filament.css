@@ -1,4 +1,6 @@
 @import "/vendor/filament/filament/resources/css/theme.css";
+@import "/app-modules/ui/resources/css/index.css";
+@import "/app-modules/core-ui/resources/css/index.css";
 
 /* abstract components */
 .x--topbar {
