@@ -3,3 +3,9 @@
 @import "./icon.css";
 @import "./input.css";
 @import "./label.css";
+
+@layer base {
+    [hidden] {
+        @apply !hidden;
+    }
+}
