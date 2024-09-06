@@ -1,4 +1,5 @@
 import defaultColors from "tailwindcss/colors";
+import { theme as defaultTheme } from "tailwindcss/defaultConfig";
 import { formatColor, parseColor } from "tailwindcss/lib/util/color";
 import flattenColors from "tailwindcss/lib/util/flattenColorPalette";
 import plugin from "tailwindcss/plugin";
@@ -6,6 +7,9 @@ import plugin from "tailwindcss/plugin";
 export default {
     theme: {
         extend: {
+            fontFamily: {
+                sans: ["'Inter'", ...defaultTheme.fontFamily.sans],
+            },
             colors: {
                 brand: {
                     50: "rgba(var(--brand-50), <alpha-value>)",
