@@ -15,6 +15,7 @@
         'name' => $name,
         'type' => $type,
     ])->class(['sr-only']);
+    if ($vertical) $options = array_reverse($options);
 @endphp
 @if(count($options) > 0)
 <div {{ $attributes->class(

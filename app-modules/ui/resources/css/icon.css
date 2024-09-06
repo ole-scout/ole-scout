@@ -2,13 +2,13 @@
     .icon {
         @apply inline-block;
         &:is(.icon-sm) {
-            @apply w-4 h-4;
+            @apply size-4;
         }
         &:not(.icon-sm, .icon-lg) {
-            @apply w-5 h-5;
+            @apply size-5;
         }
         &:is(.icon-lg) {
-            @apply w-6 h-6;
+            @apply size-6;
         }
     }
 }

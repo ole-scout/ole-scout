@@ -32,7 +32,6 @@ class Authentication extends Component
 
     public function render(): View
     {
-        return view('auth::authentication')
-            ->title('Login');
+        return view('auth::authentication');
     }
 }

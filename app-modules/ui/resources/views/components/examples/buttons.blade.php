@@ -1,11 +1,11 @@
- <div class="space-y-4">
+ <div class="my-8 space-y-8">
+    @foreach(['card', 'card-2', 'card-3'] as $i => $card)
     @foreach(['sm', 'md', 'lg'] as $size)
-    @foreach(['bg-gray-100 dark:bg-gray-900', 'bg-gray-50 dark:bg-gray-950', 'bg-white dark:bg-black'] as $i => $bg)
     <div class="grid {{ match($size) {
         'sm' => 'max-w-xl',
         'md' => 'max-w-2xl',
-        'lg' => 'max-w-3xl',
-    } }} grid-cols-5 gap-4 p-8 mx-auto rounded-lg shadow place-items-center {{ $bg }}">
+        'lg' => 'max-w-4xl',
+    } }} grid-cols-5 gap-4 mx-auto place-items-center {{ $card }}">
         @foreach([null, 'alt', 'ghost', 'link', 'overlay'] as $variant)
         @php
             $hiddenLabel = $variant === 'overlay';

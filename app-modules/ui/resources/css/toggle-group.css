@@ -32,32 +32,32 @@
             }
         }
         &:not(.vertical) {
-            &:where(:not(.subtle)) .btn {
-                &:not(:first-child) {
+            &:where(:not(.subtle)) {
+                .btn:not(:first-child) {
                     @apply rounded-l-none border-l-0;
                 }
-                &:not(:last-child) {
+                .btn:not(:last-child) {
                     @apply rounded-r-none border-r-0;
                 }
             }
-            &:where(.subtle) .btn {
-                & + .btn {
+            &:where(.subtle) {
+                .btn + .btn {
                     @apply -ml-0.5;
                 }
             }
         }
         &.vertical {
             @apply flex-col;
-            &:where(:not(.subtle)) .btn {
-                &:not(:first-child) {
+            &:where(:not(.subtle)) {
+                .btn:not(:first-child) {
                     @apply rounded-t-none border-t-0;
                 }
-                &:not(:last-child) {
+                .btn:not(:last-child) {
                     @apply rounded-b-none border-b-0;
                 }
             }
-            &:where(.subtle) .btn {
-                & + .btn {
+            &:where(.subtle) {
+                .btn + .btn {
                     @apply -mt-0.5;
                 }
             }

@@ -1,11 +1,13 @@
+<x-slot:title>{{ __('Login mit Scout-Konto') }}</x-slot:title>
+<x-slot:size>sm</x-slot:size>
 <div>
-    <form wire:submit="login" class="flex flex-col max-w-xl gap-4 p-8 mx-auto bg-gray-100 rounded-lg shadow mt-80 dark:bg-gray-900">
+    <form wire:submit="login" class="flex flex-col gap-4">
         <x-ui::field
             :id="$this->id() . '-email'"
             type="text"
             name="loginForm.email"
             wire:model.live.debounce.200ms="loginForm.email">
-            <x-slot:label>{{ __('E-Mail') }}</x-slot:label>
+            <x-slot:label>{{ __('Benutzername oder E-Mail-Adresse') }}</x-slot:label>
             <x-slot:hint>{{ __('*Pflichtfeld') }}</x-slot:hint>
         </x-ui::field>
         <x-ui::field 
@@ -35,13 +37,14 @@
             </x-slot:actionTrailing>
         </x-ui::field>
         <x-ui::label class="place-self-start" trailing>
-            {{ __('Remember me') }}
+            {{ __('Auf diesem Gerät merken') }}
             <x-slot:wrap
                 component="ui::checkbox"
                 wire:model="loginForm.remember"></x-slot:wrap>
         </x-ui::label>
         <x-ui::button
+            size="lg"
             type="submit"
-            class="place-self-end">Submit</x-ui::button>
+            class="place-self-end">Einloggen</x-ui::button>
     </form>
 </div>

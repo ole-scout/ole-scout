@@ -2,7 +2,7 @@
     .field {
         @apply relative flex flex-wrap items-end gap-2;
         > .label {
-            @apply flex-grow flex-shrink-0;
+            @apply flex-grow flex-shrink;
         }
         > .hint {
             @apply flex-shrink-0 text-gray-600 dark:text-gray-500;

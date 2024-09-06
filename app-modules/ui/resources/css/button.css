@@ -1,27 +1,38 @@
 @layer components {
     .btn {
-        @apply inline-flex items-center gap-1;
+        @apply inline-flex items-center;
 
         &.btn-sm {
             @apply text-xs;
         }
-        &:not(.btn-sm, .btn-lg) {
+        &:not(.btn-sm) {
             @apply text-sm;
         }
-        &.btn-lg {
-            @apply text-base;
-        }
 
-        &:where(.btn-alt, .btn-button, .btn-ghost, .btn-link:is(.input .btn)) {
-            @apply leading-tight rounded-md;
+        &:where(.btn-alt, .btn-button, .btn-ghost, .btn-link) {
             &.btn-sm {
-                @apply px-2 py-1;
+                @apply gap-1;
             }
             &:not(.btn-sm, .btn-lg) {
-                @apply px-3 py-2;
+                @apply gap-1.5;
             }
             &.btn-lg {
-                @apply px-3 py-2;
+                @apply gap-2;
+            }
+        }
+        &:where(.btn-alt, .btn-button, .btn-ghost, .btn-link:is(.input .btn)) {
+            @apply rounded-md;
+            &.btn-sm {
+                @apply px-2 py-1 leading-4;
+            }
+            &:not(.btn-sm) {
+                @apply py-2;
+            }
+            &:not(.btn-sm, .btn-lg) {
+                @apply px-3 leading-5;
+            }
+            &.btn-lg {
+                @apply px-8 leading-6;
             }
         }
 

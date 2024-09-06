@@ -1,0 +1,11 @@
+@layer components {
+    .divider {
+        @apply border-gray-300 dark:border-gray-700;
+        &.horizontal {
+            @apply border-l mx-4;
+        }
+        &:not(.horizontal) {
+            @apply border-t my-4;
+        }
+    }
+}

@@ -14,9 +14,34 @@
 
 @layer components {
     body {
-        @apply flex flex-col min-h-screen antialiased font-normal bg-gray-50 text-gray-950 dark:bg-gray-950 dark:text-white;
-    }
-    main {
-        @apply flex-grow flex-shrink-0;
+        @apply flex flex-col items-center min-h-screen antialiased font-normal bg-gray-200 dark:bg-black text-gray-950 dark:text-white;
+        > header {
+            @apply self-stretch bg-brand-500 text-white px-2 py-4 md:pb-24 md:px-16;
+            img {
+                @apply block h-16 object-contain object-left;
+            }
+        }
+        > main {
+            @apply flex-grow flex-shrink-0 w-full mx-auto;
+            &:is(.page-sm > main) {
+                @apply md:max-w-xl;
+            }
+            &:is(.page-md > main) {
+                @apply md:max-w-3xl;
+            }
+            &:not(.page-sm > main, .page-md > main) {
+                @apply md:px-16;
+            }
+            &:is(header + main:has(> .card > .title)) {
+                @apply md:pt-0 md:-mt-16;
+            }
+            > .card,
+            > .card > .title {
+                @apply rounded-t-none md:rounded-t-lg;
+            }
+        }
+        > footer {
+            @apply flex-grow-0 flex-shrink-0;
+        }
     }
 }
