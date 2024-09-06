@@ -28,11 +28,12 @@
     }
     $classes = ['btn', 'btn-sm' => $size === 'sm', 'btn-lg' => $size === 'lg'];
     $classes[] = match ($variant) {
+        'neutral' => null,
         'alt' => 'btn-alt',
         'ghost' => 'btn-ghost',
         'overlay' => 'btn-overlay',
         'link' => 'btn-link',
-        default => null,
+        default => 'btn-button',
     };
     if ($variant !== 'neutral') {
         $classes[] = match($intent) {

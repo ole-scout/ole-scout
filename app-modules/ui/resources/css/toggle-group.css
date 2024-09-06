@@ -1,0 +1,108 @@
+@layer components {
+    .toggle-group {
+        @apply inline-flex items-center border border-transparent transition-colors duration-200 ease-in-out;
+        .btn {
+            @apply bg-transparent dark:bg-transparent border-none transition-colors duration-200 ease-in-out text-gray-600 dark:text-gray-200;
+        }
+        &:where(:not(.subtle)),
+        &:where(:not(.subtle)) .btn {
+            @apply rounded-md;
+        }
+        &:where(:not(.subtle)) .btn {
+            &.btn-sm {
+                @apply px-2 py-1;
+            }
+            &:not(.btn-sm, .btn-lg) {
+                @apply px-3 py-2;
+            }
+            &.btn-lg {
+                @apply px-3 py-2;
+            }
+        }
+        &:where(.subtle) .btn {
+            @apply rounded-full;
+            &.btn-sm {
+                @apply p-1;
+            }
+            &:not(.btn-sm, .btn-lg) {
+                @apply p-1.5;
+            }
+            &.btn-lg {
+                @apply p-2;
+            }
+        }
+        &:not(.vertical) {
+            &:where(:not(.subtle)) .btn {
+                &:not(:first-child) {
+                    @apply rounded-l-none border-l-0;
+                }
+                &:not(:last-child) {
+                    @apply rounded-r-none border-r-0;
+                }
+            }
+            &:where(.subtle) .btn {
+                & + .btn {
+                    @apply -ml-0.5;
+                }
+            }
+        }
+        &.vertical {
+            @apply flex-col;
+            &:where(:not(.subtle)) .btn {
+                &:not(:first-child) {
+                    @apply rounded-t-none border-t-0;
+                }
+                &:not(:last-child) {
+                    @apply rounded-b-none border-b-0;
+                }
+            }
+            &:where(.subtle) .btn {
+                & + .btn {
+                    @apply -mt-0.5;
+                }
+            }
+        }
+        &:not(:has(input:not(:disabled))) {
+            &:not(.subtle) {
+                @apply bg-neutral-400/50 dark:bg-neutral-500/50;
+            }
+            .btn {
+                @apply text-neutral-400 dark:text-neutral-500;
+                &:has(:checked) {
+                    @apply text-neutral-500 dark:text-neutral-400;
+                }
+            }
+        }
+        &:has(input:not(:disabled)) {
+            &:where(:not(.subtle)) {
+                @apply bg-gray-50 dark:bg-gray-800 border-gray-800/25 dark:border-gray-50/35 shadow-inner;
+                .btn:has(input:disabled) {
+                    @apply bg-neutral-400/50 dark:bg-neutral-500/50;
+                }
+                .btn:not(:has(input:disabled)):has(:checked) {
+                    @apply bg-gray-100 dark:bg-gray-900 shadow-inner;
+                }
+                .btn:not(:has(input:disabled), :has(:checked)):hover {
+                    @apply text-gray-700 dark:text-gray-100;
+                }
+                .btn:not(:has(input:disabled)):hover {
+                    @apply bg-gray-200 dark:bg-gray-950;
+                }
+                &:has(:hover) .btn:not(:has(:disabled), :hover, :has(:focus)) {
+                    @apply bg-transparent shadow-none;
+                }
+            }
+            &:where(.subtle) {
+                .btn:not(:has(input:disabled)):hover {
+                    @apply text-primary-700 dark:text-primary-300;
+                }
+            }
+            .btn:not(:has(input:disabled)):has(:checked) {
+                @apply text-primary-600 dark:text-primary-400;
+            }
+            .btn:has(input:disabled) {
+                @apply text-neutral-50 dark:text-neutral-400;
+            }
+        }
+    }
+}

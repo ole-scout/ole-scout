@@ -17,6 +17,7 @@
 
         @vite('resources/css/app.css')
         @stack('styles')
+        @livewireStyles
         <style>
             [x-cloak] {
                 display: none !important;
@@ -31,20 +32,22 @@
             }
         </style>
         <script>
+            'use strict';
             const theme = localStorage.getItem('theme') ?? 'system';
-
-            if (
-                theme === 'dark' ||
-                (theme === 'system' &&
-                    window.matchMedia('(prefers-color-scheme: dark)')
-                        .matches)
-            ) {
+            if (theme === 'dark' || (
+                theme === 'system' &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches
+            )) {
                 document.documentElement.classList.add('dark');
             }
         </script>
     </head>
 
     <body>
+        <x-core-ui::theme-picker
+            x-data vertical subtle
+            class="sm:fixed bottom-[50vh] left-2"
+        />
         <main>{{ $slot }}</main>
         <x-core-ui::footer class="flex-grow-0 flex-shrink-0" />
         @unlessconsentgiven
@@ -52,5 +55,6 @@
         @endconsentgiven
         @vite('resources/js/app.js')
         @stack('scripts')
+        @livewireScriptConfig
     </body>
 </html>

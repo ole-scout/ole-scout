@@ -1,120 +1,170 @@
 @layer components {
     .btn {
         @apply inline-flex items-center gap-1;
-        &:where(:disabled, .disabled) {
-            @apply cursor-not-allowed;
-        }
-        &:where(:not(:disabled, .disabled)) {
-            @apply cursor-pointer;
-        }
-        &:where(.btn-sm) {
+
+        &.btn-sm {
             @apply text-xs;
         }
-        &:where(:not(.btn-sm, .btn-lg)) {
+        &:not(.btn-sm, .btn-lg) {
             @apply text-sm;
         }
-        &:where(.btn-lg) {
+        &.btn-lg {
             @apply text-base;
         }
-        &:is(.btn-normal, .btn-primary, .btn-danger, .btn-success) {
-            &:where(:focus) {
-                @apply ring outline-none;
+
+        &:where(.btn-alt, .btn-button, .btn-ghost, .btn-link:is(.input .btn)) {
+            @apply leading-tight rounded-md;
+            &.btn-sm {
+                @apply px-2 py-1;
             }
-            &:not(.btn-link) {
-                @apply font-semibold;
+            &:not(.btn-sm, .btn-lg) {
+                @apply px-3 py-2;
             }
-            &:not(.btn-link:not(.input .btn), .btn-overlay) {
-                @apply leading-tight rounded-md;
-                &:where(.btn-sm) {
-                    @apply px-2 py-1;
+            &.btn-lg {
+                @apply px-3 py-2;
+            }
+        }
+
+        &:where(
+                .btn-alt,
+                .btn-button,
+                .btn-ghost,
+                .btn-overlay,
+                .toggle-group .btn
+            ) {
+            @apply font-semibold;
+        }
+
+        &:where(.btn-overlay) {
+            @apply p-1 rounded-md;
+        }
+
+        &:where(
+                .btn-button,
+                .btn-alt,
+                .btn-ghost,
+                .btn-overlay,
+                .btn-link
+            ):focus,
+        &:where(.toggle-group .btn):has(:focus) {
+            @apply ring outline-none;
+        }
+
+        &:disabled,
+        &.disabled,
+        &:has(:disabled) {
+            &:where(:not(.toggle-group .btn)) {
+                @apply cursor-not-allowed;
+            }
+
+            &:where(.btn-alt, .btn-button) {
+                @apply bg-neutral-100 dark:bg-neutral-900;
+            }
+
+            &:where(.btn-ghost, .btn-link) {
+                @apply bg-transparent;
+            }
+
+            &:where(.btn-overlay) {
+                @apply bg-neutral-50/70 dark:bg-neutral-950/70;
+            }
+
+            &:where(
+                    .btn-alt,
+                    .btn-button,
+                    .btn-ghost,
+                    .btn-link,
+                    .btn-overlay
+                ) {
+                @apply text-neutral-400 dark:text-neutral-500;
+            }
+        }
+
+        &:not(:disabled, .disabled, :has(:disabled)) {
+            @apply cursor-pointer;
+            &:where(
+                    .btn-alt,
+                    .btn-button,
+                    .btn-ghost:hover,
+                    .btn-overlay
+                ):where(:not(.input .btn)) {
+                @apply shadow;
+            }
+            &:where(.btn-button) {
+                @apply text-white;
+                &:where(.btn-normal) {
+                    @apply dark:text-gray-950 bg-gray-600 dark:bg-white shadow-sheen-gray dark:shadow-sheen-none;
+                    &:hover {
+                        @apply bg-gray-800 dark:bg-gray-200;
+                    }
                 }
-                &:where(:not(.btn-sm, .btn-lg)) {
-                    @apply px-3 py-2;
+                &:where(.btn-primary) {
+                    @apply bg-primary-600 shadow-sheen-primary dark:shadow-sheen-none;
+                    &:hover {
+                        @apply bg-primary-800;
+                    }
                 }
-                &:where(.btn-lg) {
-                    @apply px-3 py-2;
+                &:where(.btn-danger) {
+                    @apply bg-danger-600 shadow-sheen-danger dark:shadow-sheen-none;
+                    &:hover {
+                        @apply bg-danger-800;
+                    }
                 }
+                &:where(.btn-success) {
+                    @apply bg-success-600 shadow-sheen-success dark:shadow-sheen-none;
+                    &:hover {
+                        @apply bg-success-800;
+                    }
+                }
+            }
+            &:where(.btn-alt, .btn-ghost, .btn-overlay, .btn-link) {
+                &:where(.btn-normal) {
+                    @apply text-gray-600 dark:text-gray-200;
+                }
+                &:where(.btn-primary) {
+                    @apply text-primary-600 dark:text-primary-500;
+                }
+                &:where(.btn-danger) {
+                    @apply text-danger-600 dark:text-danger-500;
+                }
+                &:where(.btn-success) {
+                    @apply text-success-600 dark:text-success-500;
+                }
+            }
+            &:where(.btn-alt, .btn-ghost, .btn-overlay):hover {
+                &:where(.btn-normal) {
+                    @apply dark:text-gray-100;
+                }
+                &:where(.btn-primary) {
+                    @apply dark:text-primary-400;
+                }
+                &:where(.btn-danger) {
+                    @apply dark:text-danger-400;
+                }
+                &:where(.btn-success) {
+                    @apply dark:text-success-400;
+                }
+            }
+            &:where(.btn-alt) {
+                @apply bg-white dark:bg-gray-900;
+            }
+            &:where(.btn-alt, .btn-ghost):hover {
+                @apply bg-gray-50 dark:bg-gray-800;
+            }
+            &:where(.btn-alt, .btn-overlay) {
+                @apply shadow shadow-border-gray-900/15 dark:shadow-border-gray-50/15;
+            }
+            &:where(.btn-alt, .btn-ghost, .btn-overlay):hover {
+                @apply shadow shadow-border-gray-900/25 dark:shadow-border-gray-50/25;
             }
             &:where(.btn-overlay) {
-                @apply p-1 leading-none rounded;
-            }
-            &:where(:disabled, .disabled) {
-                @apply text-neutral-400 dark:text-neutral-500;
-                &:not(.btn-link, .btn-ghost, .btn-overlay) {
-                    @apply bg-neutral-100 dark:bg-neutral-900;
-                }
-                &:is(.btn-link, .btn-ghost) {
-                    @apply bg-transparent;
-                }
-                &:is(.btn-overlay) {
-                    @apply bg-neutral-50/70 dark:bg-neutral-950/70;
+                @apply bg-gray-50/90 dark:bg-gray-800/90;
+                &:hover {
+                    @apply bg-white/70 dark:bg-gray-950/70;
                 }
             }
-            &:where(:not(:disabled, .disabled)) {
-                &:not(.btn-alt, .btn-ghost, .btn-overlay, .btn-link) {
-                    @apply text-white;
-                    &:where(:not(.input .btn)) {
-                        @apply shadow;
-                    }
-                    &:where(.btn-normal) {
-                        @apply dark:text-gray-950 bg-gray-600 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 shadow-sheen-gray dark:shadow-sheen-none;
-                    }
-                    &:where(.btn-primary) {
-                        @apply bg-primary-600 hover:bg-primary-800 shadow-sheen-primary dark:shadow-sheen-none;
-                    }
-                    &:where(.btn-danger) {
-                        @apply bg-danger-600 hover:bg-danger-800 shadow-sheen-danger dark:shadow-sheen-none;
-                    }
-                    &:where(.btn-success) {
-                        @apply bg-success-600 hover:bg-success-800 shadow-sheen-success dark:shadow-sheen-none;
-                    }
-                }
-                &:is(.btn-alt, .btn-ghost, .btn-overlay, .btn-link) {
-                    &:where(.btn-normal) {
-                        @apply text-gray-600 dark:text-gray-200;
-                    }
-                    &:where(.btn-primary) {
-                        @apply text-primary-600 dark:text-primary-500;
-                    }
-                    &:where(.btn-danger) {
-                        @apply text-danger-600 dark:text-danger-500;
-                    }
-                    &:where(.btn-success) {
-                        @apply text-success-600 dark:text-success-500;
-                    }
-                }
-                &:is(.btn-alt, .btn-ghost, .btn-overlay) {
-                    &:where(.btn-normal) {
-                        @apply dark:hover:text-gray-100;
-                    }
-                    &:where(.btn-primary) {
-                        @apply dark:hover:text-primary-400;
-                    }
-                    &:where(.btn-danger) {
-                        @apply dark:hover:text-danger-400;
-                    }
-                    &:where(.btn-success) {
-                        @apply dark:hover:text-success-400;
-                    }
-                }
-                &:is(.btn-alt, .btn-ghost) {
-                    @apply hover:bg-gray-50 dark:hover:bg-gray-800;
-                }
-                &:is(.btn-alt, .btn-overlay) {
-                    @apply shadow shadow-border-gray-900/15 hover:shadow-border-gray-900/25 dark:shadow-border-gray-50/15 dark:hover:shadow-border-gray-50/25;
-                }
-                &:is(.btn-alt) {
-                    @apply bg-white dark:bg-gray-900;
-                }
-                &:is(.btn-ghost) {
-                    @apply hover:shadow hover:shadow-border-gray-900/25 dark:hover:shadow-border-gray-50/25;
-                }
-                &:is(.btn-overlay) {
-                    @apply bg-white/70 dark:bg-gray-950/70 hover:bg-gray-50/90 dark:hover:bg-gray-800/90;
-                }
-                &:is(.btn-link) {
-                    @apply bg-transparent hover:underline;
-                }
+            &:where(.btn-link) {
+                @apply bg-transparent hover:underline;
             }
         }
     }

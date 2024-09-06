@@ -3,6 +3,7 @@
 @import "./icon.css";
 @import "./input.css";
 @import "./label.css";
+@import "./toggle-group.css";
 
 @layer base {
     [hidden] {

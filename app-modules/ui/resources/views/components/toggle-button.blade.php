@@ -11,7 +11,6 @@
 @php
     $icon = ($onIcon && $offIcon) ? ['on' => $onIcon, 'off' => $offIcon] : null;
     $iconTrailing = ($onIconTrailing && $offIconTrailing) ? ['on' => $onIconTrailing, 'off' => $offIconTrailing] : null;
-    $onClick = $attributes->get('x-on:click');
     $attributes = $attributes->merge([
         'role' => 'switch',
         'aria-checked' => $checked ? 'true' : 'false',
@@ -31,7 +30,7 @@
         ],
     ];
 @endphp
-<x-ui::button x-ui-toggle-button
+<x-ui::button x-ui-toggle-button="data-when-checked"
     :$icon :$iconTrailing :$iconAttributes
     :$attributes
 >{{ $slot }}</x-ui::button>
