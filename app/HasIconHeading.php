@@ -17,7 +17,7 @@ trait HasIconHeading
         $icon = static::getNavigationIcon();
         $title = $this->getTitle();
         return new HtmlString(
-            view('icon-heading', [
+            view('components.filament.icon-heading', [
                 'icon' => $icon,
                 'title' => $title,
             ])
