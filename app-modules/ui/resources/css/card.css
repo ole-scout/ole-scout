@@ -8,9 +8,22 @@
             @apply p-8;
         }
         & > .title {
-            @apply justify-center px-8 py-4 leading-8 bg-brand-500/40 dark:bg-brand-500/50 rounded-t-lg;
-            & + .body {
-                @apply pt-4;
+            @apply px-8 pt-6 pb-2 leading-8 bg-brand-500/40 dark:bg-brand-500/50 rounded-t-lg;
+            @apply flex items-center gap-4;
+            > .title-wrap {
+                @apply flex-grow;
+            }
+            > .icon-wrap {
+                @apply shadow bg-brand-500 text-white ring-1 ring-white dark:ring-white/25 p-2 -mt-2 mr-1 -mb-6 rounded-md;
+                > .icon {
+                    @apply size-10;
+                }
+                &:has(> .icon.circle) {
+                    @apply rounded-full p-3 -ml-1.5 -mt-3.5 -mb-6 -mr-0.5;
+                    > .icon {
+                        @apply size-11;
+                    }
+                }
             }
         }
     }

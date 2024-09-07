@@ -1,9 +1,19 @@
 @props([
+    'icon' => null,
     'size' => 'lg',
+    'title' => null,
 ])
 @use('Filament\Support\Colors\Color')
 @php
     $branding = app(\App\Settings\BrandingSettings::class);
+    $iconAttributes = (
+        isset($icon->attributes)
+        ? $icon->attributes->get('attributes') ?: $icon->attributes
+        : $attributes->only([])
+    );
+    $icon = $icon ? strval($icon) : $icon;
+    $size = $size ? strval($size) : $size;
+    $title = $title ? strval($title) : $title;
 @endphp
 <!DOCTYPE html>
 <html
@@ -64,12 +74,12 @@
                 class="absolute top-0 lg:top-4 sm:fixed right-4"
             />
             <x-ui::card>
-                @isset($title)
+                @if($title)
                 <x-slot:title>{{ $title }}</x-slot:title>
-                @endisset
-                @isset($icon)
-                <x-slot:icon>{{ $icon }}</x-slot:icon>
-                @endisset
+                @endif
+                @if($icon)
+                <x-slot:icon :attributes="$iconAttributes">{{ $icon }}</x-slot:icon>
+                @endif
                 {{ $slot }}
             </x-ui::card>
         </main>

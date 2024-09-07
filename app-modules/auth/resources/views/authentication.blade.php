@@ -1,4 +1,5 @@
 <x-slot:title>{{ __('Login mit Scout-Konto') }}</x-slot:title>
+<x-slot:icon>/icon-ole-scout</x-slot:icon>
 <x-slot:size>sm</x-slot:size>
 <div>
     <form wire:submit="login" class="flex flex-col gap-4">
