@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('course_groups', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(CourseGroup::class, 'parent_id')->nullable()->index();
+            $table->foreignIdFor(CourseGroup::class, 'parent_id')->nullable()->index()->constrained()->nullOnDelete();
             $table->string('slug')->unique()->index();
             $table->integer('order_column');
             $table->softDeletes();

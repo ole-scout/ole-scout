@@ -2,10 +2,10 @@
 
 namespace FossHaas\Courses\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CourseGroup extends Model
@@ -25,5 +25,15 @@ class CourseGroup extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(CourseGroup::class);
+    }
+
+    public function visibleCourseGroups(): HasMany
+    {
+        return $this->hasMany(VisibleCourseGroup::class);
+    }
+
+    public function enrollments(): BelongsToMany
+    {
+        return $this->belongsToMany(Enrollment::class, VisibleCourseGroup::class);
     }
 }
