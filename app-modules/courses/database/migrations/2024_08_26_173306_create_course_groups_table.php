@@ -16,7 +16,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignIdFor(CourseGroup::class, 'parent_id')->nullable()->index();
             $table->string('slug')->unique()->index();
-            $table->double('sort_weight')->default(1.0)->index();
+            $table->integer('order_column');
             $table->softDeletes();
             $table->timestamps();
         });

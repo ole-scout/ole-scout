@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Course::class)->index()->constrained()->cascadeOnDelete();
             $table->foreignIdFor(ActivityGroup::class, 'parent_id')->nullable()->index()->constrained()->nullOnDelete();
             $table->string('label');
-            $table->double('sort_weight')->default(1.0)->index();
+            $table->integer('order_column');
             $table->softDeletes();
             $table->timestamps();
         });

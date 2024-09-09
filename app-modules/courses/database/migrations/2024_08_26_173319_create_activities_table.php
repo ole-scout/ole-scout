@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Course::class)->index();
             $table->foreignIdFor(ActivityGroup::class)->nullable();
             $table->morphs('activity');
-            $table->double('sort_weight')->default(1.0)->index();
+            $table->integer('order_column');
             $table->boolean('is_disabled')->default(false)->index();
             $table->boolean('is_required')->default(false)->index();
             $table->softDeletes();
