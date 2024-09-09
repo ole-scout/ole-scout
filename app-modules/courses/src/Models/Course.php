@@ -3,6 +3,7 @@
 namespace FossHaas\Courses\Models;
 
 use App\Models\User;
+use FossHaas\Courses\Actions\CreateVisibleCourseGroups;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,6 +13,18 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Course extends Model
 {
     use HasFactory;
+
+    protected static function booted()
+    {
+        static::updated(function (Course $course) {
+            if ($course->wasChanged('parent_id')) {
+                app(CreateVisibleCourseGroups::class)->handle(
+                    $course->enrollments()->get(),
+                    prune: true
+                );
+            }
+        });
+    }
 
     public function activities(): HasMany
     {
