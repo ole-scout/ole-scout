@@ -21,6 +21,7 @@ return new class extends Migration
             $table->double('sort_weight')->default(1.0)->index();
             $table->boolean('is_disabled')->default(false)->index();
             $table->boolean('is_required')->default(false)->index();
+            $table->softDeletes();
             $table->timestamps();
 
             $table->unique(['course_id', 'activity_id', 'activity_type']);

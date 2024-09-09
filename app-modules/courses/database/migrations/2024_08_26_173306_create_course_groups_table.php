@@ -14,10 +14,10 @@ return new class extends Migration
     {
         Schema::create('course_groups', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(CourseGroup::class)->nullable()->index();
-            $table->string('path')->unique()->index();
-            $table->foreignId('parent_id')->nullable()->index();
+            $table->foreignIdFor(CourseGroup::class, 'parent_id')->nullable()->index();
+            $table->string('slug')->unique()->index();
             $table->double('sort_weight')->default(1.0)->index();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

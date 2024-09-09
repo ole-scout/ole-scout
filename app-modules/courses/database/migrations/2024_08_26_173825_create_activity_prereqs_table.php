@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('activity_prereqs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Activity::class);
-            $table->foreignIdFor(Activity::class, column: 'prereq_id');
+            $table->foreignIdFor(Activity::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Activity::class, column: 'prereq_id')->constrained()->cascadeOnDelete();
 
             $table->unique(['activity_id', 'prereq_id']);
         });

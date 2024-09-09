@@ -2,6 +2,7 @@
 
 namespace FossHaas\Courses\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,6 @@ class CourseGroup extends Model
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(CourseGroup::class, 'course_group_id');
+        return $this->belongsTo(CourseGroup::class);
     }
 }

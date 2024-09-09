@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(CourseGroup::class)->nullable()->index();
+            $table->foreignIdFor(CourseGroup::class)->nullable()->index()->constrained()->nullOnDelete();
             $table->double('sort_weight')->default(1.0)->index();
             $table->string('slug')->unique();
             $table->string('title');
@@ -26,11 +26,9 @@ return new class extends Migration
             $table->boolean('is_published')->default(false)->index();
             $table->boolean('is_guest')->default(false)->index();
             $table->enum('access', ['hidden', 'default', 'gratis'])->index();
-            /*
-              layout: string
-              is_disabled: boolean
-             */
+            /* layout: string, is_disabled: boolean */
             $table->jsonb('cert')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

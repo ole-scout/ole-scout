@@ -28,6 +28,6 @@ class ActivityGroup extends Model
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(ActivityGroup::class, 'activity_group_id');
+        return $this->belongsTo(ActivityGroup::class);
     }
 }
