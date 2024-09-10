@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('activity_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Course::class)->index()->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(ActivityGroup::class, 'parent_id')->nullable()->index()->constrained()->nullOnDelete();
-            $table->string('label');
+            $table->foreignIdFor(Course::class)->index()
+                ->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ActivityGroup::class, 'parent_id')->nullable()->index()
+                ->constrained('activity_groups')->nullOnDelete();
+            $table->string('slug')->unique()->index();
+            $table->string('title');
             $table->integer('order_column');
             $table->softDeletes();
             $table->timestamps();

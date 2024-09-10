@@ -1,5 +1,6 @@
 <?php
 
+use FossHaas\Courses\Models\Activity;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,14 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('download_activities', function (Blueprint $table) {
+        Schema::create('weblink_activities', function (Blueprint $table) {
             $table->id();
-            $table->string('version');
-            $table->string('title');
-            $table->text('description')->nullable();
+            $table->foreignIdFor(Activity::class)->index()
+                ->constrained()->cascadeOnDelete();
             $table->text('image')->nullable();
-            $table->string('filename');
-            $table->softDeletes();
+            $table->string('url');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('download_activities');
+        Schema::dropIfExists('weblink_activities');
     }
 };

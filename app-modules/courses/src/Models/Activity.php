@@ -2,15 +2,55 @@
 
 namespace FossHaas\Courses\Models;
 
+use FossHaas\Support\CalVer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Str;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 
-class Activity extends Model
+class Activity extends Model implements Sortable
 {
-    use HasFactory;
+    use HasFactory, SortableTrait;
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
+
+    protected static function booted(): void
+    {
+        $calver = new CalVer(minorIsDay: true);
+        static::creating(function (Activity $activity) use ($calver) {
+            $activity->id = Str::uuid();
+            $activity->version = $calver();
+        });
+        static::updating(function (Activity $activity) use ($calver) {
+            if (!$activity->isDirty()) return;
+            $activity->version = $calver->increment($activity->version);
+        });
+    }
+
+    public function buildSortQuery()
+    {
+        return static::query()->where([
+            'course_id' => $this->course_id,
+            'activity_group_id' => $this->activity_group_id,
+        ]);
+    }
+
+    protected $fillable = [
+        'course_id',
+        'activity_group_id',
+        'activity_id',
+        'activity_type',
+        'title',
+        'description',
+        'is_disabled',
+        'is_required',
+    ];
 
     public function activity(): MorphTo
     {

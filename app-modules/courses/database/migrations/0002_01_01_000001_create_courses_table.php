@@ -1,5 +1,6 @@
 <?php
 
+use FossHaas\Courses\Enums\Access;
 use FossHaas\Courses\Models\CourseGroup;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(CourseGroup::class)->nullable()->index()->constrained()->nullOnDelete();
+            $table->foreignIdFor(CourseGroup::class)->nullable()->index()
+                ->constrained()->nullOnDelete();
             $table->integer('order_column');
+            $table->string('language');
             $table->string('slug')->unique();
             $table->string('title');
             $table->text('description')->nullable();
@@ -24,8 +27,7 @@ return new class extends Migration
             $table->string('author')->nullable();
             $table->string('clearance')->nullable();
             $table->boolean('is_published')->default(false)->index();
-            $table->boolean('is_guest')->default(false)->index();
-            $table->enum('access', ['hidden', 'default', 'gratis'])->index();
+            $table->enum('access', Access::values())->index();
             /* layout: string, is_disabled: boolean */
             $table->jsonb('cert')->nullable();
             $table->softDeletes();

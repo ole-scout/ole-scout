@@ -14,11 +14,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visible_course_groups', function (Blueprint $table) {
+        Schema::create('user_visible_course_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->index()->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(CourseGroup::class)->index()->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Enrollment::class)->index()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->index()
+                ->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(CourseGroup::class)->index()
+                ->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Enrollment::class)->index()
+                ->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visible_course_groups');
+        Schema::dropIfExists('user_visible_course_groups');
     }
 };

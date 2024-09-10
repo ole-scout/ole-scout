@@ -2,33 +2,78 @@
 
 namespace FossHaas\Courses\Models;
 
-use FossHaas\Courses\Actions\CreateVisibleCourseGroups;
+use FossHaas\Courses\Actions\CreateCommonVisibleCourseGroups;
+use FossHaas\Courses\Actions\CreateUserVisibleCourseGroups;
+use FossHaas\Courses\Enums\Access;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
+use Spatie\Translatable\HasTranslations;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
-class CourseGroup extends Model
+class CourseGroup extends Model implements Sortable
 {
-    use HasFactory, HasRecursiveRelationships;
+    use HasFactory, HasRecursiveRelationships, HasTranslations, SortableTrait;
+
+    protected $keyType = 'string';
+
+    public $incrementing = false;
 
     protected static function booted()
     {
+        static::creating(function (CourseGroup $group) {
+            $group->id = Str::uuid();
+        });
         static::updated(function (CourseGroup $group) {
             if ($group->wasChanged('parent_id')) {
-                app(CreateVisibleCourseGroups::class)->handle(
+                app(CreateCommonVisibleCourseGroups::class)->handle(
+                    $group->descendantsAndSelf()->get()->flatMap(
+                        fn($group) => $group->publishedCourses()
+                            ->where('access', '!=', Access::HIDDEN)
+                            ->get()
+                    ),
+                    purge: true
+                );
+                app(CreateUserVisibleCourseGroups::class)->handle(
                     $group->enrollments()->get(),
-                    prune: true
+                    purge: true
                 );
             }
         });
     }
 
+    protected $fillable = [
+        'parent_id',
+        'slug',
+        'title',
+        'icon',
+        'color',
+    ];
+
+    public $translatable = [
+        'title',
+    ];
+
+    public function buildSortQuery()
+    {
+        return static::query()->where([
+            'parent_id' => $this->parent_id,
+        ]);
+    }
+
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);
+    }
+
+    public function publishedCourses(): HasMany
+    {
+        return $this->courses()->where('is_published', true);
     }
 
     public function courseGroups(): HasMany
@@ -41,13 +86,18 @@ class CourseGroup extends Model
         return $this->belongsTo(CourseGroup::class);
     }
 
-    public function visibleCourseGroups(): HasMany
+    public function commonVisibleCourseGroups(): HasMany
     {
-        return $this->hasMany(VisibleCourseGroup::class);
+        return $this->hasMany(CommonVisibleCourseGroup::class);
+    }
+
+    public function userVisibleCourseGroups(): HasMany
+    {
+        return $this->hasMany(UserVisibleCourseGroup::class);
     }
 
     public function enrollments(): BelongsToMany
     {
-        return $this->belongsToMany(Enrollment::class, VisibleCourseGroup::class);
+        return $this->belongsToMany(Enrollment::class, UserVisibleCourseGroup::class);
     }
 }

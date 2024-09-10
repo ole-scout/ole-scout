@@ -17,7 +17,7 @@ class ActivityPrereqFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            // activity_id, prereq_id
         ];
     }
 }

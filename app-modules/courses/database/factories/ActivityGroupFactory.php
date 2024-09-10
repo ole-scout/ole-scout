@@ -2,6 +2,8 @@
 
 namespace FossHaas\Courses\Database\Factories;
 
+use FossHaas\Courses\Models\ActivityGroup;
+use FossHaas\Courses\Models\Course;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,12 @@ class ActivityGroupFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'parent_id' => null,
+            'slug' => $this->faker->slug,
+            'title' => fn() => $this->faker->words(
+                $this->faker->numberBetween(2, 3),
+                true
+            ),
         ];
     }
 }

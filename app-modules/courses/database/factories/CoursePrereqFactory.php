@@ -2,6 +2,7 @@
 
 namespace FossHaas\Courses\Database\Factories;
 
+use FossHaas\Courses\Models\Course;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class CoursePrereqFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            // course_id, prereq_id
         ];
     }
 }

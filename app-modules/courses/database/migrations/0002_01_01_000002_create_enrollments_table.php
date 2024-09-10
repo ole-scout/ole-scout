@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->index()->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Course::class)->index()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->index()
+                ->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Course::class)->index()
+                ->constrained()->cascadeOnDelete();
             $table->timestamp('expires_at')->nullable()->index();
             $table->softDeletes();
             $table->timestamps();

@@ -15,9 +15,14 @@ return new class extends Migration
     {
         Schema::create('activities', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignIdFor(Course::class)->index();
-            $table->foreignIdFor(ActivityGroup::class)->nullable();
-            $table->morphs('activity');
+            $table->foreignIdFor(Course::class)->index()
+                ->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ActivityGroup::class)->nullable()
+                ->constrained()->nullOnDelete();
+            $table->nullableMorphs('activity');
+            $table->string('version');
+            $table->string('title');
+            $table->text('description')->nullable();
             $table->integer('order_column');
             $table->boolean('is_disabled')->default(false)->index();
             $table->boolean('is_required')->default(false)->index();

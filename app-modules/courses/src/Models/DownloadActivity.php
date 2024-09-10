@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class DownloadActivity extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'image',
+        'filename',
+    ];
 }

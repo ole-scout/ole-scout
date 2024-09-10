@@ -17,7 +17,8 @@ class WeblinkActivityFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'image' => 'https://place-hold.it/640/360/',
+            'url' => $this->faker->url,
         ];
     }
 }

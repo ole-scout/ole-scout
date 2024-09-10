@@ -2,24 +2,23 @@
 
 namespace FossHaas\Courses\Models;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class VisibleCourseGroup extends Model
+class CommonVisibleCourseGroup extends Model
 {
-    public function user(): BelongsTo
+    protected $fillable = [
+        'course_id',
+        'course_group_id',
+    ];
+
+    public function course(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Course::class);
     }
 
     public function courseGroup(): BelongsTo
     {
         return $this->belongsTo(CourseGroup::class);
-    }
-
-    public function enrollment(): BelongsTo
-    {
-        return $this->belongsTo(Enrollment::class);
     }
 }

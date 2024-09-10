@@ -14,8 +14,10 @@ return new class extends Migration
     {
         Schema::create('course_prereqs', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Course::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Course::class, column: 'prereq_id')->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Course::class)
+                ->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Course::class, column: 'prereq_id')
+                ->constrained('courses')->cascadeOnDelete();
 
             $table->unique(['course_id', 'prereq_id']);
         });
