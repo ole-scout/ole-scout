@@ -1,7 +1,7 @@
 <?php
 
-use FossHaas\Consent\CookieType;
-use FossHaas\Consent\LegalBasis;
+use FossHaas\Consent\Enums\CookieType;
+use FossHaas\Consent\Enums\LegalBasis;
 use FossHaas\Consent\Models\ServiceDefinition;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,12 +16,12 @@ return new class extends Migration
     {
         Schema::create('service_cookies', function (Blueprint $table) {
             $table->id();
-            $table->enum('type', CookieType::names());
+            $table->enum('type', CookieType::values());
             $table->string('name');
             $table->string('host');
             $table->json('description');
             $table->json('duration');
-            $table->enum('legal_basis', LegalBasis::names());
+            $table->enum('legal_basis', LegalBasis::values());
             $table->timestamps();
             $table->foreignIdFor(ServiceDefinition::class)
                 ->constrained()->cascadeOnDelete();

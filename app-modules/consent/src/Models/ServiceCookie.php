@@ -2,8 +2,8 @@
 
 namespace FossHaas\Consent\Models;
 
-use FossHaas\Consent\CookieType;
-use FossHaas\Consent\LegalBasis;
+use FossHaas\Consent\Enums\CookieType;
+use FossHaas\Consent\Enums\LegalBasis;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +14,7 @@ class ServiceCookie extends Model
     use HasFactory, HasTranslations;
 
     protected $attributes = [
-        'legal_basis' => LegalBasis::consent,
+        'legal_basis' => LegalBasis::CONSENT,
     ];
 
     protected $fillable = [

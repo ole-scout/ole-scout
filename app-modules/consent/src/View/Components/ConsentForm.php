@@ -3,7 +3,7 @@
 namespace FossHaas\Consent\View\Components;
 
 use Closure;
-use FossHaas\Consent\Category;
+use FossHaas\Consent\Enums\Category;
 use FossHaas\Consent\Models\ServiceDefinition;
 use FossHaas\Consent\Settings\ServiceProviderSettings;
 use Illuminate\Contracts\View\View;

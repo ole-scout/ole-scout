@@ -1,6 +1,6 @@
 <?php
 
-use FossHaas\Consent\Category;
+use FossHaas\Consent\Enums\Category;
 use FossHaas\Consent\Models\ServiceProvider;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('service_definitions', function (Blueprint $table) {
             $table->id();
-            $table->enum('category', Category::names());
+            $table->enum('category', Category::values());
             $table->json('name');
             $table->json('description');
             $table->timestamps();

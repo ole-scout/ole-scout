@@ -2,8 +2,8 @@
 
 namespace FossHaas\Consent\Database\Factories;
 
-use FossHaas\Consent\CookieType;
-use FossHaas\Consent\LegalBasis;
+use FossHaas\Consent\Enums\CookieType;
+use FossHaas\Consent\Enums\LegalBasis;
 use FossHaas\Consent\Models\ServiceDefinition;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
@@ -20,7 +20,7 @@ class ServiceCookieFactory extends Factory
             'legal_basis' => fn() => $this->faker->randomElement(
                 Arr::where(
                     LegalBasis::cases(),
-                    fn(LegalBasis $case) => $case !== LegalBasis::consent
+                    fn(LegalBasis $case) => $case !== LegalBasis::CONSENT
                 )
             ),
         ]);
@@ -64,11 +64,11 @@ class ServiceCookieFactory extends Factory
                 $locale => $locale . ': ' . $this->faker->paragraph()
             ]),
             'duration' => fn(array $attributes) => match ($attributes['type']) {
-                CookieType::session_storage => 'session',
-                CookieType::local_storage => 'indefinite',
+                CookieType::SESSION_STORAGE => 'session',
+                CookieType::LOCAL_STORAGE => 'indefinite',
                 default => $this->faker->randomElement($durations),
             },
-            'legal_basis' => LegalBasis::consent,
+            'legal_basis' => LegalBasis::CONSENT,
             'service_definition_id' => ServiceDefinition::factory(),
         ];
     }
