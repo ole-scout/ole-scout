@@ -29,19 +29,19 @@ class ServiceDefinitionFactory extends Factory
     {
         $locales = array_keys(config('support.locales'));
         return [
-            'category' => fn() => $this->faker->randomElement(
+            'category' => $this->faker->randomElement(
                 Arr::where(
                     Category::cases(),
                     fn(Category $case) => $case !== Category::ESSENTIAL
                 )
             ),
-            'name' => fn() => Arr::mapWithKeys($locales, fn($locale) => [
+            'name' => Arr::mapWithKeys($locales, fn($locale) => [
                 $locale => $locale . ': ' . ucwords(
                     $this->faker->words($this->faker->numberBetween(2, 3), true)
                 )
             ]),
-            'description' => fn() => Arr::mapWithKeys($locales, fn($locale) => [
-                $locale => $locale . ': ' . $this->faker->paragraph
+            'description' => Arr::mapWithKeys($locales, fn($locale) => [
+                $locale => $locale . ': ' . $this->faker->paragraph()
             ]),
             'service_provider_id' => ServiceProvider::factory(),
         ];

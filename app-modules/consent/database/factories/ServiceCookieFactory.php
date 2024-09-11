@@ -58,9 +58,9 @@ class ServiceCookieFactory extends Factory
         ];
         return [
             'type' => $this->faker->randomElement(CookieType::cases()),
-            'name' => $this->faker->word,
-            'host' => $this->faker->domainName,
-            'description' => fn() => Arr::mapWithKeys($locales, fn($locale) => [
+            'name' => $this->faker->word(),
+            'host' => $this->faker->domainName(),
+            'description' => Arr::mapWithKeys($locales, fn($locale) => [
                 $locale => $locale . ': ' . $this->faker->paragraph()
             ]),
             'duration' => fn(array $attributes) => match ($attributes['type']) {
