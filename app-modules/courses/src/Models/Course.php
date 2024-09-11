@@ -28,6 +28,11 @@ class Course extends Model implements Sortable
         static::creating(function (Course $course) {
             $course->id = Str::uuid();
         });
+        static::created(function (Course $course) {
+            app(CreateCommonVisibleCourseGroups::class)->handle(
+                collect([$course])
+            );
+        });
         static::updated(function (Course $course) {
             if ($course->wasChanged(['parent_id', 'access'])) {
                 app(CreateCommonVisibleCourseGroups::class)->handle(

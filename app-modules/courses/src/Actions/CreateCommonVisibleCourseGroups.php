@@ -28,9 +28,7 @@ class CreateCommonVisibleCourseGroups
             }
             $groups = $course->courseGroup->ancestorsAndSelf()->get();
             $course->commonVisibleCourseGroups()->createMany(
-                $groups->map(fn($group) => [
-                    'course_group_id' => $group->id,
-                ])
+                $groups->map(fn($group) => ['course_group_id' => $group->id])
             );
         });
     }

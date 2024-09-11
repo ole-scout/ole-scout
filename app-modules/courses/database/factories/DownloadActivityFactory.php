@@ -17,8 +17,8 @@ class DownloadActivityFactory extends Factory
     public function definition(): array
     {
         return [
-            'image' => 'https://place-hold.it/640/360/',
-            'filename' => $this->faker->word, // TODO
+            'image' => 'https://place-hold.it/640/360/' . ltrim($this->faker->hexColor(), '#'),
+            'filename' => $this->faker->word(), // TODO
         ];
     }
 }

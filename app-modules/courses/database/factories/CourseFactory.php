@@ -27,19 +27,19 @@ class CourseFactory extends Factory
         $locales = array_keys(config('support.locales'));
         return [
             'course_group_id' => null,
-            'slug' => $this->faker->slug,
+            'slug' => $this->faker->slug(),
             'language' => fn() => $this->faker->randomElement($locales),
             'title' => fn() => $this->faker->words(
                 $this->faker->numberBetween(2, 3),
                 true
             ),
-            'description' => $this->faker->paragraph,
-            'color' => $this->faker->hexColor,
+            'description' => $this->faker->paragraph(),
+            'color' => $this->faker->hexColor(),
             'author' => null, // currently serves no purpose
             'clearance' => null, // currently serves no purpose
             'icon' => fn($attributes) => 'https://place-hold.it/128/128/' . ltrim($attributes['color'], '#'),
             'is_published' => true,
-            'access' => fn() => $this->faker->randomElement(Access::cases()),
+            'access' => $this->faker->randomElement(Access::cases()),
             'cert' => null, // TODO
         ];
     }

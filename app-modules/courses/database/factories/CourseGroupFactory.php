@@ -21,14 +21,14 @@ class CourseGroupFactory extends Factory
         return [
             'parent_id' => null,
             'order_column' => $this->faker->numberBetween(0, 100),
-            'slug' => $this->faker->slug,
+            'slug' => $this->faker->slug(),
             'title' => fn() => Arr::mapWithKeys($locales, fn($locale) => [
                 $locale => $locale . ': ' . $this->faker->words(
                     $this->faker->numberBetween(2, 3),
                     true
                 )
             ]),
-            'color' => $this->faker->hexColor,
+            'color' => $this->faker->hexColor(),
             'icon' => fn($attributes) => 'https://place-hold.it/128/128/' . ltrim($attributes['color'], '#'),
         ];
     }

@@ -27,6 +27,11 @@ class Activity extends Model implements Sortable
             $activity->id = Str::uuid();
             $activity->version = $calver();
         });
+        static::created(function (Activity $activity) {
+            $content = $activity->content;
+            $content->activity_id = $activity->id;
+            $content->save();
+        });
         static::updating(function (Activity $activity) use ($calver) {
             if (!$activity->isDirty()) return;
             $activity->version = $calver->increment($activity->version);
@@ -44,15 +49,15 @@ class Activity extends Model implements Sortable
     protected $fillable = [
         'course_id',
         'activity_group_id',
-        'activity_id',
-        'activity_type',
+        'content_id',
+        'content_type',
         'title',
         'description',
         'is_disabled',
         'is_required',
     ];
 
-    public function activity(): MorphTo
+    public function content(): MorphTo
     {
         return $this->morphTo();
     }

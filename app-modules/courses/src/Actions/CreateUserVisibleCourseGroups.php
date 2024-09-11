@@ -22,13 +22,10 @@ class CreateUserVisibleCourseGroups
             $sample = $enrollments->first();
             $group = $sample->course->courseGroup;
             if (!$group) return;
-            $groups = $group->ancestorsAndSelf()->get();
-            $enrollments->each(function (Enrollment $enrollment) use ($groups) {
+            $groupIds = $group->ancestorsAndSelf()->get()->pluck('id');
+            $enrollments->each(function (Enrollment $enrollment) use ($groupIds) {
                 $enrollment->userVisibleCourseGroups()->createMany(
-                    $groups->map(fn($group) => [
-                        'course_group_id' => $group->id,
-                        // 'user_id' => $enrollment->user_id,
-                    ])
+                    $groupIds->map(fn($groupId) => ['course_group_id' => $groupId])
                 );
             });
         });

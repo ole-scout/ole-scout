@@ -44,7 +44,7 @@ class ActivityGroup extends Model implements Sortable
 
     public function activityGroups(): HasMany
     {
-        return $this->hasMany(ActivityGroup::class);
+        return $this->hasMany(ActivityGroup::class, 'parent_id');
     }
 
     public function course(): BelongsTo

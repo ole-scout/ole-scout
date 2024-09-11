@@ -25,13 +25,13 @@ class ActivityFactory extends Factory
     {
         return [
             // course_id, activity_group_id, activity_id, activity_type
-            'title' => fn() => $this->faker->words(
+            'title' => $this->faker->words(
                 $this->faker->numberBetween(2, 3),
                 true
             ),
-            'description' => $this->faker->sentence,
+            'description' => $this->faker->sentence(),
             'is_disabled' => false,
-            'is_required' => $this->faker->boolean,
+            'is_required' => $this->faker->boolean(),
         ];
     }
 }

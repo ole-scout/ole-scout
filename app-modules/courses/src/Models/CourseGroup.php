@@ -78,7 +78,7 @@ class CourseGroup extends Model implements Sortable
 
     public function courseGroups(): HasMany
     {
-        return $this->hasMany(CourseGroup::class);
+        return $this->hasMany(CourseGroup::class, 'parent_id');
     }
 
     public function parent(): BelongsTo

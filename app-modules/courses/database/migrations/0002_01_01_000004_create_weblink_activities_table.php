@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('weblink_activities', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Activity::class)->index()
+            $table->foreignIdFor(Activity::class)->nullable()->index()
                 ->constrained()->cascadeOnDelete();
             $table->text('image')->nullable();
             $table->string('url');

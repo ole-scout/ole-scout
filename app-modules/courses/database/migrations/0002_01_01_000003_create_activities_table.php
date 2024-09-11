@@ -19,7 +19,7 @@ return new class extends Migration
                 ->constrained()->cascadeOnDelete();
             $table->foreignIdFor(ActivityGroup::class)->nullable()
                 ->constrained()->nullOnDelete();
-            $table->nullableMorphs('activity');
+            $table->morphs('content');
             $table->string('version');
             $table->string('title');
             $table->text('description')->nullable();
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->unique(['course_id', 'activity_id', 'activity_type']);
+            $table->unique(['course_id', 'content_id', 'content_type']);
         });
     }
 

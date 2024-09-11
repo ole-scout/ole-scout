@@ -20,7 +20,7 @@ class ActivityGroupFactory extends Factory
     {
         return [
             'parent_id' => null,
-            'slug' => $this->faker->slug,
+            'slug' => $this->faker->slug(),
             'title' => fn() => $this->faker->words(
                 $this->faker->numberBetween(2, 3),
                 true
