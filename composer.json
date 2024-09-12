@@ -27,6 +27,7 @@
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
         "spatie/eloquent-sortable": "^4.4",
+        "spatie/laravel-ray": "^1.37",
         "spatie/laravel-settings": "^3.3",
         "spatie/laravel-translatable": "^6.8",
         "staudenmeir/laravel-adjacency-list": "^1.22"
