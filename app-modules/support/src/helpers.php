@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Model;
 
-if (! function_exists('preciseDiffForHumans')) {
+if (! function_exists('FossHaas\Support\preciseDiffForHumans')) {
     /**
      * Get a millisecond-precision difference between two dates in a human readable format.
      * 
@@ -21,7 +21,7 @@ if (! function_exists('preciseDiffForHumans')) {
     }
 }
 
-if (! function_exists('getMorphFields')) {
+if (! function_exists('FossHaas\Support\getMorphFields')) {
     /**
      * Get the morph fields for a model.
      * 
