@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Log;
+
+use function FossHaas\Support\preciseDiffForHumans;
 
 class FakeUsersSeeder extends Seeder
 {
@@ -12,6 +15,10 @@ class FakeUsersSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(200)->create();
+        $time = now();
+        $count = User::factory(200)->create()->count();
+        Log::info(sprintf('Created %d users', $count), [
+            'time' => preciseDiffForHumans($time),
+        ]);
     }
 }

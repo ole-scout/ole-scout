@@ -3,44 +3,41 @@
 namespace FossHaas\Courses\Database\Seeders;
 
 use App\Models\User;
-use Carbon\CarbonInterval;
 use FossHaas\Courses\Models\Activity;
 use FossHaas\Courses\Models\ActivityGroup;
 use FossHaas\Courses\Models\Course;
 use FossHaas\Courses\Models\CourseGroup;
 use FossHaas\Courses\Models\DownloadActivity;
-use FossHaas\Courses\Models\Enrollment;
+use FossHaas\Courses\Models\UserVisibleCourseGroup;
 use FossHaas\Courses\Models\WeblinkActivity;
+use FossHaas\Courses\Services\EnrollmentService;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+
+use function FossHaas\Support\getMorphFields;
+use function FossHaas\Support\preciseDiffForHumans;
 
 class FakeCoursesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run(EnrollmentService $enrollmentService): void
     {
-        $getMorphFields = fn($model, string $name) => [
-            $name . '_id' => $model->id,
-            $name . '_type' => $model->getMorphClass(),
-        ];
+        // TODO implement prereqs
         $time = now();
-        $rootGroups = CourseGroup::factory(5)->create();
+        $rootGroups = CourseGroup::factory(4)->create();
         $allCourses = collect();
         foreach ($rootGroups as $rootGroup) {
             $groups = $rootGroup->courseGroups()->createMany(
-                CourseGroup::factory(
-                    fake()->numberBetween(1, 3)
-                )->make()->toArray()
+                CourseGroup::factory(3)->make()->toArray()
             );
-            $groups->push(
-                ...$rootGroups->shuffle()->take(fake()->numberBetween(2, 3))
-            );
+            $groups->push(...$rootGroups->take(2));
             foreach ($groups as $subGroup) {
                 $courses = $subGroup->courses()->createMany(
                     Course::factory(
-                        fake()->numberBetween(2, 5)
+                        fake()->numberBetween(1, 5)
                     )->make()->toArray()
                 );
                 $allCourses->push(...$courses);
@@ -55,59 +52,79 @@ class FakeCoursesSeeder extends Seeder
                         WeblinkActivity::factory(),
                     ];
                     $course->activities()->createMany(
-                        $activityGroups->pluck('id')->push(null)->flatMap(
-                            fn(string|null $activityGroupId) => Activity::factory(
-                                fake()->numberBetween(0, 2)
-                            )->make(fn() => [
-                                'activity_group_id' => $activityGroupId,
-                                ...$getMorphFields(
-                                    fake()->randomElement($contentFactories)
-                                        ->create(),
-                                    'content'
-                                ),
-                            ])->toArray()
-                        )->toArray()
+                        $activityGroups
+                            ->pluck('id')
+                            ->push(null)
+                            ->flatMap(
+                                fn(string|null $activityGroupId) => Activity::factory(
+                                    fake()->numberBetween(0, 2)
+                                )->make(fn() => [
+                                    'activity_group_id' => $activityGroupId,
+                                    ...getMorphFields(
+                                        fake()->randomElement($contentFactories)
+                                            ->create(),
+                                        'content'
+                                    ),
+                                ])->toArray()
+                            )->toArray()
                     );
                 }
             }
         }
-        Log::info('Created ' . $allCourses->count() . ' courses', [
-            'time' => CarbonInterval::milliseconds(intval($time->diffInMilliseconds()))->cascade()->forHumans(),
-        ]);
-        $count = User::count();
-        $users = User::all()->shuffle();
-        Log::info('Creating up to ' . $count * $allCourses->count() . ' enrollments for ' . $count . ' users');
-        $total = 0;
-        $started = now();
-        foreach ($allCourses as $i => $course) {
-            $time = now();
-            $enrollments = $course->enrollments()->createMany(
-                $users->take(
-                    intval(ceil($count * fake()->randomFloat(min: 0.75, max: 0.9)))
-                )->map(function (User $user) {
-                    $enrollment = Enrollment::factory([
-                        'user_id' => $user->id
-                    ]);
-                    if (fake()->randomFloat() > 0.2) {
-                        $enrollment = $enrollment->expired();
-                    }
-                    return $enrollment->make()->toArray();
-                })->toArray()
-            );
-            $total += $enrollments->count();
-            $remaining = (($allCourses->count() - 1 - $i) * $count);
-            $speed = $total / $started->diffInSeconds();
-            Log::info(sprintf(
-                'Created %d enrollments (%d %%)',
-                $enrollments->count(),
-                (($i + 1) / $allCourses->count()) * 100
-            ), [
-                'time' => CarbonInterval::milliseconds(intval($time->diffInMilliseconds()))->cascade()->forHumans(),
-                'speed' => sprintf('%d enrollments/s', $speed),
-                'remaining' => CarbonInterval::seconds(intval(
-                    $remaining / $speed
-                ))->cascade()->forHumans(),
-            ]);
-        }
+        $numCourses = $allCourses->count();
+        Log::info(sprintf(
+            'Created %d courses in %d groups containing %d activities in %d groups',
+            $numCourses,
+            CourseGroup::count(),
+            Activity::count(),
+            ActivityGroup::count(),
+        ), ['time' => preciseDiffForHumans($time)]);
+
+        $time = now();
+        $users = User::all();
+        $numUsers = $users->count();
+        Log::info(sprintf(
+            'Creating up to %d enrollments for %d users',
+            $numUsers * $numCourses,
+            $numUsers
+        ));
+
+        $enrollments = $enrollmentService->enrollUsers($users, $allCourses);
+        $numEnrollments = $enrollments->count();
+        $numUVCGs = UserVisibleCourseGroup::count();
+        Log::info(sprintf(
+            'Created %d enrollments with %d user visible course groups (%d enrollments/s)',
+            $numEnrollments,
+            $numUVCGs,
+            $numEnrollments / $time->diffInSeconds()
+        ), ['time' => preciseDiffForHumans($time)]);
+
+        $time = now();
+        $numDeleted = (int) ceil($numEnrollments * (fake()->numberBetween(10, 25) / 100));
+        $enrollmentsTable = $enrollments->first()->getTable();
+        DB::table($enrollmentsTable)
+            ->inRandomOrder()
+            ->limit($numDeleted)
+            ->delete();
+        $numUVCGsDeleted = $numUVCGs - UserVisibleCourseGroup::count();
+        Log::info(sprintf(
+            'Deleted %d enrollments and %d user visible course groups (%d enrollments/s)',
+            $numDeleted,
+            $numUVCGsDeleted,
+            $numDeleted / $time->diffInSeconds()
+        ), ['time' => preciseDiffForHumans($time)]);
+
+        $numEnrollments -= $numDeleted;
+        $time = now();
+        $numExpired = (int) ceil($numEnrollments * (fake()->numberBetween(20, 40) / 100));
+        DB::table($enrollmentsTable)
+            ->inRandomOrder()
+            ->limit($numExpired)
+            ->update(['expires_at' => now()->subMonths(2)]);
+        Log::info(sprintf(
+            'Expired %d enrollments (%d enrollments/s)',
+            $numExpired,
+            $numExpired / $time->diffInSeconds()
+        ), ['time' => preciseDiffForHumans($time)]);
     }
 }

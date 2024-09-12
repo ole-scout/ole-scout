@@ -2,8 +2,6 @@
 
 namespace FossHaas\Courses\Database\Factories;
 
-use FossHaas\Courses\Models\ActivityGroup;
-use FossHaas\Courses\Models\Course;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

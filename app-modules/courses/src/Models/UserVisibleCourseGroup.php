@@ -11,7 +11,7 @@ class UserVisibleCourseGroup extends Model
     protected static function booted()
     {
         static::creating(function (UserVisibleCourseGroup $group) {
-            if (is_null($group->user_id) && !is_null($group->enrollment)) {
+            if (is_null($group->user_id) && !is_null($group->enrollment_id)) {
                 $group->user_id = $group->enrollment->user_id;
             }
         });
