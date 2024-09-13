@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 
 if (! function_exists('data_uri')) {
@@ -15,6 +16,34 @@ if (! function_exists('data_uri')) {
         $mimeType = $file->getMimeType() ?? 'application/octet-stream';
         $encodedContent = base64_encode($file->getContent());
         return 'data:' . $mimeType . ';base64,' . $encodedContent;
+    }
+}
+
+if (! function_exists('is_external_url')) {
+    /**
+     * Checks whether a given URL is external.
+     * 
+     * @param string $url
+     * @return bool
+     */
+    function is_external_url(string $url): bool
+    {
+        if (Str::startsWith($url, config('app.url'))) return false;
+        return !is_relative_url($url);
+    }
+}
+
+if (! function_exists('is_relative_url')) {
+    /**
+     * Checks whether a given URL is relative.
+     * 
+     * @param string $url
+     * @return bool
+     */
+    function is_relative_url(string $url): bool
+    {
+        if (preg_match('/^\w+:/', $url)) return false;
+        return !Str::startsWith($url, '//');
     }
 }
 

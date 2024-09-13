@@ -59,12 +59,12 @@
         $as = 'a';
         $href = $attributes->get('href');
         $attributes = $attributes->except(['href'])->merge(
-            substr($href, 0, 1) === '/' ? [
-                'href' => url($href),
-            ] : [
+            is_external_url($href) ? [
                 'href' => $href,
                 'target' => '_blank',
                 'rel' => 'noopener noreferrer',
+            ] : [
+                'href' => is_relative_url($href) ? url($href) : $href,
             ]
         )->class(
             [...$classes, 'disabled' => $disabled]
