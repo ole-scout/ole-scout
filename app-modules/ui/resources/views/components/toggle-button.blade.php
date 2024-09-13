@@ -11,10 +11,10 @@
 @php
     $icon = ($onIcon && $offIcon) ? ['on' => $onIcon, 'off' => $offIcon] : null;
     $iconTrailing = ($onIconTrailing && $offIconTrailing) ? ['on' => $onIconTrailing, 'off' => $offIconTrailing] : null;
-    $attributes = $attributes->merge([
+    $attributes = as_attributes($attributes)->merge([
         'role' => 'switch',
         'aria-checked' => $checked ? 'true' : 'false',
-    ]);
+    ], false);
     $iconAttributes = [
         'on' => [
             'hidden' => !$checked ? 'hidden' : null,

@@ -8,44 +8,32 @@
     'hiddenLabel' => false,
 ])
 @php
-    $as = $fake ? 'span' : 'label';
-    $wrapAttributes = (
-        isset($wrap->attributes)
-        ? $wrap->attributes->get('attributes') ?: $wrap->attributes
-        : $attributes->only([])
-    )->class(['wrap']);
-    if ($wrapAttributes->has('component')) {
-        $wrapComponent = $wrapAttributes->get('component');
-        $wrapAttributes = $wrapAttributes->except('component')->merge(['size' => $size]);
-        if (in_array($wrapComponent, ['ui::checkbox', 'ui::radio', 'ui::switch'])) {
-            $wrapAttributes = $wrapAttributes->merge(['wrapped' => true]);
-        }
-    }
+    $wrappedComponents = ['ui::checkbox', 'ui::radio', 'ui::switch'];
+    $wrap = as_slot(
+        $wrap,
+        fn($attributes) => (
+            $attributes->has('component')
+            ? (
+                in_array($attributes->get('component'), $wrappedComponents)
+                ? $attributes->merge(['wrapped' => true], false)
+                : $attributes
+            )->merge(['size' => $size], false)
+            : $attributes->merge(['as' => 'span'], false)
+        )->class(['wrap'])
+    );
 @endphp
-<{{ $as }} {{ $attributes->class(
-    ['label', 'label-sm' => $size === 'sm', 'label-lg' => $size === 'lg']
-) }}>
+@capture($wrapper, $slot)
     @if($trailing)
-    @isset($wrapComponent)
-    <x-dynamic-component
-        :component="$wrapComponent"
-        :attributes="$wrapAttributes"
-    >{{ $wrap }}</x-dynamic-component>
-    @else
-    @if($wrap)<span {{ $wrapAttributes }}>{{ $wrap }}</span>@endif
-    @endisset
+    {{ render_slot($wrap) }}
     @endif
     @if($icon)<x-ui::icon :$size :$icon />@endif
     <span class={{ $hiddenLabel ? 'sr-only' : '' }}>{{ $slot }}</span>
     @if($iconTrailing)<x-ui::icon :$size :icon="$iconTrailing" />@endif
     @if(!$trailing)
-    @isset($wrapComponent)
-    <x-dynamic-component
-        :component="$wrapComponent"
-        :attributes="$wrapAttributes"
-    >{{ $wrap }}</x-dynamic-component>
-    @else
-    @if($wrap)<span {{ $wrapAttributes }}>{{ $wrap }}</span>@endif
-    @endisset
+    {{ render_slot($wrap) }}
     @endif
-</{{ $as }}>
+@endcapture
+{{ render_slot($wrapper($slot), $attributes
+    ->merge(['as' => $fake ? 'span' : 'label'])
+    ->class(['label', 'label-sm' => $size === 'sm', 'label-lg' => $size === 'lg'])
+) }}

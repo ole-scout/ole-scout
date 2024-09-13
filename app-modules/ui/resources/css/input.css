@@ -3,7 +3,7 @@
         @apply inline-block;
         &:where([type="checkbox"] ~ .input),
         &:where([type="radio"] ~ .input) {
-            @apply border border-transparent transition-colors duration-200 ease-in-out leading-none -mb-px;
+            @apply border border-transparent transition-colors duration-200 ease-in-out leading-none -mt-px;
             &:where(:focus ~ .input) {
                 @apply ring;
             }

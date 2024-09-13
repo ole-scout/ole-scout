@@ -11,10 +11,8 @@
 ])
 @php
     $type = count($options) > 1 ? 'radio' : 'checkbox';
-    $inputAttributes = $attributes->only([])->merge([
-        'name' => $name,
-        'type' => $type,
-    ])->class(['sr-only']);
+    $inputAttributes = as_attributes(['name' => $name, 'type' => $type])
+        ->class(['sr-only']);
     if ($vertical) $options = array_reverse($options);
 @endphp
 @if(count($options) > 0)
@@ -35,7 +33,7 @@
             'value' => $option['value'],
             'checked' => $option['value'] === $value,
             'disabled' => $disabled ? 'disabled' : null,
-        ]) }} />
+        ], false) }} />
     </x-ui::button>
     @endforeach
 </div>

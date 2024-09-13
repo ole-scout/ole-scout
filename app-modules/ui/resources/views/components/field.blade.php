@@ -10,55 +10,34 @@
     'extra' => [],
 ])
 @php
-    $inputAttributes = $attributes->merge([
+    $input = as_slot('', as_attributes($attributes)->merge([
+        'component' => 'ui::input',
         'id' => $id,
         'action' => $action,
         'actionTrailing' => $actionTrailing,
         'aria-labelledby' => $id . '-label',
         'aria-describedby' => $id . '-description',
         'size' => $size,
-    ]);
-    $attributes = $attributes->only([])->merge($extra);
-    $labelAttributes = (
-        isset($label->attributes)
-        ? $label->attributes->get('attributes') ?: $label->attributes
-        : $attributes->only([])
-    )->merge(['id' => $id . '-label', 'for' => $id, 'size' => $size])->class(['label']);
-    $hintAttributes = (
-        isset($hint->attributes)
-        ? $hint->attributes->get('attributes') ?: $hint->attributes
-        : $attributes->only([])
-    )->merge(['id' => $id . '-hint'])->class(['hint']);
-    if ($hintAttributes->has('component')) {
-        $hintComponent = $hintAttributes->get('component');
-        $hintAttributes = $hintAttributes->except('component')->merge(['size' => $size]);
-    }
-    $descriptionAttributes = (
-        isset($description->attributes)
-        ? $description->attributes->get('attributes') ?: $description->attributes
-        : $attributes->only([])
-    )->merge(['id' => $id . '-description'])->class(['description']);
-    $errorAttributes = (
-        isset($error->attributes)
-        ? $error->attributes->get('attributes') ?: $error->attributes
-        : $attributes->only([])
-    )->merge(['id' => $id . '-error', 'role' => 'alert'])->class(['error']);
+    ], false));
+    $attributes = as_attributes($extra)->class(['field', 'field-sm' => $size === 'sm', 'field-lg' => $size === 'lg']);
+    $label = as_slot($label, fn($attributes) => $attributes->merge(['id' => $id . '-label', 'for' => $id, 'size' => $size], false)->class(['label']));
+    $hint = as_slot($hint, fn($attributes) => ($attributes->has('component') ? $attributes->merge(['size' => $size], false) : $attributes)->merge(['id' => $id . '-hint'], false)->class(['hint']));
+    $description = as_slot($description, fn($attributes) => $attributes->merge(['id' => $id . '-description'], false)->class(['description']));
+    $error = as_slot($error, fn($attributes) => $attributes->merge(['id' => $id . '-error', 'role' => 'alert'], false)->class(['error']));
 @endphp
-<div {{ $attributes->class(['field', 'field-sm' => $size === 'sm', 'field-lg' => $size === 'lg']) }}>
-    @if($label)<x-ui::label :attributes="$labelAttributes">{{ $label }}</x-ui::label>@endif
-    @isset($hintComponent)
-    <x-dynamic-component
-        :component="$hintComponent"
-        :attributes="$hintAttributes"
-    >{{ $hint }}</x-dynamic-component>
-    @else
-    <div {{ $hintAttributes }}>{{ $hint }}</div>
+<div {{ $attributes }}>
+    @if($label->isNotEmpty())
+    {{ render_slot($label, ['component' => 'ui::label']) }}
     @endif
-    <x-ui::input :attributes="$inputAttributes" />
-    @if($error || $inputAttributes->whereStartsWith('wire:model')->isEmpty())
-    <div {{ $errorAttributes }}>{{ $error }}</div>
+    {{ render_slot($hint, allowEmpty: true) }}
+    {{ render_slot($input, allowEmpty: true) }}
+    @if($error->isNotEmpty() || $input->attributes->whereStartsWith('wire:model')->isEmpty())
+    {{ render_slot($error, allowEmpty: true) }}
     @else
-    <div {{ $errorAttributes }}>@error($inputAttributes->get('name')){{ $message }}@enderror</div>
+    @capture($wrapper)
+    @error($input->attributes->get('name')){{ $message }}@enderror
+    @endcapture
+    {{ render_slot($wrapper(), $error->attributes, allowEmpty: true) }}
     @endif
-    <div {{ $descriptionAttributes }}>{{ $description }}</div>
+    {{ render_slot($description, allowEmpty: true) }}
 </div>

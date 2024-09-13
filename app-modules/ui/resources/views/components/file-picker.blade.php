@@ -18,10 +18,10 @@
     ];
 @endphp
 <x-ui::button {{ $attributes->only($buttonProps)->merge(
-    [...$extra, 'as' => 'label', 'disabled' => $disabled]
+    [...$extra, 'as' => 'label', 'disabled' => $disabled], false
 )->class(['focus-within:ring']) }}>
     <input {{ $attributes->except($buttonProps)->merge(
-        ['disabled' => $disabled, 'type' => 'file']
+        ['disabled' => $disabled, 'type' => 'file'], false
     )->class(['sr-only']) }} />
     <span>{{ $slot }}</span>
 </x-ui::button>

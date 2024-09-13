@@ -3,13 +3,18 @@
     'wrapped' => false,
     'proxyAttributes' => [],
 ])
-@if(!$wrapped)<label>@endif
-    <input {{ $attributes->except(['class'])->merge(
-        ['type' => 'checkbox', 'class' => 'sr-only', 'role' => 'switch']
-    ) }}>
-    <span {{ $attributes->only(['class'])->merge($proxyAttributes)->class(
+@php
+    $attributes = as_attributes($attributes)->merge(
+        ['type' => 'checkbox', 'role' => 'switch'], false
+    );
+    $proxyAttributes = as_attributes($proxyAttributes, $attributes->only(['class']))->class(
         ['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']
-    ) }}>
+    );
+    $attributes = $attributes->except(['class'])->class(['sr-only']);
+@endphp
+@if(!$wrapped)<label>@endif
+    <input {{ $attributes }}>
+    <span {{ $proxyAttributes }}>
         <span class="toggle"></span>
     </span>
 @if(!$wrapped)</label>@endif

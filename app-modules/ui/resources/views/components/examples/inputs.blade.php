@@ -1,5 +1,5 @@
 @php
-    $asAttributes = fn (array $array) => $attributes->only([])->merge($array);
+    $asAttributes = fn (array $array) => $attributes->only([])->merge($array, false);
     $toggleAttributeTuples = [
         [[], ['required' => true]],
         [['icon' => 'warning'], []],

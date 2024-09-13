@@ -2,14 +2,13 @@
     .card,
     .card-2,
     .card-3 {
-        @apply rounded-lg shadow bg-gray-100 dark:bg-gray-950 ring-1 ring-gray-950/5 dark:ring-white/10;
-        &:not(:has(> .body)),
+        @apply flex flex-col rounded-lg shadow bg-gray-100 dark:bg-gray-950 ring-1 ring-gray-950/5 dark:ring-white/10;
         & > .body {
-            @apply p-8;
+            @apply p-8 flex-grow;
         }
         & > .title {
             @apply px-8 pt-6 pb-2 leading-8 bg-brand-500/40 dark:bg-brand-500/50 rounded-t-lg;
-            @apply flex items-center gap-4;
+            @apply flex items-center gap-4 flex-grow-0 flex-shrink-0;
             > .title-wrap {
                 @apply flex-grow;
             }
