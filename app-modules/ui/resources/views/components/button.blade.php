@@ -45,7 +45,7 @@
         $attributes = $attributes->merge([
             'disabled' => $disabled,
             'type' => $attributes->get('type') ?: 'button',
-        ], false)->class($classes);
+        ])->class($classes);
     } else if (!$disabled) {
         $as = 'a';
         $href = $attributes->get('href');
@@ -56,7 +56,7 @@
                 'rel' => 'noopener noreferrer',
             ] : [
                 'href' => is_relative_url($href) ? url($href) : $href,
-            ], false
+            ]
         )->class(
             [...$classes, 'disabled' => $disabled]
         );
@@ -81,7 +81,7 @@
         $slot,
         fn($attributes) => (
             $attributes->has('component')
-            ? $attributes->merge(['size' => $size], false)
+            ? $attributes->merge(['size' => $size])
             : $attributes
         )->class(['sr-only' => $hiddenLabel]),
         allowEmpty: false

@@ -1,16 +1,17 @@
 @props([
     'as' => 'div',
     'title' => null,
+    'body' => null,
     'icon' => null,
     'layer' => 1,
 ])
 @php
-    $iconAttributes = as_attributes($icon);
-    $iconAttributes = $iconAttributes
+    $iconAttributes = as_attributes($icon, fn($attributes) => $attributes
         ->except(['circle'])
-        ->merge(['aria-hidden' => 'true'], false)
-        ->class(['circle' => $iconAttributes->has('circle')]);
+        ->merge(['aria-hidden' => 'true'])
+        ->class(['circle' => $attributes->has('circle')]));
     $title = as_slot($title);
+    $body = as_slot($body);
 @endphp
 <{{ $as }} {{ $attributes->class([
     match ($layer) {
@@ -25,7 +26,7 @@
 @endcapture
 {{ render_slot(
     $wrapper($title->toHtml()),
-    $title->attributes->merge(['as' => 'div'], false)->class(['title'])
+    as_attributes(['as' => 'div'])->class(['title'])
 ) }}
-<div class="body">{{ $slot }}</div>
+{{ render_slot($slot->isEmpty() ? $body->toHtml() : $slot, as_attributes(as_slot($body)->attributes->class('body'), ['as' => 'div']), allowEmpty: true) }}
 </{{ $as }}>

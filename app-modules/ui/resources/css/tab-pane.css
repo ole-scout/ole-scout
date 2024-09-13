@@ -4,7 +4,7 @@
         > [role="tablist"] {
             @apply flex flex-row gap-2 p-2 text-sm border-b border-gray-300 dark:border-gray-700;
             > [role="tab"] {
-                @apply p-2 px-4 rounded-md text-gray-700 dark:text-gray-400 cursor-default;
+                @apply flex flex-row gap-2 p-2 px-4 rounded-md text-gray-700 dark:text-gray-400 cursor-default;
                 &[aria-selected="true"] {
                     @apply bg-primary-500/5 dark:bg-white/5 text-primary-600 dark:text-primary-400;
                 }

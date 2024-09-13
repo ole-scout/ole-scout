@@ -1,4 +1,5 @@
 @import "typeface-inter";
+@import "./badge.css";
 @import "./button.css";
 @import "./card.css";
 @import "./divider.css";

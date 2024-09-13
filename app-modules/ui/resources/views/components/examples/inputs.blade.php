@@ -1,5 +1,4 @@
 @php
-    $asAttributes = fn (array $array) => $attributes->only([])->merge($array, false);
     $toggleAttributeTuples = [
         [[], ['required' => true]],
         [['icon' => 'warning'], []],
@@ -36,18 +35,18 @@
         </div>
 
         @foreach($toggleAttributeTuples as [$labelAttributes, $inputAttributes])
-        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">
+        <x-ui::label :$size :attributes="as_attributes($labelAttributes)">
             Click
-            <x-slot:wrap :attributes="$asAttributes($inputAttributes)->merge([
+            <x-slot:wrap :attributes="as_attributes($inputAttributes)->merge([
                 'component' => 'ui::checkbox',
             ])"></x-slot:wrap>
         </x-ui::label>
         @endforeach
 
         @foreach($toggleAttributeTuples as $j => [$labelAttributes, $inputAttributes])
-        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">
+        <x-ui::label :$size :attributes="as_attributes($labelAttributes)">
             Click
-            <x-slot:wrap :attributes="$asAttributes($inputAttributes)->merge([
+            <x-slot:wrap :attributes="as_attributes($inputAttributes)->merge([
                 'component' => 'ui::radio',
                 'name' => join('-', [$size, $i, floor($j / 2)]),
                 'value' => strval($j % 2),
@@ -56,9 +55,9 @@
         @endforeach
 
         @foreach($toggleAttributeTuples as [$labelAttributes, $inputAttributes])
-        <x-ui::label :$size :attributes="$asAttributes($labelAttributes)">
+        <x-ui::label :$size :attributes="as_attributes($labelAttributes)">
             Click
-            <x-slot:wrap :attributes="$asAttributes($inputAttributes)->merge([
+            <x-slot:wrap :attributes="as_attributes($inputAttributes)->merge([
                 'component' => 'ui::switch',
             ])"></x-slot:wrap>
         </x-ui::label>

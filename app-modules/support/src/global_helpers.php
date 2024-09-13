@@ -76,6 +76,8 @@ if (! function_exists('as_attributes')) {
      */
     function as_attributes(mixed $attributes, mixed $defaults = null): ComponentAttributeBag
     {
+        $originalAttributes = $attributes;
+        $originalDefaults = $defaults;
         if (!$attributes || is_string($attributes) || $attributes instanceof HtmlString) {
             $attributes = new ComponentAttributeBag();
         } else if ($attributes instanceof ComponentSlot) {
@@ -100,9 +102,10 @@ if (! function_exists('as_attributes')) {
         }
         if ($defaults) {
             $class = explode(' ', $attributes->get('class'));
-            $attributes = as_attributes([...$attributes, ...$defaults])
+            $attributes = as_attributes([...$attributes->except(['class']), ...$defaults])
                 ->class($class);
         }
+        if (count(explode(' ', $attributes->get('class') ?? '')) > 7) dd($originalAttributes, $originalDefaults, $attributes->get('class'), debug_backtrace());
         return $attributes->filter(
             fn($value) => $value !== null && $value !== false
         );

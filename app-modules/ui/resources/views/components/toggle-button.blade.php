@@ -14,7 +14,7 @@
     $attributes = as_attributes($attributes)->merge([
         'role' => 'switch',
         'aria-checked' => $checked ? 'true' : 'false',
-    ], false);
+    ]);
     $iconAttributes = [
         'on' => [
             'hidden' => !$checked ? 'hidden' : null,

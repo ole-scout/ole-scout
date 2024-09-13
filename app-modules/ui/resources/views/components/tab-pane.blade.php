@@ -8,24 +8,25 @@
 @php
     $values = array_keys($tabs);
     $initialValue = $value ?? $values[0];
-    //$tabs = Arr::mapWithKeys($tabs, fn($v,$k) => [$k => as_slot($v)]);
 @endphp
 <div class="tab-pane card" x-id="['tab-pane']">
     <div role="tablist">
         @foreach($tabs as $value => $tab)
-        <x-ui::tab-pane.tab
-            :$value
-            :$values
-            :isActive="$value === $initialValue"
-            :$alpineState
-        >{{ $tab }}</x-ui::tab-pane.tab>
+        {{ render_slot($tab, [
+            'component' => 'ui::tab-pane.tab',
+            'value' => $value,
+            'values' => $values,
+            'isActive' => $value === $initialValue,
+            'alpineState' => $alpineState,
+        ]) }}
         @endforeach
     </div>
-    @foreach($panels as $i => $panel)
-        <x-ui::tab-pane.panel
-            :value="$values[$i]"
-            :isActive="$value === $initialValue"
-            :$alpineState
-        >{{ $panel }}</x-ui::tab-pane.panel>
+    @foreach($panels as $value => $panel)
+    {{ render_slot($panel, [
+        'component' => 'ui::tab-pane.panel',
+        'value' => $value,
+        'isActive' => $value === $initialValue,
+        'alpineState' => $alpineState,
+    ]) }}
     @endforeach
 </div>

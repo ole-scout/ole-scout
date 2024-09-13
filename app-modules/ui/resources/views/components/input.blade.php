@@ -8,7 +8,7 @@
         $action,
         fn($attributes) => (
             $attributes->has('component')
-            ? $attributes->merge(['size' => $size], false)
+            ? $attributes->merge(['size' => $size])
             : $attributes
         )->class(['action'])
     );
@@ -16,13 +16,13 @@
         $actionTrailing,
         fn($attributes) => (
             $attributes->has('component')
-            ? $attributes->merge(['size' => $size], false)
+            ? $attributes->merge(['size' => $size])
             : $attributes
         )->class(['action'])
     );
 @endphp
 @if($attributes->get('type') === 'file')
-<x-ui::file-picker {{ $attributes->merge(['size' => $size], false) }} />
+<x-ui::file-picker {{ $attributes->merge(['size' => $size]) }} />
 @else
 <span {{ $attributes->only(['class'])->class(
     ['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']

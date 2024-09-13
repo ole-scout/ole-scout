@@ -8,7 +8,7 @@
         $attributes,
         fn($attributes) => $attributes->merge(
             $attributes->hasAny('aria-label', 'aria-labelledby')
-            ? [] : ['aria-hidden' => 'true'], false
+            ? [] : ['aria-hidden' => 'true']
         )->class(['icon', match($size) {
             'sm' => 'icon-sm',
             default => null,
@@ -17,7 +17,7 @@
     );
 @endphp
 @isset($src)
-{{ render_slot($slot, $attributes->merge(['src' => $src, 'as' => 'img'], false)) }}
+{{ render_slot($slot, $attributes->merge(['src' => $src, 'as' => 'img'])) }}
 @else
 @svg(
     substr($icon, 0, 1) === '/'

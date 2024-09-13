@@ -33,7 +33,7 @@
             'value' => $option['value'],
             'checked' => $option['value'] === $value,
             'disabled' => $disabled ? 'disabled' : null,
-        ], false) }} />
+        ]) }} />
     </x-ui::button>
     @endforeach
 </div>

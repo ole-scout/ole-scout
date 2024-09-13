@@ -15,10 +15,10 @@
             $attributes->has('component')
             ? (
                 in_array($attributes->get('component'), $wrappedComponents)
-                ? $attributes->merge(['wrapped' => true], false)
+                ? $attributes->merge(['wrapped' => true])
                 : $attributes
-            )->merge(['size' => $size], false)
-            : $attributes->merge(['as' => 'span'], false)
+            )->merge(['size' => $size])
+            : $attributes->merge(['as' => 'span'])
         )->class(['wrap'])
     );
 @endphp

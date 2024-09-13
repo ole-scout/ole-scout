@@ -5,7 +5,7 @@
 ])
 @php
     $attributes = as_attributes($attributes)->merge(
-        ['type' => 'checkbox'], false
+        ['type' => 'checkbox']
     );
     $proxyAttributes = as_attributes($proxyAttributes, $attributes->only(['class']))->class(
         ['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']

@@ -17,11 +17,11 @@
         'hiddenIcons',
     ];
 @endphp
-<x-ui::button {{ $attributes->only($buttonProps)->merge(
-    [...$extra, 'as' => 'label', 'disabled' => $disabled], false
+<x-ui::button {{ as_attributes($attributes->only($buttonProps), $extra)->merge(
+    ['as' => 'label', 'disabled' => $disabled]
 )->class(['focus-within:ring']) }}>
     <input {{ $attributes->except($buttonProps)->merge(
-        ['disabled' => $disabled, 'type' => 'file'], false
+        ['disabled' => $disabled, 'type' => 'file']
     )->class(['sr-only']) }} />
     <span>{{ $slot }}</span>
 </x-ui::button>

@@ -1,6 +1,7 @@
 @props([
     'value',
     'values',
+    'badge' => null,
     'isActive' => false,
     'alpineState' => 'state',
 ])
@@ -13,6 +14,7 @@
     $lastValue = $values[$numValues - 1];
     $nextValue = $value === $lastValue ? $firstValue : $values[$i + 1];
     $prevValue = $value === $firstValue ? $lastValue : $values[$i - 1];
+    $badge = as_slot($badge, ['class' => 'badge']);
     $attributes = as_attributes($attributes, [
         'as' => 'div',
         'role' => 'tab',
@@ -29,4 +31,8 @@
         'x-on:keyup.end' => "${alpineState} = '{$lastValue}';\$focus.focus(document.querySelector('#' + \$id('tab-pane', 'tab_{$lastValue}')))",
     ]);
 @endphp
-{{ render_slot($slot, $attributes) }}
+@capture($wrapper, $slot)
+<span>{{ $slot }}</span>
+{{ render_slot($badge, allowEmpty: true) }}
+@endcapture
+{{ render_slot($wrapper($slot), $attributes) }}
