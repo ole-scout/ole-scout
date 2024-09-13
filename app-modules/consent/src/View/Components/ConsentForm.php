@@ -32,16 +32,16 @@ class ConsentForm extends Component
             'serviceProvider',
             'serviceCookies',
         ])->get()->groupBy('category');
-        foreach ($this->services as $categoryName => $category) {
-            if (!isset($this->selected[$categoryName])) {
-                $this->selected[$categoryName] = [];
+        foreach ($this->services as $categoryValue => $category) {
+            if (!isset($this->selected[$categoryValue])) {
+                $this->selected[$categoryValue] = [];
             }
             foreach ($category as $service) {
                 if (!$service->serviceProvider) {
                     $service->serviceProvider = $operator;
                 }
-                $this->selected[$categoryName][$service->id] = (
-                    $categoryName === 'essential'
+                $this->selected[$categoryValue][$service->id] = (
+                    $categoryValue === 'essential'
                     ?: array_key_exists($service->id, $selected)
                 );
             }
@@ -57,9 +57,9 @@ class ConsentForm extends Component
             'categories' => Arr::mapWithKeys(
                 Arr::where(
                     Category::cases(),
-                    fn(Category $category) => $this->services->has($category->name)
+                    fn(Category $category) => $this->services->has($category->value)
                 ),
-                fn(Category $category) => [$category->name => $category->label()]
+                fn(Category $category) => [$category->value => $category->label()]
             ),
             'selected' => $this->selected,
             'services' => $this->services

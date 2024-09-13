@@ -17,7 +17,7 @@ class ServiceCookieFactory extends Factory
     public function essential(): self
     {
         return $this->state([
-            'legal_basis' => fn() => $this->faker->randomElement(
+            'legal_basis' => $this->faker->randomElement(
                 Arr::where(
                     LegalBasis::cases(),
                     fn(LegalBasis $case) => $case !== LegalBasis::CONSENT
