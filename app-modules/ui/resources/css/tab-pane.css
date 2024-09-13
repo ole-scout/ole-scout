@@ -1,0 +1,20 @@
+@layer components {
+    .tab-pane {
+        @apply flex flex-col rounded-lg shadow bg-gray-100 dark:bg-gray-950 ring-1 ring-gray-950/5 dark:ring-white/10;
+        > [role="tablist"] {
+            @apply flex flex-row gap-2 p-2 text-sm border-b border-gray-300 dark:border-gray-700;
+            > [role="tab"] {
+                @apply p-2 px-4 rounded-md text-gray-700 dark:text-gray-400 cursor-default;
+                &[aria-selected="true"] {
+                    @apply bg-primary-500/5 dark:bg-white/5 text-primary-600 dark:text-primary-400;
+                }
+                &[aria-selected="false"]:hover {
+                    @apply bg-gray-500/5 dark:bg-white/5 text-gray-950 dark:text-gray-200 cursor-pointer;
+                }
+            }
+        }
+        > [role="tabpanel"] {
+            @apply p-4;
+        }
+    }
+}

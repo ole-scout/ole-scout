@@ -6,6 +6,7 @@
 @import "./icon.css";
 @import "./input.css";
 @import "./label.css";
+@import "./tab-pane.css";
 @import "./toggle-group.css";
 
 @layer base {
