@@ -16,11 +16,9 @@ return new class extends Migration
     {
         Schema::create('user_visible_course_groups', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->index()
+            $table->foreignIdFor(Enrollment::class)->index()
                 ->constrained()->cascadeOnDelete();
             $table->foreignIdFor(CourseGroup::class)->index()
-                ->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Enrollment::class)->index()
                 ->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

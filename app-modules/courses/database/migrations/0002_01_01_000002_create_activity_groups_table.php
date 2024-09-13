@@ -19,7 +19,6 @@ return new class extends Migration
                 ->constrained()->cascadeOnDelete();
             $table->foreignIdFor(ActivityGroup::class, 'parent_id')->nullable()->index()
                 ->constrained('activity_groups')->nullOnDelete();
-            $table->string('slug')->unique()->index();
             $table->string('title');
             $table->integer('order_column');
             $table->softDeletes();

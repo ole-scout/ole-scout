@@ -3,6 +3,7 @@
 namespace FossHaas\Courses\Models;
 
 use FossHaas\Support\CalVer;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -56,6 +57,11 @@ class Activity extends Model implements Sortable
         'is_disabled',
         'is_required',
     ];
+
+    public function scopeRoot(Builder $query): void
+    {
+        $query->whereNull('activity_group_id');
+    }
 
     public function content(): MorphTo
     {

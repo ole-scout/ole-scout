@@ -3,6 +3,7 @@
 namespace FossHaas\Courses\Database\Factories;
 
 use FossHaas\Courses\Enums\Access;
+use FossHaas\Courses\Models\CourseGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,9 +28,21 @@ class CourseFactory extends Factory
         $locales = array_keys(config('support.locales'));
         return [
             'course_group_id' => null,
-            'slug' => $this->faker->slug(),
-            'language' => fn() => $this->faker->randomElement($locales),
-            'title' => fn() => $this->faker->words(
+            'slug' => function ($attributes) {
+                if ($attributes['course_group_id']) {
+                    $courseGroup = CourseGroup::find($attributes['course_group_id']);
+                    return join('-', [
+                        $courseGroup->slug,
+                        sprintf('%02d', $courseGroup->courses()->count() + 1)
+                    ]);
+                }
+                return join('-', [
+                    $this->faker->lexify($this->faker->randomElement(['??', '???', '???'])),
+                    sprintf('%02d', $this->faker->randomNumber(2))
+                ]);
+            },
+            'language' => $this->faker->randomElement($locales),
+            'title' => $this->faker->words(
                 $this->faker->numberBetween(2, 3),
                 true
             ),

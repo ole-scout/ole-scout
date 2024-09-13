@@ -6,11 +6,13 @@ use App\Models\User;
 use FossHaas\Courses\Actions\CreateCommonVisibleCourseGroups;
 use FossHaas\Courses\Actions\CreateUserVisibleCourseGroups;
 use FossHaas\Courses\Enums\Access;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
@@ -25,6 +27,9 @@ class Course extends Model implements Sortable
 
     protected static function booted()
     {
+        static::addGlobalScope('published', function (Builder $query): void {
+            $query->where('is_published', true);
+        });
         static::creating(function (Course $course) {
             $course->id = Str::uuid();
         });
@@ -70,6 +75,20 @@ class Course extends Model implements Sortable
         'cert' => 'json',
     ];
 
+    public function scopeForUser(Builder $query, ?User $user = null): void
+    {
+        if (!$user) $user = Auth::user();
+        $query->where('access', Access::OPEN);
+        if ($user) {
+            $query->orWhereHas(
+                'enrollments',
+                function (Builder $query) use ($user) {
+                    $query->forUser($user);
+                }
+            );
+        }
+    }
+
     public function activities(): HasMany
     {
         return $this->hasMany(Activity::class);
@@ -98,11 +117,6 @@ class Course extends Model implements Sortable
     public function enrollments(): HasMany
     {
         return $this->hasMany(Enrollment::class);
-    }
-
-    public function enrolledUsers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, Enrollment::class);
     }
 
     public function commonVisibleCourseGroups(): HasMany

@@ -2,14 +2,17 @@
 
 namespace FossHaas\Courses\Models;
 
+use App\Models\User;
 use FossHaas\Courses\Actions\CreateCommonVisibleCourseGroups;
 use FossHaas\Courses\Actions\CreateUserVisibleCourseGroups;
 use FossHaas\Courses\Enums\Access;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
@@ -66,14 +69,28 @@ class CourseGroup extends Model implements Sortable
         ]);
     }
 
+    public function scopeRoot(Builder $query): void
+    {
+        $query->whereNull('parent_id');
+    }
+
+    public function scopeForUser(Builder $query, ?User $user = null): void
+    {
+        if (!$user) $user = Auth::user();
+        $query->whereHas('commonVisibleCourseGroups');
+        if ($user) {
+            $query->orWhereHas(
+                'userVisibleCourseGroups',
+                function (Builder $query) use ($user) {
+                    $query->forUser($user);
+                }
+            );
+        }
+    }
+
     public function courses(): HasMany
     {
         return $this->hasMany(Course::class);
-    }
-
-    public function publishedCourses(): HasMany
-    {
-        return $this->courses()->where('is_published', true);
     }
 
     public function courseGroups(): HasMany
@@ -94,10 +111,5 @@ class CourseGroup extends Model implements Sortable
     public function userVisibleCourseGroups(): HasMany
     {
         return $this->hasMany(UserVisibleCourseGroup::class);
-    }
-
-    public function enrollments(): BelongsToMany
-    {
-        return $this->belongsToMany(Enrollment::class, UserVisibleCourseGroup::class);
     }
 }

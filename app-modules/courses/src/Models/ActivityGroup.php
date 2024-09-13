@@ -2,6 +2,7 @@
 
 namespace FossHaas\Courses\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -26,7 +27,6 @@ class ActivityGroup extends Model implements Sortable
     protected $fillable = [
         'course_id',
         'parent_id',
-        'slug',
     ];
 
     public function buildSortQuery()
@@ -35,6 +35,11 @@ class ActivityGroup extends Model implements Sortable
             'course_id' => $this->course_id,
             'parent_id' => $this->parent_id,
         ]);
+    }
+
+    public function scopeRoot(Builder $query): void
+    {
+        $query->whereNull('parent_id');
     }
 
     public function activities(): HasMany

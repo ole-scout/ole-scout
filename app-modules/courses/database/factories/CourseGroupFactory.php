@@ -2,6 +2,7 @@
 
 namespace FossHaas\Courses\Database\Factories;
 
+use FossHaas\Courses\Models\CourseGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
 
@@ -21,8 +22,18 @@ class CourseGroupFactory extends Factory
         return [
             'parent_id' => null,
             'order_column' => $this->faker->numberBetween(0, 100),
-            'slug' => $this->faker->slug(),
-            'title' => fn() => Arr::mapWithKeys($locales, fn($locale) => [
+            'slug' => function ($attributes) {
+                if ($attributes['parent_id']) {
+                    return join('-', [
+                        CourseGroup::find($attributes['parent_id'])->slug,
+                        $this->faker->lexify('??')
+                    ]);
+                }
+                return $this->faker->lexify(
+                    $this->faker->randomElement(['??', '???', '???'])
+                );
+            },
+            'title' => Arr::mapWithKeys($locales, fn($locale) => [
                 $locale => $locale . ': ' . $this->faker->words(
                     $this->faker->numberBetween(2, 3),
                     true

@@ -44,7 +44,6 @@ class CreateUserVisibleCourseGroups
                         ->get($enrollment->course_id)
                         ->map(
                             fn($groupId) => [
-                                'user_id' => $enrollment->user_id,
                                 'enrollment_id' => $enrollment->id,
                                 'course_group_id' => $groupId,
                                 'created_at' => now(),
