@@ -1,0 +1,5 @@
+@layer components {
+    .fieldset {
+        @apply p-4 lines;
+    }
+}

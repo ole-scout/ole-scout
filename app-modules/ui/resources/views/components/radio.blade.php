@@ -1,18 +1,28 @@
 @props([
     'size' => null,
-    'wrapped' => false,
-    'proxyAttributes' => [],
 ])
 @php
-    $attributes = as_attributes($attributes)->merge(
-        ['type' => 'radio']
-    );
-    $proxyAttributes = as_attributes($proxyAttributes, $attributes->only(['class']))->class(
-        ['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']
-    );
-    $attributes = $attributes->except(['class'])->class(['sr-only']);
+    $attributes = as_attributes($attributes);
+    $slot = as_slot($slot);
+    $slot->attributes = $slot->attributes->merge([
+        'class' => $attributes->get('class')
+    ])->class([
+        'input',
+        'input-sm' => $size === 'sm',
+        'input-lg' => $size === 'lg'
+    ]);
+    $inputAttributes = $attributes->except('class')->merge([
+        'type' => 'radio',
+        'class' => 'sr-only'
+    ]);
 @endphp
-@if(!$wrapped)<label>@endif
-    <input {{ $attributes }}>
-    <span {{ $proxyAttributes }}><span class="toggle"></span></span>
-@if(!$wrapped)</label>@endif
+@capture($transform, $contents)
+{{ $contents }}
+<input {{ $inputAttributes }}>
+<span class="toggle"></span>
+@endcapture
+{{ render_slot(
+    $slot,
+    transform: $transform,
+    fallbackTag: 'label'
+) }}

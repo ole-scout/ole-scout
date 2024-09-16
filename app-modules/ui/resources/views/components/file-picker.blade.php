@@ -12,16 +12,21 @@
         'variant',
         'icon',
         'iconTrailing',
-        'iconAttributes',
         'hiddenLabel',
         'hiddenIcons',
     ];
-@endphp
-<x-ui::button {{ as_attributes($attributes->only($buttonProps), $extra)->merge(
-    ['as' => 'label', 'disabled' => $disabled]
-)->class(['focus-within:ring']) }}>
-    <input {{ $attributes->except($buttonProps)->merge(
+    $attributes = as_attributes($attributes);
+    $buttonAttributes = as_attributes(
+        $attributes->only($buttonProps),
+        $extra
+    )->merge(
+        ['as' => 'label', 'disabled' => $disabled]
+    )->class(['focus-within:ring']);
+    $inputAttributes = as_attributes($attributes->except($buttonProps))->merge(
         ['disabled' => $disabled, 'type' => 'file']
-    )->class(['sr-only']) }} />
+    )->class(['sr-only']);
+@endphp
+<x-ui::button :attributes="$buttonAttributes">
+    <input {{ $inputAttributes }} />
     <span>{{ $slot }}</span>
 </x-ui::button>

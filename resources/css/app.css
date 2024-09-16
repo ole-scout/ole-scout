@@ -32,11 +32,11 @@
             &:not(.page-sm > main, .page-md > main) {
                 @apply md:px-16;
             }
-            &:is(header + main:has(> .card > .title)) {
+            &:is(header + main:has(> .card > .header > .title)) {
                 @apply md:pt-0 md:-mt-16;
             }
             > .card,
-            > .card > .title {
+            > .card > .header {
                 @apply rounded-t-none md:rounded-t-lg;
             }
         }

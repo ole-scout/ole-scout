@@ -1,43 +1,75 @@
 @props([
-    'id',
+    'name',
+    'disabled' => false,
+    'inline' => false,
+    'size' => null,
     'label' => null,
     'hint' => null,
-    'description' => null,
-    'error' => null,
-    'size' => null,
+    'input' => null,
     'action' => null,
     'actionTrailing' => null,
-    'extra' => [],
+    'description' => null,
+    'error' => null,
 ])
 @php
-    $input = as_slot('', as_attributes($attributes)->merge([
+    $as = $inline !== false ? 'span' : 'div';
+    $attributes = as_attributes($attributes, [
+        'x-id' => '[\'field\']',
+        'class' => [
+            'field',
+            'field-sm' => $size === 'sm',
+            'field-lg' => $size === 'lg',
+            'field-inline' => $inline !== false,
+        ],
+    ]);
+    $label = as_slot($label);
+    $hint = as_slot($hint);
+    $input = as_slot($input, [
         'component' => 'ui::input',
-        'id' => $id,
         'action' => $action,
         'actionTrailing' => $actionTrailing,
-        'aria-labelledby' => "{$id}-label",
-        'aria-describedby' => "{$id}-description",
+        'name' => isset($name) ? $name : null,
+        'disabled' => $disabled,
         'size' => $size,
-    ]));
-    $attributes = as_attributes($extra)->class(['field', 'field-sm' => $size === 'sm', 'field-lg' => $size === 'lg']);
-    $label = as_slot($label, fn($attributes) => $attributes->merge(['id' => "{$id}-label", 'for' => $id, 'size' => $size])->class(['label']));
-    $hint = as_slot($hint, fn($attributes) => ($attributes->has('component') ? $attributes->merge(['size' => $size]) : $attributes)->merge(['id' => "{$id}-hint"])->class(['hint']));
-    $description = as_slot($description, fn($attributes) => $attributes->merge(['id' => "{$id}-description"])->class(['description']));
-    $error = as_slot($error, fn($attributes) => $attributes->merge(['id' => "{$id}-error", 'role' => 'alert'])->class(['error']));
+        'x-bind:id' => '$id(\'field\', \'input\')',
+        'x-bind:aria-labelledby' => '$id(\'field\', \'label\')',
+        'x-bind:aria-describedby' => '$id(\'field\', \'description\')',
+    ]);
+    $description = as_slot($description);
+    $error = as_slot($error);
 @endphp
-<div {{ $attributes }}>
+<{{ $as }} {{ $attributes }}>
+    @if($inline === 'trailing'){{ render_slot($input) }}@endif
     @if($label->isNotEmpty())
-    {{ render_slot($label, ['component' => 'ui::label']) }}
+    {{ render_slot($label, [
+        'component' => 'ui::label',
+        'size' => $size,
+        'class' => 'label',
+        'x-bind:id' => '$id(\'field\', \'label\')',
+        'x-bind:for' => '$id(\'field\', \'input\')',
+    ]) }}
     @endif
-    {{ render_slot($hint, allowEmpty: true) }}
-    {{ render_slot($input, allowEmpty: true) }}
-    @if($error->isNotEmpty() || $input->attributes->whereStartsWith('wire:model')->isEmpty())
-    {{ render_slot($error, allowEmpty: true) }}
-    @else
-    @capture($wrapper)
-    @error($input->attributes->get('name')){{ $message }}@enderror
+    @if($hint->isNotEmpty())
+    {{ render_slot($hint, [
+        'size' => $hint->attributes->has('component') ? $size : null,
+        'class' => 'hint',
+        'x-bind:id' => '$id(\'field\', \'hint\')',
+    ]) }}
+    @endif
+    @if($inline !== 'trailing'){{ render_slot($input) }}@endif
+    @capture($transformError, $contents)
+    @error($name){{ $message }}@enderror
+    {{ $contents }}
     @endcapture
-    {{ render_slot($wrapper(), $error->attributes, allowEmpty: true) }}
+    {{ render_slot($error, [
+        'class' => 'error',
+        'role' => 'alert',
+        'x-bind:id' => '$id(\'field\', \'error\')',
+    ], transform: $transformError) }}
+    @if($description->isNotEmpty())
+    {{ render_slot($description, [
+        'class' => 'description',
+        'x-bind:id' => '$id(\'field\', \'description\')',
+    ]) }}
     @endif
-    {{ render_slot($description, allowEmpty: true) }}
-</div>
+</{{ $as }}>

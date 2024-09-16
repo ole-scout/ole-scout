@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
@@ -71,13 +72,11 @@ if (! function_exists('markdown')) {
 if (! function_exists('as_attributes')) {
     /**
      * @param array|ComponentAttributeBag|Collection|string|HtmlString|ComponentSlot|null $attributes
-     * @param array|ComponentAttributeBag|Collection|Closure|null $defaults
+     * @param array|ComponentAttributeBag|Collection|null $defaults
      * @return ComponentAttributeBag
      */
     function as_attributes(mixed $attributes, mixed $defaults = null): ComponentAttributeBag
     {
-        $originalAttributes = $attributes;
-        $originalDefaults = $defaults;
         if (!$attributes || is_string($attributes) || $attributes instanceof HtmlString) {
             $attributes = new ComponentAttributeBag();
         } else if ($attributes instanceof ComponentSlot) {
@@ -88,7 +87,8 @@ if (! function_exists('as_attributes')) {
             $attributes = new ComponentAttributeBag($attributes);
         }
         while ($attributes->has('attributes')) {
-            $class = explode(' ', $attributes->get('class'));
+            $class = $attributes->get('class') ?? [];
+            if (!is_array($class)) $class = explode(' ', (string) $class);
             $attributes = as_attributes(
                 $attributes->get('attributes'),
                 $attributes->except(['attributes', 'class'])
@@ -96,16 +96,16 @@ if (! function_exists('as_attributes')) {
         }
         if ($defaults instanceof ComponentAttributeBag || $defaults instanceof Collection) {
             $defaults = $defaults->all();
-        } else if (is_callable($defaults)) {
-            $attributes = $defaults($attributes);
-            $defaults = null;
         }
         if ($defaults) {
-            $class = explode(' ', $attributes->get('class'));
-            $attributes = as_attributes([...$attributes->except(['class']), ...$defaults])
-                ->class($class);
+            if (isset($defaults['class'])) {
+                $class = $defaults['class'];
+                $defaults = Arr::except($defaults, 'class');
+                if (!is_array($class)) $class = explode(' ', (string) $class);
+            }
+            $attributes = $attributes->merge($defaults, false);
+            if (isset($class)) $attributes = $attributes->class($class);
         }
-        if (count(explode(' ', $attributes->get('class') ?? '')) > 7) dd($originalAttributes, $originalDefaults, $attributes->get('class'), debug_backtrace());
         return $attributes->filter(
             fn($value) => $value !== null && $value !== false
         );
@@ -114,96 +114,89 @@ if (! function_exists('as_attributes')) {
 
 if (! function_exists('as_slot')) {
     /**
-     * @param string|HtmlString|ComponentSlot|Closure $contents
-     * @param array|ComponentAttributeBag|Collection|Closure|null $attributes
+     * @param string|HtmlString|ComponentSlot|ComponentAttributeBag|Closure $contents
+     * @param array|ComponentAttributeBag|Collection|null $attributes
      * @return ComponentSlot
      */
     function as_slot(mixed $contents, mixed $attributes = null): ComponentSlot
     {
-        if (is_callable($contents)) {
+        if ($contents instanceof ComponentAttributeBag) {
+            $attributes = as_attributes($contents, $attributes);
+            $contents = '';
+        } else if (!is_string($contents) && is_callable($contents)) {
             $contents = $contents();
+        } else if ($contents instanceof ComponentSlot) {
+            if ($attributes) {
+                $contents->attributes = as_attributes(
+                    $contents->attributes,
+                    $attributes
+                );
+            }
+            return $contents;
         }
-        if ($contents instanceof ComponentSlot) {
-            $attributes = as_attributes(
-                $contents->attributes,
-                $attributes
-            );
-            $contents = $contents->toHtml();
-        }
-        if (!($attributes instanceof ComponentAttributeBag) && is_callable($attributes)) {
-            $attributes = $attributes(new ComponentAttributeBag());
-        } else if (is_array($attributes)) {
-            $attributes = new ComponentAttributeBag($attributes);
-        }
+
+        if (!$contents) $contents = '';
+        elseif (!is_string($contents)) $contents = (string) $contents;
+        if (!$attributes) return new ComponentSlot($contents);
+
         $slot = new ComponentSlot($contents);
-        $slot->attributes = $attributes;
+        $slot->attributes = as_attributes($attributes);
         return $slot;
     }
 }
 
 if (! function_exists('render_slot')) {
-    /**
-     * @param string|HtmlString|ComponentSlot|Closure $slot
-     * @param array|ComponentAttributeBag|Collection|Closure|null $attributes
-     * @param bool|null $allowEmpty
-     */
-    function render_slot(mixed $slot, mixed $attributes = null, ?bool $allowEmpty = null): HtmlString
-    {
-        if (is_callable($slot)) {
-            $slot = $slot();
+    function render_slot(
+        ComponentSlot|HtmlString|string|null $slot,
+        ComponentAttributeBag|array|null $attributes = null,
+        ?Closure $transform = null,
+        ?string $fallbackTag = null,
+    ): HtmlString {
+        if ($slot instanceof HtmlString) $contents = $slot;
+        else if (!$slot) $contents = new HtmlString();
+        else if ($slot instanceof ComponentSlot) {
+            $contents = new HtmlString($slot->toHtml());
+            if ($attributes instanceof ComponentAttributeBag) {
+                $attributes = $attributes->all();
+            }
+            $attributes = ($attributes
+                ? as_attributes($slot->attributes, $attributes)
+                : $slot->attributes
+            );
+        } else $contents = new HtmlString((string) $slot);
+        if ($transform) $contents = $transform($contents);
+
+        if (!$attributes) $attributes = new ComponentAttributeBag();
+        else $attributes = as_attributes($attributes);
+
+        if ($attributes->has('callback')) {
+            $callback = $attributes->get('callback');
+            $attributes = $attributes->except('callback');
+            return new HtmlString((string) $callback($attributes, $contents));
         }
-        if ($slot instanceof ComponentSlot) {
-            $slot = as_slot($slot, $attributes);
-            $attributes = $slot->attributes;
-            $slot = $slot->toHtml();
-        } else if (!($attributes instanceof ComponentAttributeBag) && is_callable($attributes)) {
-            $attributes = $attributes(new ComponentAttributeBag());
-        } else {
-            $attributes = as_attributes($attributes);
-        }
+
         if ($attributes->has('component')) {
-            $component = $attributes->get('component');
-            $attributes = $attributes->except(['component']);
             return new HtmlString(Blade::render(
-                '<x-dynamic-component :$component :$attributes>{{ $slot }}</x-dynamic-component>',
+                '<x-dynamic-component :$component :$attributes>{{ $contents }}</x-dynamic-component>',
                 [
-                    'component' => $component,
-                    'attributes' => $attributes,
-                    'slot' => new HtmlString($slot),
+                    'attributes' => $attributes->except('component'),
+                    'component' => $attributes->get('component'),
+                    'contents' => $contents,
                 ]
             ));
         }
-        $as = $attributes->get('as') ?? 'div';
-        // List of void elements from html.spec.whatwg.org
-        $isVoid = in_array($as, [
-            'area',
-            'base',
-            'br',
-            'col',
-            'embed',
-            'hr',
-            'img',
-            'input',
-            'link',
-            'meta',
-            'source',
-            'track',
-            'wbr'
-        ]);
-        // Make an exception for empty void elements if allowEmpty is unset
-        if ($attributes->isEmpty() && !trim((string) $slot) && (
-            $isVoid ? $allowEmpty === false : !$allowEmpty
-        )) {
-            return new HtmlString('');
+
+        $tag = $fallbackTag ?? 'div';
+        if ($attributes->has('as')) {
+            $tag = $attributes->get('as');
+            $attributes = $attributes->except('as');
         }
-        $attributes = $attributes->except(['as']);
         return new HtmlString(Blade::render(
-            $isVoid ? '<{{ $as }} {{ $attributes }}>' :
-                '<{{ $as }} {{ $attributes }}>{{ $slot }}</{{ $as }}>',
+            '<{{ $tag }} {{ $attributes }}>{{ $contents }}</{{ $tag }}>',
             [
-                'as' => $as,
+                'tag' => $tag,
                 'attributes' => $attributes,
-                'slot' => new HtmlString($slot),
+                'contents' => $contents,
             ]
         ));
     }

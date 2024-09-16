@@ -1,11 +1,20 @@
 @layer components {
     .field {
-        @apply relative flex flex-wrap items-end gap-2;
-        > .label {
-            @apply flex-grow flex-shrink;
+        @apply relative gap-2;
+        &:where(.field-inline) {
+            @apply inline-flex items-center;
+        }
+        &:where(:not(.field-inline)) {
+            @apply flex flex-wrap items-end;
+            > .label {
+                @apply flex-grow flex-shrink;
+            }
+            > .hint {
+                @apply flex-shrink-0;
+            }
         }
         > .hint {
-            @apply flex-shrink-0 text-gray-600 dark:text-gray-500;
+            @apply text-gray-600 dark:text-gray-500;
             &:empty {
                 @apply hidden;
             }

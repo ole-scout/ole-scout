@@ -18,7 +18,7 @@
     >
       <x-slot:slot class="leading-5">
         powered by OLE Scout<br>
-        made with <x-ui::icon icon="heart" size="sm" aria-label="love" />
+        made with <x-ui::icon size="sm" aria-label="love">heart</x-ui::icon>
         in <abbr lang="de" title="Ostwestfalen-Lippe">OWL</abbr>
       </x-slot:slot>
     </x-ui::button>

@@ -6,31 +6,48 @@
     'offIconTrailing' => null,
     'onIconTitle' => null,
     'offIconTitle' => null,
-    'alpineState' => 'state',
 ])
 @php
-    $icon = ($onIcon && $offIcon) ? ['on' => $onIcon, 'off' => $offIcon] : null;
-    $iconTrailing = ($onIconTrailing && $offIconTrailing) ? ['on' => $onIconTrailing, 'off' => $offIconTrailing] : null;
     $attributes = as_attributes($attributes)->merge([
         'role' => 'switch',
         'aria-checked' => $checked ? 'true' : 'false',
     ]);
-    $iconAttributes = [
-        'on' => [
+    $icon = [];
+    $iconTrailing = [];
+    if ($onIcon) {
+        $icon[] = as_slot($onIcon, [
             'hidden' => !$checked ? 'hidden' : null,
             'data-when-checked' => 'show',
             'title' => $onIconTitle,
             'aria-hidden' => 'true',
-        ],
-        'off' => [
+        ]);
+    }
+    if ($onIconTrailing) {
+        $iconTrailing[] = as_slot($onIconTrailing, [
+            'hidden' => !$checked ? 'hidden' : null,
+            'data-when-checked' => 'show',
+            'title' => $onIconTitle,
+            'aria-hidden' => 'true',
+        ]);
+    }
+    if ($offIcon) {
+        $icon[] = as_slot($offIcon, [
             'hidden' => $checked ? 'hidden' : null,
             'data-when-checked' => 'hide',
             'title' => $offIconTitle,
             'aria-hidden' => 'true',
-        ],
-    ];
+        ]);
+    }
+    if ($offIconTrailing) {
+        $iconTrailing[] = as_slot($offIconTrailing, [
+            'hidden' => $checked ? 'hidden' : null,
+            'data-when-checked' => 'hide',
+            'title' => $offIconTitle,
+            'aria-hidden' => 'true',
+        ]);
+    }
+    $slot = as_slot($slot);
 @endphp
 <x-ui::button x-ui-toggle-button="data-when-checked"
-    :$icon :$iconTrailing :$iconAttributes
-    :$attributes
->{{ $slot }}</x-ui::button>
+    :$icon :$iconTrailing :$attributes
+><x-slot:slot :attributes="$slot->attributes">{{ $slot }}</x-slot:slot></x-ui::button>

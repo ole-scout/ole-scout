@@ -1,16 +1,16 @@
 @layer components {
     .icon {
         @apply inline-block;
-        &:is(img) {
+        &:where(img) {
             @apply object-contain;
         }
-        &:is(.icon-sm) {
+        &:where(.icon-sm) {
             @apply size-4;
         }
-        &:not(.icon-sm, .icon-lg) {
+        &:where(:not(.icon-sm, .icon-lg)) {
             @apply size-5;
         }
-        &:is(.icon-lg) {
+        &:where(.icon-lg) {
             @apply size-6;
         }
     }

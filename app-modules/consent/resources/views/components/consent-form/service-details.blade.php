@@ -1,25 +1,31 @@
-@props([ 'service', 'category' ])
-<x-filament::fieldset :label="$service->name" label-hidden {{ $attributes }}>
-    <x-filament-partials::forms.component-container class="sm:grid-cols-2">
-        <div class="space-y-6">
-            <x-filament-forms::field-wrapper>
-                <x-slot:labelPrefix>
-                    <x-filament-partials::forms.toggle
-                        alpineActive="isSelected('{{ $category }}', '{{ $service->id }}')"
-                        :initialChecked="$category === 'essential'"
-                        :disabled="$category === 'essential'"
-                        x-on:click="toggle('{{ $category }}', '{{ $service->id }}')"
-                    />
-                </x-slot:labelPrefix>
-                <x-slot:label>{{ $service->name }}</x-slot:label>
-                <x-slot:helperText>{!! markdown($service->description) !!}</x-slot:helperText>
-            </x-filament-forms::field-wrapper>
-            <x-consent::consent-form.provider-details :provider="$service->serviceProvider" />
-        </div>
-        @if($service->serviceCookies->count())
-        <div>
-            <x-consent::consent-form.cookie-list :cookies="$service->serviceCookies" />
-        </div>
-        @endif
-    </x-filament-partials::forms.component-container>
-</x-filament::fieldset>
+@props([
+    'service',
+    'category',
+])
+@php
+    $switchAttributes = as_attributes([
+        'component' => 'ui::switch',
+        'checked' => $category === 'essential',
+        'disabled' => $category === 'essential',
+        'x-bind:checked' => "isSelected('{$category}', '{$service->id}')",
+        'x-on:click' => "toggle('{$category}', '{$service->id}')",
+    ]);
+@endphp
+<x-ui::fieldset>
+    <div class="pb-4 md:inline-block md:pt-2">
+        <x-ui::field :name="$service->id" :label="$service->name" size="lg" inline="trailing">
+            <x-slot:input :attributes="$switchAttributes"></x-slot:input>
+        </x-ui::field>
+    </div>
+    <div class="pb-4 sm:float-right sm:w-2/3 sm:ml-2 sm:pl-2 md:w-1/2">
+        <x-consent::consent-form.provider-details :provider="$service->serviceProvider" />
+    </div>
+    <div class="text-sm leading-6 prose max-w-none dark:prose-invert empty:hidden hyphens-auto">
+        {!! markdown($service->description) !!}
+    </div>
+    @if($service->serviceCookies->count())
+    <div class="clear-both pt-4">
+        <x-consent::consent-form.cookie-list :cookies="$service->serviceCookies" class="w-full" />
+    </div>
+    @endif
+</x-ui::fieldset>

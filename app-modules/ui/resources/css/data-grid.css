@@ -1,0 +1,13 @@
+@layer components {
+    .data-grid {
+        @apply text-sm grid grid-cols-1 gap-2 sm:col-[--col-span-sm];
+        > * {
+            > :where(dt) {
+                @apply font-semibold;
+            }
+            > :where(dd) {
+                @apply text-gray-950 dark:text-gray-50;
+            }
+        }
+    }
+}

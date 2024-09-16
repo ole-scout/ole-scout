@@ -1,11 +1,27 @@
+@layer utilities {
+    .lines {
+        @apply rounded-lg ring-1 ring-gray-950/5 dark:ring-white/10;
+    }
+    .line-t {
+        @apply border-t border-t-gray-300 dark:border-t-gray-700;
+    }
+    .line-b {
+        @apply border-b border-b-gray-300 dark:border-b-gray-700;
+    }
+    .line-l {
+        @apply border-l border-l-gray-300 dark:border-l-gray-700;
+    }
+    .line-r {
+        @apply border-r border-r-gray-300 dark:border-r-gray-700;
+    }
+}
 @layer components {
     .divider {
-        @apply border-gray-300 dark:border-gray-700;
         &.horizontal {
-            @apply border-l mx-4;
+            @apply line-l mx-4;
         }
         &:not(.horizontal) {
-            @apply border-t my-4;
+            @apply line-t my-4;
         }
     }
 }

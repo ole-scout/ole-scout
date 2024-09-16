@@ -1,0 +1,23 @@
+@layer components {
+    .section {
+        @apply lines shadow;
+        > :where(.header) {
+            @apply flex items-start justify-between w-full gap-2 p-4 rounded-t-lg;
+            &:where(.btn) {
+                @apply text-left;
+            }
+            :where(.title) {
+                @apply text-base font-semibold;
+            }
+            :where(.description) {
+                @apply text-gray-700 dark:text-gray-400;
+            }
+        }
+        &:where(:has(> [aria-expanded="false"])) > :where(.header) {
+            @apply rounded-b-lg;
+        }
+        > :where(.body) {
+            @apply p-4 text-sm line-t;
+        }
+    }
+}

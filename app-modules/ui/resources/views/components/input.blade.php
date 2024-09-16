@@ -4,37 +4,35 @@
     'actionTrailing' => null,
 ])
 @php
-    $action = as_slot(
-        $action,
-        fn($attributes) => (
-            $attributes->has('component')
-            ? $attributes->merge(['size' => $size])
-            : $attributes
-        )->class(['action'])
-    );
-    $actionTrailing = as_slot(
-        $actionTrailing,
-        fn($attributes) => (
-            $attributes->has('component')
-            ? $attributes->merge(['size' => $size])
-            : $attributes
-        )->class(['action'])
-    );
+    $action = as_slot($action);
+    if ($action->attributes->has('component')) {
+        $action->attributes = $action->attributes->merge([
+            'size' => $size,
+        ]);
+    }
+    $actionTrailing = as_slot($actionTrailing);
+    if ($actionTrailing->attributes->has('component')) {
+        $actionTrailing->attributes = $actionTrailing->attributes->merge([
+            'size' => $size,
+        ]);
+    }
 @endphp
 @if($attributes->get('type') === 'file')
-<x-ui::file-picker {{ $attributes->merge(['size' => $size]) }} />
+<x-ui::file-picker :attributes="$attributes->merge(['size' => $size])" />
 @else
 <span {{ $attributes->only(['class'])->class(
     ['input', 'input-sm' => $size === 'sm', 'input-lg' => $size === 'lg']
 ) }}>
-    {{ render_slot($action, ['as' => 'span']) }}
-    @if($attributes->get('type') === 'textarea')
-    <textarea {{ $attributes->except(['class', 'value'])->class(['input-area']) }}>{{
-        $attributes->get('value')
-    }}</textarea>
-    @else
-    <input {{ $attributes->except(['class'])->class(['input-area']) }}>
+    @if($action->isNotEmpty())
+    {{ render_slot($action, ['class' => 'action'], fallbackTag: 'span') }}
     @endif
-    {{ render_slot($actionTrailing, ['as' => 'span']) }}
+    @if($attributes->get('type') === 'textarea')
+    {{ render_slot($attributes->get('value'), $attributes->except(['class', 'value'])->class(['input-area']), fallbackTag: 'textarea') }}
+    @else
+    <input {{ $attributes->except('class')->class(['input-area']) }}>
+    @endif
+    @if($actionTrailing->isNotEmpty())
+    {{ render_slot($actionTrailing, ['class' => 'action'], fallbackTag: 'span') }}
+    @endif
 </span>
 @endif

@@ -1,6 +1,6 @@
 @props([
     'wrapper' => null,
-    'alpineAfterSubmit' => null
+    'alpineAfterSubmit' => null,
 ])
 <form
     id="consent"
@@ -18,47 +18,39 @@
         :$categories
         class="px-4"
     />
-    <x-filament-partials::forms.tabs>
-        <x-slot:tablist>
-            @foreach($categories as $name => $label)
-            <x-filament-partials::forms.tabs.tab
-                :$name
-                :badge="count($services[$name])"
-                prefix="consent"
-                alpineState="activeCategory"
-                x-effect="updateBadge('{{ $name }}', selectedCount('{{ $name }}'))"
-            >
-                {{ $label }}
-            </x-filament-partials::forms.tabs.tab>
-            @endforeach
-        </x-slot:tablist>
-        @foreach($services as $category => $serviceList)
-        <x-filament-partials::forms.tabs.panel
-            :name="$category"
-            prefix="consent"
-            alpineState="activeCategory"
-            :x-cloak="$category !== 'essential'"
-        >
-            @foreach($serviceList as $i => $service)
-            <x-consent::consent-form.service-details
-                :$service
-                :$category
-            />
-            @endforeach
-        </x-filament-partials::forms.tabs.panel>
-        @endforeach
-    </x-filament-partials::forms.tabs>
+    @php
+        $tabs = [];
+        $panels = [];
+    @endphp
+    @foreach($categories as $category => $label)
+    @php
+        $tabs[$category] = as_slot($label, [
+            'badge' => as_slot($category === 'essential' ? strval(count($services[$category])) : '', [
+                'x-text' => "selectedCount('{$category}') || ''",
+            ]),
+        ]);
+    @endphp
+    @capture($panels[$category])
+    @foreach($services[$category] as $service)
+    <x-consent::consent-form.service-details :$service :$category />
+    @endforeach
     @endcapture
+    @php
+        $panels[$category] = as_slot($panels[$category], ['class' => 'flex flex-col gap-4'])
+    @endphp
+    @endforeach
+    <x-ui::tab-pane alpineState="activeCategory" :$tabs :$panels />
+    @endcapture
+
     @if($wrapper)
     {{ $wrapper($content) }}
     @else
     {{ $content() }}
-    <x-filament::button type="button" x-on:click="submit()">
+    <x-ui::button type="submit">
         {{ __('Auswahl speichern') }}
-    </x-filament::button>
+    </x-ui::button>
     @endif
-    <script>
-        "use strict";
+    <script type="module">
         document.addEventListener('alpine:init', () => {
             Alpine.data('consent', () => ({
                 services: @js($selected),
@@ -96,16 +88,6 @@
                 selectedCount (cat) {
                     const count = Object.values(this.services[cat]).filter(v => v).length;
                     return count;
-                },
-                updateBadge (cat, count) {
-                    const badge = document.getElementById('consent-' + cat).querySelector('.fi-badge');
-                    let leafNode = badge;
-                    while (leafNode.firstElementChild) {
-                        leafNode = leafNode.firstElementChild;
-                    }
-                    leafNode.textContent = count;
-                    if (count) badge.classList.remove('hidden');
-                    else badge.classList.add('hidden');
                 },
                 selectAllAndSubmit () {
                     this.selectAll();

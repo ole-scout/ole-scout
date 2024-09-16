@@ -2,36 +2,36 @@
     .btn {
         @apply inline-flex items-center;
 
-        &.btn-sm {
+        &:where(.btn-sm) {
             @apply text-xs;
         }
-        &:not(.btn-sm) {
+        &:where(:not(.btn-sm)) {
             @apply text-sm;
         }
 
         &:where(.btn-alt, .btn-button, .btn-ghost, .btn-link) {
-            &.btn-sm {
+            &:where(.btn-sm) {
                 @apply gap-1;
             }
-            &:not(.btn-sm, .btn-lg) {
+            &:where(:not(.btn-sm, .btn-lg)) {
                 @apply gap-1.5;
             }
-            &.btn-lg {
+            &:where(.btn-lg) {
                 @apply gap-2;
             }
         }
         &:where(.btn-alt, .btn-button, .btn-ghost, .btn-link:is(.input .btn)) {
             @apply rounded-md;
-            &.btn-sm {
+            &:where(.btn-sm) {
                 @apply px-2 py-1 leading-4;
             }
-            &:not(.btn-sm) {
+            &:where(:not(.btn-sm)) {
                 @apply py-2;
             }
-            &:not(.btn-sm, .btn-lg) {
+            &:where(:not(.btn-sm, .btn-lg)) {
                 @apply px-3 leading-5;
             }
-            &.btn-lg {
+            &:where(.btn-lg) {
                 @apply px-8 leading-6;
             }
         }
@@ -56,15 +56,13 @@
                 .btn-ghost,
                 .btn-overlay,
                 .btn-link
-            ):focus,
-        &:where(.toggle-group .btn):has(:focus) {
+            ):where(:focus),
+        &:is(.toggle-group .btn):where(:has(:focus)) {
             @apply ring outline-none;
         }
 
-        &:disabled,
-        &.disabled,
-        &:has(:disabled) {
-            &:where(:not(.toggle-group .btn)) {
+        &:where(:disabled, .disabled, :has(:disabled)) {
+            &:not(.toggle-group .btn) {
                 @apply cursor-not-allowed;
             }
 
@@ -91,46 +89,43 @@
             }
         }
 
-        &:not(:disabled, .disabled, :has(:disabled)) {
+        &:where(:not(:disabled, .disabled, :has(:disabled))) {
             @apply cursor-pointer;
-            &:where(
-                    .btn-alt,
-                    .btn-button,
-                    .btn-ghost:hover,
-                    .btn-overlay
-                ):where(:not(.input .btn)) {
+            &:where(.btn-alt, .btn-button, .btn-ghost:hover, .btn-overlay):not(
+                    .input .btn
+                ) {
                 @apply shadow;
             }
             &:where(.btn-button) {
                 @apply text-white;
                 &:where(.btn-normal) {
                     @apply dark:text-gray-950 bg-gray-600 dark:bg-white shadow-sheen-gray dark:shadow-sheen-none;
-                    &:hover {
+                    &:where(:hover) {
                         @apply bg-gray-800 dark:bg-gray-200;
                     }
                 }
                 &:where(.btn-primary) {
                     @apply bg-primary-600 shadow-sheen-primary dark:shadow-sheen-none;
-                    &:hover {
+                    &:where(:hover) {
                         @apply bg-primary-800;
                     }
                 }
                 &:where(.btn-danger) {
                     @apply bg-danger-600 shadow-sheen-danger dark:shadow-sheen-none;
-                    &:hover {
+                    &:where(:hover) {
                         @apply bg-danger-800;
                     }
                 }
                 &:where(.btn-success) {
                     @apply bg-success-600 shadow-sheen-success dark:shadow-sheen-none;
-                    &:hover {
+                    &:where(:hover) {
                         @apply bg-success-800;
                     }
                 }
             }
             &:where(.btn-alt, .btn-ghost, .btn-overlay, .btn-link) {
                 &:where(.btn-normal) {
-                    @apply text-gray-600 dark:text-gray-200;
+                    @apply text-gray-800 dark:text-gray-200;
                 }
                 &:where(.btn-primary) {
                     @apply text-primary-600 dark:text-primary-500;
@@ -142,7 +137,7 @@
                     @apply text-success-600 dark:text-success-500;
                 }
             }
-            &:where(.btn-alt, .btn-ghost, .btn-overlay):hover {
+            &:where(.btn-alt, .btn-ghost, .btn-overlay):where(:hover) {
                 &:where(.btn-normal) {
                     @apply dark:text-gray-100;
                 }
@@ -159,18 +154,18 @@
             &:where(.btn-alt) {
                 @apply bg-white dark:bg-gray-900;
             }
-            &:where(.btn-alt, .btn-ghost):hover {
+            &:where(.btn-alt, .btn-ghost):where(:hover) {
                 @apply bg-gray-50 dark:bg-gray-800;
             }
             &:where(.btn-alt, .btn-overlay) {
                 @apply shadow shadow-border-gray-900/15 dark:shadow-border-gray-50/15;
             }
-            &:where(.btn-alt, .btn-ghost, .btn-overlay):hover {
+            &:where(.btn-alt, .btn-ghost, .btn-overlay):where(:hover) {
                 @apply shadow shadow-border-gray-900/25 dark:shadow-border-gray-50/25;
             }
             &:where(.btn-overlay) {
                 @apply bg-gray-50/90 dark:bg-gray-800/90;
-                &:hover {
+                &:where(:hover) {
                     @apply bg-white/70 dark:bg-gray-950/70;
                 }
             }

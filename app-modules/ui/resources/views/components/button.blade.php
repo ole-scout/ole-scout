@@ -1,15 +1,30 @@
+@use(Illuminate\Support\Arr)
 @props([
-    'as' => null,
     'disabled' => false,
     'size' => 'md',
     'intent' => null,
     'variant' => null,
     'icon' => null,
     'iconTrailing' => null,
-    'iconAttributes' => [],
     'hiddenLabel' => false,
 ])
 @php
+    $attributes = as_attributes($attributes);
+    $slot = as_slot($slot);
+    $iconLeading = Arr::map(
+        Arr::wrap($icon) ?? [],
+        fn($icon) => as_slot($icon, [
+            'component' => 'ui::icon',
+            'size' => $size,
+        ])
+    );
+    $iconTrailing = Arr::map(
+        Arr::wrap($iconTrailing) ?? [],
+        fn($icon) => as_slot($icon, [
+            'component' => 'ui::icon',
+            'size' => $size,
+        ])
+    );
     if (!$intent) {
         $isSubmit = $attributes->has('type') && $attributes->get('type') === 'submit';
         $intent = $isSubmit ? 'primary' : 'normal';
@@ -36,18 +51,18 @@
     }
 
     $linkProps = ['href', 'target', 'rel'];
-    if ($as) {
+    $fallbackTag = 'button';
+    if ($attributes->has('as')) {
         $attributes = $attributes->class(
             [...$classes, 'disabled' => $disabled]
         );
     } else if (!$attributes->has('href')) {
-        $as = 'button';
         $attributes = $attributes->merge([
             'disabled' => $disabled,
             'type' => $attributes->get('type') ?: 'button',
         ])->class($classes);
     } else if (!$disabled) {
-        $as = 'a';
+        $fallbackTag = 'a';
         $href = $attributes->get('href');
         $attributes = $attributes->except(['href'])->merge(
             is_external_url($href) ? [
@@ -61,34 +76,32 @@
             [...$classes, 'disabled' => $disabled]
         );
     } else {
-        $as = 'span';
+        $fallbackTag = 'span';
         $attributes = $attributes->filter(
             fn (string $value, string $key) => !in_array($key, $linkProps)
         )->class(
             [...$classes, 'disabled' => $disabled]
         );
     }
-    if (!is_array($icon)) $icon = $icon ? [$icon] : [];
-    if (!is_array($iconTrailing)) $iconTrailing = $iconTrailing ? [$iconTrailing] : [];
 @endphp
-<{{ $as }} {{ $attributes }}>
-    @foreach($icon as $key => $iconName)
-    <x-ui::icon :$size :icon="$iconName" :attributes="as_attributes(
-        is_string($key) ? Arr::get($iconAttributes, $key, []) : []
-    )" />
+@capture($transform, $contents)
+    @foreach($iconLeading as $icon)
+    {{ render_slot($icon) }}
     @endforeach
     {{ render_slot(
-        $slot,
-        fn($attributes) => (
-            $attributes->has('component')
-            ? $attributes->merge(['size' => $size])
-            : $attributes
-        )->class(['sr-only' => $hiddenLabel]),
-        allowEmpty: false
+        $contents,
+        [
+            'size' => $attributes->has('component') ? $size : null,
+            'class' => $hiddenLabel ? 'sr-only' : null,
+        ]
     ) }}
-    @foreach($iconTrailing as $key => $iconName)
-    <x-ui::icon :$size :icon="$iconName" :attributes="as_attributes(
-        is_string($key) ? Arr::get($iconAttributes, $key, []) : []
-    )" />
+    @foreach($iconTrailing as $icon)
+    {{ render_slot($icon) }}
     @endforeach
-</{{ $as }}>
+@endcapture
+{{ render_slot(
+    $slot,
+    $attributes,
+    transform: $transform,
+    fallbackTag: $fallbackTag,
+) }}

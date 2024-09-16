@@ -1,17 +1,17 @@
 @props([
     'as' => 'div',
     'title' => null,
-    'body' => null,
     'icon' => null,
+    'footer' => null,
     'layer' => 1,
 ])
 @php
-    $iconAttributes = as_attributes($icon, fn($attributes) => $attributes
-        ->except(['circle'])
-        ->merge(['aria-hidden' => 'true'])
-        ->class(['circle' => $attributes->has('circle')]));
     $title = as_slot($title);
-    $body = as_slot($body);
+    $icon = as_slot($icon);
+    $body = as_slot($slot);
+    $footer = as_slot($footer);
+    $circle = $icon->attributes->get('circle') ?? false;
+    $icon->attributes = $icon->attributes->except('circle');
 @endphp
 <{{ $as }} {{ $attributes->class([
     match ($layer) {
@@ -20,13 +20,31 @@
         3 => 'card-3',
     }
 ]) }}>
-@capture($wrapper,$slot)
-@if($icon)<span class="icon-wrap"><x-ui::icon :$icon :attributes="$iconAttributes" /></span>@endif
-<span class="title-wrap">{{ $slot }}</span>
-@endcapture
-{{ render_slot(
-    $wrapper($title->toHtml()),
-    as_attributes(['as' => 'div'])->class(['title'])
-) }}
-{{ render_slot($slot->isEmpty() ? $body->toHtml() : $slot, as_attributes(as_slot($body)->attributes->class('body'), ['as' => 'div']), allowEmpty: true) }}
+    @capture($transformTitle, $title)
+    @if($icon->isNotEmpty())
+    <span class="icon-wrap">{{ render_slot($icon, [
+        'component' => 'ui::icon',
+        'aria-hidden' => 'true',
+        'class' => $circle ? 'circle' : null,
+    ]) }}</span>
+    @endif
+    <span class="title">{{ $title }}</span>
+    @endcapture
+    @if($title->isNotEmpty())
+    {{ render_slot(
+        $title,
+        ['class' => 'header'],
+        transform: $transformTitle,
+    ) }}
+    @endif
+    {{ render_slot(
+        $body,
+        ['class' => 'body']
+    ) }}
+    @if($footer->isNotEmpty())
+    {{ render_slot(
+        $footer,
+        ['class' => 'footer']
+    ) }}
+    @endif
 </{{ $as }}>

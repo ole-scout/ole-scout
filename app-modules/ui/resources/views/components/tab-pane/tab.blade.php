@@ -16,7 +16,6 @@
     $prevValue = $value === $firstValue ? $lastValue : $values[$i - 1];
     $badge = as_slot($badge, ['class' => 'badge']);
     $attributes = as_attributes($attributes, [
-        'as' => 'div',
         'role' => 'tab',
         'x-bind:id' => "\$id('tab-pane', 'tab_{$value}')",
         'x-bind:aria-controls' => "\$id('tab-pane', 'tabpanel_{$value}')",
@@ -24,15 +23,15 @@
         'tabindex' => $isActive ? '0' : '-1',
         'x-bind:aria-selected' => "{$alpineState} === '{$value}'",
         'x-bind:tabindex' => "{$alpineState} === '{$value}' ? 0 : -1",
-        'x-on:click' => "${alpineState} = '{$value}'",
-        'x-on:keyup.left' => "${alpineState} = '{$prevValue}';\$focus.focus(document.querySelector('#' + \$id('tab-pane', 'tab_{$prevValue}')))",
-        'x-on:keyup.right' => "${alpineState} = '{$nextValue}';\$focus.focus(document.querySelector('#' + \$id('tab-pane', 'tab_{$nextValue}')))",
-        'x-on:keyup.home' => "${alpineState} = '{$firstValue}';\$focus.focus(document.querySelector('#' + \$id('tab-pane', 'tab_{$firstValue}')))",
-        'x-on:keyup.end' => "${alpineState} = '{$lastValue}';\$focus.focus(document.querySelector('#' + \$id('tab-pane', 'tab_{$lastValue}')))",
+        'x-on:click' => "{$alpineState} = '{$value}'",
+        'x-on:keyup.left' => "{$alpineState} = '{$prevValue}';\$focus.focus(document.querySelector('#' + \$id('tab-pane', 'tab_{$prevValue}')))",
+        'x-on:keyup.right' => "{$alpineState} = '{$nextValue}';\$focus.focus(document.querySelector('#' + \$id('tab-pane', 'tab_{$nextValue}')))",
+        'x-on:keyup.home' => "{$alpineState} = '{$firstValue}';\$focus.focus(document.querySelector('#' + \$id('tab-pane', 'tab_{$firstValue}')))",
+        'x-on:keyup.end' => "{$alpineState} = '{$lastValue}';\$focus.focus(document.querySelector('#' + \$id('tab-pane', 'tab_{$lastValue}')))",
     ]);
 @endphp
-@capture($wrapper, $slot)
-<span>{{ $slot }}</span>
-{{ render_slot($badge, allowEmpty: true) }}
+@capture($transform, $contents)
+<span>{{ $contents }}</span>
+{{ render_slot($badge, fallbackTag: 'span') }}
 @endcapture
-{{ render_slot($wrapper($slot), $attributes) }}
+{{ render_slot($slot, $attributes, transform: $transform) }}
