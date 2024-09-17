@@ -54,6 +54,7 @@
     <body class="{{ match($size) {
         'sm' => 'page-sm',
         'md' => 'page-md',
+        'lg' => 'page-lg',
         default => null,
     } }}">
         <header>

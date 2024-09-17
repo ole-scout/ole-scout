@@ -18,3 +18,21 @@
         @apply !hidden;
     }
 }
+
+@layer utilities {
+    .lines {
+        @apply rounded-lg border border-gray-950/5 dark:border-white/20;
+    }
+    .line-t {
+        @apply border-t border-t-gray-950/5 dark:border-t-white/20;
+    }
+    .line-b {
+        @apply border-b border-b-gray-950/5 dark:border-b-white/20;
+    }
+    .line-l {
+        @apply border-l border-l-gray-950/5 dark:border-l-white/20;
+    }
+    .line-r {
+        @apply border-r border-r-gray-950/5 dark:border-r-white/20;
+    }
+}

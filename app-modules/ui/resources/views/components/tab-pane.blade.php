@@ -9,7 +9,7 @@
     $values = array_keys($tabs);
     $initialValue = $value ?? $values[0];
 @endphp
-<div class="tab-pane card" x-id="['tab-pane']">
+<div class="tab-pane" x-id="['tab-pane']">
     <div role="tablist">
         @foreach($tabs as $value => $tab)
         {{ render_slot($tab, [

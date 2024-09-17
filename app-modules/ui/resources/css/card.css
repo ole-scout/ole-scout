@@ -1,8 +1,29 @@
 @layer components {
     .card,
+    .tab-pane,
+    .section {
+        @apply bg-gray-100 dark:bg-gray-950;
+    }
     .card-2,
-    .card-3 {
-        @apply flex flex-col shadow bg-gray-100 dark:bg-gray-950 lines;
+    :is(.card, .tab-pane, .section) :is(.card, .tab-pane, .section) {
+        @apply bg-gray-50 dark:bg-gray-900;
+        .card,
+        .tab-pane,
+        .section {
+            @apply bg-white dark:bg-gray-800;
+        }
+    }
+    .card-3,
+    .card-2 :is(.card, .tab-pane, .section),
+    :where(.card, .tab-pane, .section)
+        :is(.card, .tab-pane, .section)
+        :is(.card, .tab-pane, .section),
+    .card-3 :is(.card, .tab-pane, .section) {
+        @apply bg-white dark:bg-gray-800;
+    }
+
+    :is(.card, .card-2, .card-3) {
+        @apply flex flex-col shadow rounded-lg ring-1 ring-gray-950/5 dark:ring-white/15;
         & > :where(.body) {
             @apply p-4 m-4 flex-grow flex-shrink;
         }
@@ -28,15 +49,5 @@
         & > :where(.footer) {
             @apply px-8 pb-4 leading-8 flex-grow-0 flex-shrink-0;
         }
-    }
-    .card .card,
-    .card-2 {
-        @apply bg-gray-50 dark:bg-gray-900;
-    }
-    .card .card .card,
-    .card-2 .card,
-    .card-3 .card,
-    .card-3 {
-        @apply bg-white dark:bg-gray-800;
     }
 }

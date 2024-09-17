@@ -1,6 +1,6 @@
 @layer components {
     .tab-pane {
-        @apply flex flex-col rounded-lg shadow ring-1 ring-gray-950/5 dark:ring-white/10;
+        @apply flex flex-col shadow rounded-lg ring-1 ring-gray-950/5 dark:ring-white/15;
         > :where([role="tablist"]) {
             @apply flex flex-row gap-2 p-2 text-sm border-b border-gray-300 dark:border-gray-700 overflow-x-auto;
             > :where([role="tab"]) {

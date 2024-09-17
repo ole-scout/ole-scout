@@ -29,7 +29,10 @@
             &:is(.page-md > main) {
                 @apply md:max-w-3xl;
             }
-            &:not(.page-sm > main, .page-md > main) {
+            &:is(.page-lg > main) {
+                @apply md:max-w-4xl;
+            }
+            &:not(.page-sm > main, .page-md > main, .page-lg > main) {
                 @apply md:px-16;
             }
             &:is(header + main:has(> .card > .header > .title)) {

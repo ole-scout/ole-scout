@@ -1,6 +1,6 @@
 @layer components {
     .section {
-        @apply lines shadow;
+        @apply shadow lines;
         > :where(.header) {
             @apply flex items-start justify-between w-full gap-2 p-4 rounded-t-lg;
             &:where(.btn) {
