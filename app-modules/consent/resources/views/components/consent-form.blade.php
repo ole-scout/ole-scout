@@ -18,28 +18,19 @@
         :$categories
         class="px-4"
     />
-    @php
-        $tabs = [];
-        $panels = [];
-    @endphp
-    @foreach($categories as $category => $label)
-    @php
-        $tabs[$category] = as_slot($label, [
-            'badge' => as_slot($category === 'essential' ? strval(count($services[$category])) : '', [
-                'x-text' => "selectedCount('{$category}') || ''",
-            ]),
-        ]);
-    @endphp
-    @capture($panels[$category])
-    @foreach($services[$category] as $service)
-    <x-consent::consent-form.service-details :$service :$category />
-    @endforeach
-    @endcapture
-    @php
-        $panels[$category] = as_slot($panels[$category], ['class' => 'flex flex-col gap-4'])
-    @endphp
-    @endforeach
-    <x-ui::tab-pane alpineState="activeCategory" :$tabs :$panels />
+    <x-ui::tab-pane>
+        @foreach($categories as $category => $label)
+        <x-ui::tab-pane.tab
+            :$label
+            :value="$category"
+            :badgeExpression="'selectedCount(\'' . $category . '\')'"
+        >
+            @foreach($services[$category] as $service)
+            <x-consent::consent-form.service-details :$service :$category/>
+            @endforeach
+        </x-ui::tab-pane.tab>
+        @endforeach
+    </x-ui::tab-pane>
     @endcapture
 
     @if($wrapper)
