@@ -25,14 +25,14 @@
             <x-ui::input :$size type="text" value="Text field" disabled class="col-span-full" />
             <x-ui::input :$size type="textarea" value="Text area" class="col-span-full" />
             <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" variant="link">Search</x-slot:actionTrailing></x-ui::input>
-            <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" variant="alt" icon="search" hiddenLabel>Search</x-slot:actionTrailing></x-ui::input>
-            <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:action component="ui::button" variant="ghost" icon="search" hiddenLabel>Search</x-slot:action></x-ui::input>
-            <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" icon="search" hiddenLabel>Search</x-slot:actionTrailing></x-ui::input>
-            <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" intent="primary" icon="search" hiddenLabel>Search</x-slot:actionTrailing></x-ui::input>
+            <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" variant="alt" icon=":search" hiddenLabel>Search</x-slot:actionTrailing></x-ui::input>
+            <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:action component="ui::button" variant="ghost" icon=":search" hiddenLabel>Search</x-slot:action></x-ui::input>
+            <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" icon=":search" hiddenLabel>Search</x-slot:actionTrailing></x-ui::input>
+            <x-ui::input :$size type="text" placeholder="Search" class="col-span-full"><x-slot:actionTrailing component="ui::button" intent="primary" icon=":search" hiddenLabel>Search</x-slot:actionTrailing></x-ui::input>
 
             <div class="flex w-full gap-2 col-span-full">
                 <x-ui::input :$size type="text" placeholder="Placeholder" class="col-span-4" />
-                <x-ui::button :$size intent="primary" icon="save">Save</x-ui::input>
+                <x-ui::button :$size intent="primary" icon=":save">Save</x-ui::input>
             </div>
 
             @foreach($toggleAttributeTuples as $j => [$fieldAttributes, $inputAttributes])

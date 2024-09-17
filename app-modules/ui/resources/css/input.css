@@ -1,127 +1,132 @@
 @layer components {
     .input {
         @apply inline-block;
-        &:where(:has(> [type="checkbox"])),
-        &:where(:has(> [type="radio"])) {
-            @apply border border-transparent transition-colors duration-200 ease-in-out leading-none;
-            &:where(:has(> :focus)) {
+        &:where(.input-checkbox, .input-radio, .input-switch) {
+            @apply border border-transparent leading-none;
+            &,
+            > :where(.toggle) {
+                @apply motion-safe:transition-all motion-safe:duration-100 motion-safe:ease-in-out;
+            }
+            &:where(:has(> input:focus)) {
                 @apply ring;
             }
-            &:where(:not(:has(> :disabled))) {
-                @apply bg-gray-50 dark:bg-gray-800 border-gray-800/25 dark:border-gray-50/35 shadow-inner cursor-pointer;
-                &:is(:has(> :invalid)) {
+            &:where(:not(:has(> input:disabled))) {
+                @apply border-gray-800/25 dark:border-gray-50/35 shadow-inner cursor-pointer;
+                &:where(:has(> input:invalid)) {
                     @apply ring-red-500 dark:ring-red-600;
-                    &:not(:has(> :focus)) {
+                    &:where(:not(:has(> input:focus))) {
                         @apply border-red-500 dark:border-red-600;
                     }
                 }
-                &:is(:has(> :checked)) {
+                &:where(:not(:has(> input:checked))) {
+                    @apply bg-gray-50 dark:bg-gray-800 text-white;
+                }
+                &:where(:has(> input:checked)) {
                     @apply bg-primary-500 dark:bg-primary-600 text-white;
                 }
             }
-            &:where(:has(> :disabled)) {
-                @apply text-neutral-50 dark:text-neutral-400 bg-neutral-400/50 dark:bg-neutral-500/50;
+            &:where(:has(> input:disabled)) {
+                @apply border-neutral-900/25 dark:border-neutral-100/35 bg-neutral-900/5 dark:bg-neutral-100/5 text-neutral-900/25 dark:text-neutral-100/35;
             }
-        }
-        &:where(:has(> [type="checkbox"]:not([role="switch"]))),
-        &:where(:has(> [type="radio"])) {
-            > :where(.toggle) {
-                @apply absolute motion-safe:transition-opacity motion-safe:duration-100;
-            }
-            &:where(:has(> :checked)) > :where(.toggle) {
-                @apply opacity-100;
-            }
-            &:where(:not(:has(> :checked))) > :where(.toggle) {
-                @apply opacity-0;
-            }
-        }
-        &:where(:has(> [type="checkbox"]:not([role="switch"]))) {
-            @apply relative rounded-[3px];
-            > :where(.toggle) {
-                @apply w-auto h-auto;
-            }
-            &:where(.input-sm) {
-                @apply w-3 h-3 leading-3;
+            &:where(:not(.input-switch)) {
                 > :where(.toggle) {
-                    @apply inset-0;
+                    @apply absolute;
                 }
-            }
-            &:where(:not(.input-sm, .input-lg)) {
-                @apply w-4 h-4 leading-4;
+                &:where(:has(> input:checked)) > :where(.toggle) {
+                    @apply opacity-100;
+                }
+                &:where(:not(:has(> input:checked))) > :where(.toggle) {
+                    @apply opacity-0;
+                }
+                @apply relative rounded-[3px];
                 > :where(.toggle) {
-                    @apply inset-px;
+                    @apply w-auto h-auto;
+                }
+                &:where(.input-sm) {
+                    @apply w-3 h-3 leading-3;
+                    > :where(.toggle) {
+                        @apply inset-0;
+                    }
+                }
+                &:where(:not(.input-sm, .input-lg)) {
+                    @apply w-4 h-4 leading-4;
+                    > :where(.toggle) {
+                        @apply inset-px;
+                    }
+                }
+                &:where(.input-lg) {
+                    @apply w-5 h-5 leading-5;
+                    > :where(.toggle) {
+                        @apply inset-0.5;
+                    }
                 }
             }
-            &:where(.input-lg) {
-                @apply w-5 h-5 leading-5;
+            &:where(.input-radio),
+            &:where(.input-switch) {
+                @apply relative rounded-full;
                 > :where(.toggle) {
-                    @apply inset-0.5;
+                    @apply rounded-full bg-current;
                 }
             }
-        }
-        &:where(:has(> [type="radio"])),
-        &:where(:has(> [type="checkbox"][role="switch"])) {
-            @apply relative rounded-full;
-            > :where(.toggle) {
-                @apply rounded-full bg-current;
+            &:where(.input-radio) {
+                &:where(.input-sm) {
+                    @apply w-3 h-3 leading-3;
+                    > :where(.toggle) {
+                        @apply inset-[3px];
+                    }
+                }
+                &:where(:not(.input-sm, .input-lg)) {
+                    @apply w-4 h-4 leading-4;
+                    > :where(.toggle) {
+                        @apply inset-[4px];
+                    }
+                }
+                &:where(.input-lg) {
+                    @apply w-5 h-5 leading-5;
+                    > :where(.toggle) {
+                        @apply inset-[5px];
+                    }
+                }
             }
-        }
-        &:where(:has(> [type="radio"])) {
-            &:where(.input-sm) {
-                @apply w-3 h-3 leading-3;
+            &:where(.input-switch) {
+                @apply flex items-center justify-start;
                 > :where(.toggle) {
-                    @apply inset-[3px];
+                    @apply transform;
                 }
-            }
-            &:where(:not(.input-sm, .input-lg)) {
-                @apply w-4 h-4 leading-4;
-                > :where(.toggle) {
-                    @apply inset-[4px];
+                &:where(:not(:has(> input:disabled))) {
+                    > :where(.toggle) {
+                        @apply shadow;
+                    }
                 }
-            }
-            &:where(.input-lg) {
-                @apply w-5 h-5 leading-5;
-                > :where(.toggle) {
-                    @apply inset-[5px];
+                &:where(:not(:has(> input:disabled), :has(> input:checked))) {
+                    @apply bg-gray-500 dark:bg-gray-950;
                 }
-            }
-        }
-        &:where(:has(> [type="checkbox"][role="switch"])) {
-            @apply flex items-center justify-start;
-            > :where(.toggle) {
-                @apply transform motion-safe:transition-transform duration-200;
-            }
-            &:not(:has(> :disabled)) {
-                @apply bg-gray-500 dark:bg-gray-950 text-white;
-                > :where(.toggle) {
-                    @apply shadow;
+                &:where(.input-sm) {
+                    @apply px-[5px] py-[1px];
+                    > :where(.toggle) {
+                        @apply w-[8px] h-[8px] translate-x-[-4px];
+                    }
+                    &:where(:has(> input:checked)) > :where(.toggle) {
+                        @apply translate-x-[4px];
+                    }
                 }
-            }
-            &:where(.input-sm) {
-                @apply px-[5px] py-[1px];
-                > :where(.toggle) {
-                    @apply w-[8px] h-[8px] translate-x-[-4px];
+                &:where(:not(.input-sm, .input-lg)) {
+                    @apply px-[7px] py-[2px];
+                    > :where(.toggle) {
+                        @apply w-[10px] h-[10px] translate-x-[-5px];
+                    }
+                    &:where(:has(> input:checked)) > :where(.toggle) {
+                        @apply translate-x-[5px];
+                    }
                 }
-                &:where(:has(> :checked)) > :where(.toggle) {
-                    @apply translate-x-[4px];
-                }
-            }
-            &:where(:not(.input-sm, .input-lg)) {
-                @apply px-[7px] py-[2px];
-                > :where(.toggle) {
-                    @apply w-[10px] h-[10px] translate-x-[-5px];
-                }
-                &:where(:has(> :checked)) > :where(.toggle) {
-                    @apply translate-x-[5px];
-                }
-            }
-            &:where(.input-lg) {
-                @apply px-[9px] py-[2px];
-                > :where(.toggle) {
-                    @apply w-[14px] h-[14px] translate-x-[-7px];
-                }
-                &:where(:has(> :checked)) > :where(.toggle) {
-                    @apply translate-x-[7px];
+                &:where(.input-lg) {
+                    @apply px-[9px] py-[2px];
+                    > :where(.toggle) {
+                        @apply w-[14px] h-[14px] translate-x-[-7px];
+                    }
+                    &:where(:has(> input:checked)) > :where(.toggle) {
+                        @apply translate-x-[7px];
+                    }
                 }
             }
         }

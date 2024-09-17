@@ -10,8 +10,6 @@
     $icon = as_slot($icon);
     $body = as_slot($slot);
     $footer = as_slot($footer);
-    $circle = $icon->attributes->get('circle') ?? false;
-    $icon->attributes = $icon->attributes->except('circle');
 @endphp
 <{{ $as }} {{ $attributes->class([
     match ($layer) {
@@ -21,12 +19,13 @@
     }
 ]) }}>
     @capture($transformTitle, $title)
-    @if($icon->isNotEmpty())
-    <span class="icon-wrap">{{ render_slot($icon, [
-        'component' => 'ui::icon',
-        'aria-hidden' => 'true',
-        'class' => $circle ? 'circle' : null,
-    ]) }}</span>
+    @if($icon->attributes->isNotEmpty())
+    <span class="icon-wrap">
+        {{ render_slot(
+            $icon,
+            ['component' => 'ui::icon'],
+        ) }}
+    </span>
     @endif
     <span class="title">{{ $title }}</span>
     @endcapture

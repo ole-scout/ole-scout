@@ -1,9 +1,9 @@
 @props([
     'name' => 'theme',
     'value' => null,
-    'iconLight' => 'weather-sunny',
-    'iconDark' => 'weather-moon',
-    'iconSystem' => 'desktop',
+    'iconLight' => ':weather-sunny',
+    'iconDark' => ':weather-moon',
+    'iconSystem' => ':desktop',
     'labelLight' => __('Hell'),
     'labelDark' => __('Dunkel'),
     'labelSystem' => __('System'),

@@ -9,16 +9,17 @@
     ])->class([
         'input',
         'input-sm' => $size === 'sm',
-        'input-lg' => $size === 'lg'
+        'input-lg' => $size === 'lg',
+        'input-checkbox',
     ]);
     $inputAttributes = $attributes->except('class')->merge([
         'type' => 'checkbox',
-        'class' => 'sr-only'
+        'class' => 'sr-only',
     ]);
 @endphp
 @capture($transform, $contents)
 <input {{ $inputAttributes->merge(['value' => (string) $contents]) }}>
-<x-ui::icon :$size class="toggle" aria-hidden="true">checkmark</x-ui::icon>
+<x-ui::icon size="xs" class="toggle" icon=":checkmark"></x-ui::icon>
 @endcapture
 {{ render_slot(
     $slot,

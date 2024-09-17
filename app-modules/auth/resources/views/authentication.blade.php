@@ -1,5 +1,5 @@
 <x-slot:title>{{ __('Login mit Scout-Konto') }}</x-slot:title>
-<x-slot:icon>/icon-ole-scout</x-slot:icon>
+<x-slot:icon icon="icon-ole-scout"></x-slot:icon>
 <x-slot:size>sm</x-slot:size>
 <div>
     <form wire:submit="login" class="flex flex-col gap-4">
@@ -15,8 +15,8 @@
             <x-slot:actionTrailing
                 component="ui::toggle-button"
                 variant="alt"
-                onIcon="eye-off"
-                offIcon="eye"
+                onIcon=":eye-off"
+                offIcon=":eye"
                 x-on:ui-toggle="$el.closest('.field').querySelector('input').type = (
                     $event.detail ? 'text' : 'password'
                 )"

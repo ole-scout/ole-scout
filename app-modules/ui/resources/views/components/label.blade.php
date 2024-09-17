@@ -13,7 +13,7 @@
     $iconTrailing = as_slot($iconTrailing);
 @endphp
 @capture($transform, $contents)
-    @if($icon->isNotEmpty())
+    @if($icon->attributes->isNotEmpty())
     {{ render_slot($icon, ['component' => 'ui::icon', 'size' => $size]) }}
     @endif
     {{ render_slot(

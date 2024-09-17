@@ -1,19 +1,14 @@
 @props([
     'icon' => null,
-    'size' => 'lg',
     'title' => null,
+    'size' => 'lg',
 ])
 @use('Filament\Support\Colors\Color')
 @php
     $branding = app(\App\Settings\BrandingSettings::class);
-    $iconAttributes = (
-        isset($icon->attributes)
-        ? $icon->attributes->get('attributes') ?: $icon->attributes
-        : $attributes->only([])
-    );
-    $icon = $icon ? strval($icon) : $icon;
-    $size = $size ? strval($size) : $size;
-    $title = $title ? strval($title) : $title;
+    $icon = as_slot($icon);
+    $title = as_slot($title);
+    $size = (string) $size;
 @endphp
 <!DOCTYPE html>
 <html
@@ -26,7 +21,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>{{ isset($title) ? $title . ' · ' : '' }}{{ $branding->name }}</title>
+        <title>{{ $title ? "{$title} · {$branding->name}" : $branding->name }}</title>
 
         @vite('resources/css/app.css')
         @stack('styles')
@@ -56,7 +51,7 @@
         </script>
     </head>
 
-    <body class="{{ match(strval($size)) {
+    <body class="{{ match($size) {
         'sm' => 'page-sm',
         'md' => 'page-md',
         default => null,
@@ -74,11 +69,11 @@
                 class="absolute top-0 lg:top-4 sm:fixed right-4"
             />
             <x-ui::card>
-                @if($title)
-                <x-slot:title>{{ $title }}</x-slot:title>
+                @if($title->isNotEmpty())
+                <x-slot:title :attributes="$title->attributes">{{ $title }}</x-slot:title>
                 @endif
-                @if($icon)
-                <x-slot:icon :attributes="$iconAttributes">{{ $icon }}</x-slot:icon>
+                @if($icon->attributes->isNotEmpty())
+                <x-slot:icon :attributes="$icon->attributes">{{ $icon }}</x-slot:icon>
                 @endif
                 {{ $slot }}
             </x-ui::card>

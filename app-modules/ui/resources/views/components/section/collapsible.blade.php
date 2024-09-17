@@ -24,9 +24,10 @@
         >
         <x-slot:slot>{{ $slot }}</x-slot:slot>
         <x-slot:iconTrailing
+            icon=":chevron-down"
             class="duration-100 motion-safe:transition-transform"
             x-bind:class="expanded ? 'rotate-180' : 'rotate-0'"
-        >chevron-down</x-slot:iconTrailing>
+        ></x-slot:iconTrailing>
     </x-ui::buton>
     @endcapture
     <x-slot:header :callback="$header"></x-slot:header>

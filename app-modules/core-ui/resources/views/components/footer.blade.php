@@ -13,12 +13,12 @@
     <x-ui::button size="sm"
       variant="neutral"
       href="https://ole-scout.app"
-      icon="/icon-ole-scout"
       lang="en"
     >
+      <x-slot:icon icon="icon-ole-scout"></x-slot:icon>
       <x-slot:slot class="leading-5">
         powered by OLE Scout<br>
-        made with <x-ui::icon size="sm" aria-label="love">heart</x-ui::icon>
+        made with <x-ui::icon size="sm" aria-label="love" icon=":heart"></x-ui::icon>
         in <abbr lang="de" title="Ostwestfalen-Lippe">OWL</abbr>
       </x-slot:slot>
     </x-ui::button>

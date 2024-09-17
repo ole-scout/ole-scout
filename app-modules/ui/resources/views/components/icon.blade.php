@@ -1,36 +1,55 @@
 @props([
-    'src',
-    'size' => 'md',
+    'icon',
+    'size' => null,
 ])
 @php
-    $attributes = as_attributes(
-        $attributes,
-    )->class(['icon', match($size) {
-        'sm' => 'icon-sm',
-        default => null,
-        'lg' => 'icon-lg',
-    }]);
-    $hasLabel = $attributes->hasAny(['aria-label', 'aria-labelledby']);
-    if (!$hasLabel && (!isset($src) || !$atributes->has('alt'))) {
-        $attributes = $attributes->merge(['aria-hidden' => 'true']);
+    $label = trim((string) $slot);
+    if (!isset($icon)) {
+        $icon = $label;
+        $label = '';
     }
-@endphp
-@isset($src)
-{{ render_slot(
-    $slot,
-    $attributes->merge(['src' => $src]),
-    fallbackTag: 'img'
-) }}
-@else
-@php
-    $slot = (string) $slot;
-    $icon = substr($slot, 0, 1) === '/'
-        ? substr($slot, 1)
-        : 'fluentui-' . $slot . '-' . (match($size) {
+    $src = null;
+    $icon = (string) $icon;
+    $attributes = as_attributes($attributes)->class([
+        'icon',
+        'icon-sm' => $size === 'sm' || $size === 'xs',
+        'icon-lg' => $size === 'lg',
+    ]);
+
+    if (str_starts_with($icon, 'data:')) {
+        $src = $icon;
+        $icon = null;
+    } else if (str_starts_with($icon, ':')) {
+        $icon = substr($icon, 1);
+        $suffix = match($size) {
+            'xs' => '12',
             'sm' => '16',
             default => '20',
             'lg' => '24',
-        });
+        };
+        $icon = "fluentui-{$icon}-{$suffix}";
+    }
+
+    $hasLabel = $attributes->hasAny(['aria-label', 'aria-labelledby']);
+    if ($src) {
+        $attributes = $attributes->merge(['src', $src]);
+        if ($label) {
+            $attributes = $attributes->merge(['alt' => $slot]);
+            $hasLabel = true;
+        } else {
+            $hasLabel = $hasLabel || !empty($attributes->get('alt'));
+            $attributes = $attributes->merge(['alt' => '']);
+        }
+    } else if ($label) {
+        $attributes = $attributes->merge(['aria-label', $label]);
+        $hasLabel = true;
+    }
+    if (!$hasLabel) {
+        $attributes = $attributes->merge(['aria-hidden' => 'true']);
+    }
 @endphp
+@if($src)
+<img {{ $attributes }}>
+@else
 @svg($icon, $attributes->all())
-@endisset
+@endif

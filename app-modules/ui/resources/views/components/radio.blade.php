@@ -9,11 +9,12 @@
     ])->class([
         'input',
         'input-sm' => $size === 'sm',
-        'input-lg' => $size === 'lg'
+        'input-lg' => $size === 'lg',
+        'input-radio',
     ]);
     $inputAttributes = $attributes->except('class')->merge([
         'type' => 'radio',
-        'class' => 'sr-only'
+        'class' => 'sr-only',
     ]);
 @endphp
 @capture($transform, $contents)

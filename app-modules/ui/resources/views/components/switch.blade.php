@@ -9,12 +9,13 @@
     ])->class([
         'input',
         'input-sm' => $size === 'sm',
-        'input-lg' => $size === 'lg'
+        'input-lg' => $size === 'lg',
+        'input-switch',
     ]);
     $inputAttributes = $attributes->except('class')->merge([
         'type' => 'checkbox',
         'role' => 'switch',
-        'class' => 'sr-only'
+        'class' => 'sr-only',
     ]);
 @endphp
 @capture($transform, $contents)
