@@ -56,7 +56,7 @@ class EditAppSettings extends Page
                     ->live(debounce: 500)
                     ->validationAttribute(__('Telefonnummer'))
                     ->rules(fn(): \Closure => function (string $attribute, $value, \Closure $fail) {
-                        if (substr($value, 0, 1) !== '+') {
+                        if (!str_starts_with($value, '+')) {
                             $fail(__(':attribute verwendet keine Ländervorwahl.'));
                             return;
                         }
@@ -73,7 +73,7 @@ class EditAppSettings extends Page
                         function (?string $state, Set $set) {
                             if (!$state) return;
                             $formatted = $state;
-                            if (substr($formatted, 0, 2) === '00') {
+                            if (str_starts_with($formatted, '00')) {
                                 $formatted = '+' . substr($state, 2);
                             }
                             try {
