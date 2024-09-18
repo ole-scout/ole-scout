@@ -20,6 +20,7 @@
 @capture($transform, $contents)
 <input {{ $inputAttributes->merge(['value' => (string) $contents]) }}>
 <x-ui::icon size="xs" class="toggle" icon=":checkmark"></x-ui::icon>
+<x-ui::icon size="xs" class="indeterminate" icon="heroicon-s-minus"></x-ui::icon>
 @endcapture
 {{ render_slot(
     $slot,

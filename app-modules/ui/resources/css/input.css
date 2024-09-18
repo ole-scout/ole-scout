@@ -4,7 +4,7 @@
         &:where(.input-checkbox, .input-radio, .input-switch) {
             @apply border border-transparent leading-none;
             &,
-            > :where(.toggle) {
+            > :where(.toggle, .indeterminate) {
                 @apply motion-safe:transition-all motion-safe:duration-100 motion-safe:ease-in-out;
             }
             &:where(:has(> input:focus)) {
@@ -19,7 +19,7 @@
                     }
                 }
                 &:where(:not(:has(> input:checked))) {
-                    @apply bg-gray-50 dark:bg-gray-800 text-white;
+                    @apply bg-gray-50 dark:bg-gray-800;
                 }
                 &:where(:has(> input:checked)) {
                     @apply bg-primary-500 dark:bg-primary-600 text-white;
@@ -29,34 +29,48 @@
                 @apply border-neutral-900/25 dark:border-neutral-100/35 bg-neutral-900/5 dark:bg-neutral-100/5 text-neutral-900/25 dark:text-neutral-100/35;
             }
             &:where(:not(.input-switch)) {
-                > :where(.toggle) {
+                &:where(
+                        :not(
+                                :has(
+                                        > input:disabled,
+                                        > input:checked,
+                                        > input:indeterminate
+                                    )
+                            )
+                    ) {
+                    @apply text-gray-950 dark:text-white;
+                }
+                > :where(.toggle, .indeterminate) {
                     @apply absolute;
                 }
-                &:where(:has(> input:checked)) > :where(.toggle) {
+                &:where(:has(> input:checked)) > :where(.toggle),
+                &:where(:has(> input:indeterminate)) > :where(.indeterminate) {
                     @apply opacity-100;
                 }
-                &:where(:not(:has(> input:checked))) > :where(.toggle) {
+                &:where(:not(:has(> input:checked))) > :where(.toggle),
+                &:where(:not(:has(> input:indeterminate)))
+                    > :where(.indeterminate) {
                     @apply opacity-0;
                 }
                 @apply relative rounded-[3px];
-                > :where(.toggle) {
+                > :where(.toggle, .indeterminate) {
                     @apply w-auto h-auto;
                 }
                 &:where(.input-sm) {
                     @apply w-3 h-3 leading-3;
-                    > :where(.toggle) {
+                    > :where(.toggle, .indeterminate) {
                         @apply inset-0;
                     }
                 }
                 &:where(:not(.input-sm, .input-lg)) {
                     @apply w-4 h-4 leading-4;
-                    > :where(.toggle) {
+                    > :where(.toggle, .indeterminate) {
                         @apply inset-px;
                     }
                 }
                 &:where(.input-lg) {
                     @apply w-5 h-5 leading-5;
-                    > :where(.toggle) {
+                    > :where(.toggle, .indeterminate) {
                         @apply inset-0.5;
                     }
                 }
@@ -99,7 +113,7 @@
                     }
                 }
                 &:where(:not(:has(> input:disabled), :has(> input:checked))) {
-                    @apply bg-gray-500 dark:bg-gray-950;
+                    @apply bg-gray-500 dark:bg-gray-950 text-white;
                 }
                 &:where(.input-sm) {
                     @apply px-[5px] py-[1px];
