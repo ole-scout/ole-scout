@@ -13,6 +13,9 @@ Alpine.data(
         );
         return {
             isDirty: false,
+            canRevoke: categories.some((category) =>
+                ids[category].some((id) => initial[category][id])
+            ),
             data: Object.fromEntries(
                 Object.entries(initial).map(([category, services]) => [
                     category,
@@ -26,6 +29,28 @@ Alpine.data(
             /** @returns {void} */
             init() {
                 this.$el.setAttribute("x-bind", "form");
+            },
+            /**
+             * @param {?string} category
+             * @param {?string} id
+             * @returns {void}
+             */
+            deselect(category, id) {
+                if (category === "essential") return;
+                if (!category) {
+                    return categories.forEach((category) =>
+                        this.select(category)
+                    );
+                }
+                if (!id) {
+                    return ids[category].forEach((id) =>
+                        this.select(category, id)
+                    );
+                }
+                if (this.data[category][id]) {
+                    this.data[category][id] = false;
+                    this.isDirty = false;
+                }
             },
             /**
              * @param {?string} category
@@ -123,7 +148,9 @@ Alpine.data(
                  * @returns {void}
                  */
                 async "@submit.prevent"(event) {
-                    if (event.submitter.name === "accept-all") {
+                    if (event.submitter.name === "revoke") {
+                        this.deselect();
+                    } else if (event.submitter.name === "accept-all") {
                         this.select();
                     }
                     try {

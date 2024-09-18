@@ -2,7 +2,6 @@
 
 namespace FossHaas\Consent\Http\Controllers;
 
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cookie;
@@ -10,9 +9,9 @@ use Illuminate\Support\Facades\Cookie;
 class ConsentController
 {
     /**
-     * Handle the incoming request.
+     * Store or update the resource.
      */
-    public function __invoke(Request $request)
+    public function store(Request $request)
     {
         $payload = $request->all();
         $now = time();
@@ -27,5 +26,13 @@ class ConsentController
         );
         Cookie::queue('consent', json_encode($consent), 60 * 24 * 365);
         return response(status: 204);
+    }
+
+    /**
+     * Display the resource.
+     */
+    public function show()
+    {
+        return view('consent::consent');
     }
 }

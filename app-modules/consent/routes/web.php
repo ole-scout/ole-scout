@@ -11,6 +11,6 @@ Route::name('consent.')
     if (!Schema::hasTable('settings')) return;
     $settings = app(AppConsentSettings::class);
     VerifyCsrfToken::except($settings->consent_url);
-    Route::post($settings->consent_url, ConsentController::class)
-      ->name('store');
+    Route::get($settings->consent_url, [ConsentController::class, 'show'])->name('show');
+    Route::post($settings->consent_url, [ConsentController::class, 'store'])->name('store');
   });
