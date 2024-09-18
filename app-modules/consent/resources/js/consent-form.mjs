@@ -4,16 +4,26 @@ Alpine.data(
     "consent_form",
     /** @param {Record<string,Record<string,boolean>>} initial */
     (initial) => {
-        const data = initial;
-        const categories = Object.keys(data);
+        const categories = Object.keys(initial);
         const ids = Object.fromEntries(
             categories.map((category) => [
                 category,
-                Object.keys(data[category]),
+                Object.keys(initial[category]),
             ])
         );
         return {
-            data,
+            isDirty: false,
+            data: Object.fromEntries(
+                Object.entries(initial).map(([category, services]) => [
+                    category,
+                    category === "essential"
+                        ? Object.fromEntries(
+                              Object.entries(services).map(([id]) => [id, true])
+                          )
+                        : services,
+                ])
+            ),
+            /** @returns {void} */
             init() {
                 this.$el.setAttribute("x-bind", "form");
             },
@@ -23,6 +33,7 @@ Alpine.data(
              * @returns {void}
              */
             select(category, id) {
+                if (category === "essential") return;
                 if (!category) {
                     return categories.forEach((category) =>
                         this.select(category)
@@ -33,7 +44,10 @@ Alpine.data(
                         this.select(category, id)
                     );
                 }
-                this.data[category][id] = true;
+                if (!this.data[category][id]) {
+                    this.data[category][id] = true;
+                    this.isDirty = true;
+                }
             },
             /**
              * @param {?string} category
@@ -83,12 +97,14 @@ Alpine.data(
              */
             toggleAll(category) {
                 const currentState = this.isAllSelected(category);
-                const categories = category ? [category] : categories;
-                for (const category of categories) {
+                const list = category ? [category] : categories;
+                for (const category of list) {
+                    if (category === "essential") continue;
                     for (const id of ids[category]) {
                         this.data[category][id] = !currentState;
                     }
                 }
+                this.isDirty = true;
             },
             /**
              * @param {?string} category
@@ -96,10 +112,16 @@ Alpine.data(
              * @returns {void}
              */
             toggle(category, id) {
+                if (category === "essential") return;
                 if (!id) return this.toggleAll(category);
                 this.data[category][id] = !this.data[category][id];
+                this.isDirty = true;
             },
             form: {
+                /**
+                 * @param {SubmitEvent} event
+                 * @returns {void}
+                 */
                 async "@submit.prevent"(event) {
                     if (event.submitter.name === "accept-all") {
                         this.select();
@@ -107,13 +129,11 @@ Alpine.data(
                     try {
                         await fetch(this.$el.action, {
                             method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
+                            headers: { "Content-Type": "application/json" },
                             body: JSON.stringify(
                                 categories.flatMap((category) =>
                                     ids[category].filter(
-                                        (id) => data[category][id]
+                                        (id) => this.data[category][id]
                                     )
                                 )
                             ),

@@ -41,8 +41,7 @@ class ConsentForm extends Component
                     $service->serviceProvider = $operator;
                 }
                 $this->selected[$categoryValue][$service->id] = (
-                    $categoryValue === 'essential'
-                    ?: array_key_exists($service->id, $selected)
+                    array_key_exists($service->id, $selected)
                 );
             }
         }
