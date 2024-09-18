@@ -89,9 +89,12 @@
 
         &:where(:not(:disabled, .disabled, :has(:disabled))) {
             @apply cursor-pointer;
-            &:where(.btn-alt, .btn-button, .btn-ghost:hover, .btn-overlay):not(
-                    .input .btn
-                ) {
+            &:where(
+                    .btn-alt,
+                    .btn-button,
+                    .btn-ghost:hover,
+                    .btn-overlay
+                ):where(:not(.input .btn)) {
                 @apply shadow;
             }
             &:where(.btn-button) {
