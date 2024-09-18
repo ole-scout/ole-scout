@@ -13,6 +13,7 @@ Alpine.data(
         );
         return {
             isDirty: false,
+            isSubmitting: false,
             canRevoke: categories.some((category) =>
                 ids[category].some((id) => initial[category][id])
             ),
@@ -148,20 +149,19 @@ Alpine.data(
                  * @returns {void}
                  */
                 async "@submit.prevent"(event) {
-                    if (event.submitter.name === "revoke") {
-                        try {
+                    const intent = event.submitter?.name || true;
+                    console.log(intent);
+                    try {
+                        this.isSubmitting = intent;
+                        if (event.submitter.name === "revoke") {
                             this.deselect();
                             await fetch(this.$el.action, { method: "DELETE" });
                             window.location.reload();
-                        } catch (error) {
-                            console.error(error);
+                            return;
                         }
-                        return;
-                    }
-                    if (event.submitter.name === "accept-all") {
-                        this.select();
-                    }
-                    try {
+                        if (event.submitter.name === "accept-all") {
+                            this.select();
+                        }
                         await fetch(this.$el.action, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -176,6 +176,7 @@ Alpine.data(
                         window.location.reload();
                     } catch (error) {
                         console.error(error);
+                        this.isSubmitting = false;
                     }
                 },
             },

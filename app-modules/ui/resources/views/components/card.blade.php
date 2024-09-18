@@ -40,7 +40,7 @@
         $body,
         ['class' => 'body']
     ) }}
-    @if($footer->isNotEmpty())
+    @if($footer->isNotEmpty() || $footer->attributes->isNotEmpty())
     {{ render_slot(
         $footer,
         ['class' => 'footer']

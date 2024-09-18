@@ -1,6 +1,5 @@
 @props([
     'name',
-    'disabled' => false,
     'inline' => false,
     'size' => null,
     'label' => null,
@@ -29,7 +28,6 @@
         'action' => $action,
         'actionTrailing' => $actionTrailing,
         'name' => isset($name) ? $name : null,
-        'disabled' => $disabled,
         'size' => $size,
         'x-bind:id' => '$id(\'field\', \'input\')',
         'x-bind:aria-labelledby' => '$id(\'field\', \'label\')',

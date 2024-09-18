@@ -5,21 +5,25 @@
     <div class="flex items-center h-full">
         <x-ui::button
             variant="link"
-            x-on:click="select()"
-            x-bind:disabled="isAllSelected()"
-        >{{ __('Alle auswählen') }}</x-ui::button>
+            x-on:click="toggle()"
+            x-bind:disabled="isSubmitting"
+        >
+            <span x-show="!isAllSelected()">{{ __('Alle auswählen') }}</span>
+            <span x-show="isAllSelected()" x-cloak>{{ __('Auswahl aufheben') }}</span>
+        </x-ui::button>
     </div>
     @foreach($categories as $name => $label)
     <x-ui::field
         :$name
         :$label
-        :disabled="$name === 'essential'"
         inline>
         <x-slot:input
             component="ui::checkbox"
             x-bind:checked="isAllSelected($el.name)"
             x-ui-indeterminate="!isAllSelected($el.name) && isSelected($el.name)"
             x-on:change="toggleAll($el.name)"
+            :disabled="$name === 'essential'"
+            :x-bind:disabled="$name === 'essential' ? null : 'isSubmitting'"
         ></x-slot:input>
     </x-ui::field>
     @endforeach
