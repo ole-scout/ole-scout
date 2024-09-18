@@ -7,7 +7,7 @@
         <x-slot:title>{{ __('Datenschutz-Einstellungen') }}</x-slot:title>
         <x-slot:slot class="overflow-y-auto">
             <x-core-ui::theme-picker class="absolute top-0 -left-48" />
-            <x-consent::consent-form :$id x-on:consent-updated="window.location.reload()" class="flex flex-col gap-4" />
+            <x-consent::consent-form :$id class="flex flex-col gap-4" />
         </x-slot:slot>
         <x-slot:footer class="flex gap-4">
             <x-ui::button

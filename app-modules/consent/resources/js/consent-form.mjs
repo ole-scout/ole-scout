@@ -138,11 +138,10 @@ Alpine.data(
                                 )
                             ),
                         });
+                        window.location.reload();
                     } catch (error) {
                         console.error(error);
-                        return;
                     }
-                    this.$dispatch("consent-updated");
                 },
             },
         };
