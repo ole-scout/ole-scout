@@ -149,8 +149,16 @@ Alpine.data(
                  */
                 async "@submit.prevent"(event) {
                     if (event.submitter.name === "revoke") {
-                        this.deselect();
-                    } else if (event.submitter.name === "accept-all") {
+                        try {
+                            this.deselect();
+                            await fetch(this.$el.action, { method: "DELETE" });
+                            window.location.reload();
+                        } catch (error) {
+                            console.error(error);
+                        }
+                        return;
+                    }
+                    if (event.submitter.name === "accept-all") {
                         this.select();
                     }
                     try {

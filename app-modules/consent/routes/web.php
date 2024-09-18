@@ -13,4 +13,5 @@ Route::name('consent.')
     VerifyCsrfToken::except($settings->consent_url);
     Route::get($settings->consent_url, [ConsentController::class, 'show'])->name('show');
     Route::post($settings->consent_url, [ConsentController::class, 'store'])->name('store');
+    Route::delete($settings->consent_url, [ConsentController::class, 'destroy'])->name('destroy');
   });

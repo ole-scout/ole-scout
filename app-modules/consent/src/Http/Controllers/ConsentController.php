@@ -4,6 +4,7 @@ namespace FossHaas\Consent\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 
 class ConsentController
@@ -34,5 +35,17 @@ class ConsentController
     public function show()
     {
         return view('consent::consent');
+    }
+
+    /**
+     * Destroy the resource
+     */
+    public function destroy()
+    {
+        $sessionCookie = Config::get('session.cookie');
+        Cookie::expire('consent');
+        Cookie::expire($sessionCookie);
+        Cookie::expire('XSRF-TOKEN');
+        return response(status: 204);
     }
 }
