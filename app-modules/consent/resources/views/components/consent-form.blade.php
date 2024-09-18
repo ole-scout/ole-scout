@@ -1,16 +1,16 @@
 @props([
-    'wrapper' => null,
-    'alpineAfterSubmit' => null,
+    'id' => 'consent-form',
 ])
-<form
-    id="consent"
-    method="post"
-    action="{{ route('consent.store') }}"
-    x-data="consent"
-    x-on:submit.prevent="submit($event)"
-    {{ $attributes }}
->
-    @capture($content)
+@php
+    $initial = json_encode($selected);
+    $slot = as_slot($slot);
+    $attributes = as_attributes($attributes)->merge([
+        'id' => $id,
+        'method' => 'post',
+        'action' => route('consent.store'),
+    ]);
+@endphp
+<form {{ $attributes }} x-data="consent_form(@js($selected))">
     <div class="text-sm leading-6 prose max-w-none dark:prose-invert [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
         {!! markdown(__("Diese Anwendung verwendet Cookies und ähnliche Technologien und verarbeitet personenbezogene Daten von Ihnen (z.B. IP-Adresse), um Inhalte und Funktionen zur Verfügung zu stellen oder Zugriffe zu analysieren.\n\nSie haben an dieser Stelle die Möglichkeit, Ihre Einwilligung in die Verarbeitung Ihrer personenbezogenen Daten zu bestimmten Zwecken zu erteilen. Sie können diese Einwilligung jederzeit widerrufen. Weitere Informationen zu Ihren Rechten und zur Verwendung Ihrer Daten finden Sie in der [Datenschutzerklärung](/privacy).")) !!}
     </div>
@@ -23,7 +23,8 @@
         <x-ui::tab-pane.tab
             :$label
             :value="$category"
-            :badgeExpression="'selectedCount(\'' . $category . '\')'"
+            :badgeExpression="'countSelected(\'' . $category . '\')'"
+            class="space-y-4"
         >
             @foreach($services[$category] as $service)
             <x-consent::consent-form.service-details :$service :$category/>
@@ -31,82 +32,5 @@
         </x-ui::tab-pane.tab>
         @endforeach
     </x-ui::tab-pane>
-    @endcapture
-
-    @if($wrapper)
-    {{ $wrapper($content) }}
-    @else
-    {{ $content() }}
-    <x-ui::button type="submit">
-        {{ __('Auswahl speichern') }}
-    </x-ui::button>
-    @endif
-    <script type="module">
-        document.addEventListener('alpine:init', () => {
-            Alpine.data('consent', () => ({
-                services: @js($selected),
-                activeCategory: 'essential',
-                selectAll (cat) {
-                    const services = cat ? [this.services[cat]] : Object.values(this.services);
-                    for (const service of services) {
-                        for (const key of Object.keys(service)) {
-                            service[key] = true;
-                        }
-                    }
-                },
-                toggleAll (cat) {
-                    const services = cat ? [this.services[cat]] : Object.values(this.services);
-                    const selected = services.every(service => Object.values(service).every( v => v));
-                    for (const service of services) {
-                        for (const key of Object.keys(service)) {
-                            service[key] = !selected;
-                        }
-                    }
-                },
-                toggle (cat, prv) {
-                    console.log('toggle', cat, prv, this.services[cat][prv])
-                    this.services[cat][prv] = !this.services[cat][prv];
-                },
-                isSelected (cat, prv) {
-                    if (!cat) return Object.keys(this.services).every(cat => this.isSelected(cat));
-                    if (prv) return this.services[cat][prv];
-                    return Object.keys(this.services[cat]).every(prv => this.isSelected(cat, prv));
-                },
-                isSomeSelected (cat) {
-                    if (!cat) return Object.keys(this.services).some(cat => this.isSelected(cat));
-                    return Object.keys(this.services[cat]).some(prv => this.services[cat][prv]);
-                },
-                selectedCount (cat) {
-                    const count = Object.values(this.services[cat]).filter(v => v).length;
-                    return count;
-                },
-                selectAllAndSubmit () {
-                    this.selectAll();
-                    this.submit();
-                },
-                async submit (evt) {
-                    if (!evt) return document.getElementById('consent').requestSubmit();
-                    try {
-                        await fetch(evt.target.action, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(
-                                Object.values(this.services).flatMap(
-                                    services => Object.keys(services).filter(
-                                        key => services[key]
-                                    )
-                                )
-                            ),
-                        });
-                    } catch (error) {
-                        console.error(error);
-                        return;
-                    }
-                    {{ $alpineAfterSubmit }};
-                }
-            }));
-        });
-    </script>
+    {{ render_slot($slot) }}
 </form>

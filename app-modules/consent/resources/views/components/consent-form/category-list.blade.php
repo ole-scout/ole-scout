@@ -5,8 +5,8 @@
     <div class="flex items-center h-full">
         <x-ui::button
             variant="link"
-            x-on:click="selectAll()"
-            x-show="!isSelected()"
+            x-on:click="select()"
+            x-bind:disabled="isAllSelected()"
         >{{ __('Alle auswählen') }}</x-ui::button>
     </div>
     @foreach($categories as $name => $label)
@@ -17,7 +17,8 @@
         inline>
         <x-slot:input
             component="ui::checkbox"
-            x-bind:checked="isSelected($el.name)"
+            x-bind:checked="isAllSelected($el.name)"
+            x-ui-indeterminate="!isAllSelected($el.name) && isSelected($el.name)"
             x-on:change="toggleAll($el.name)"
         ></x-slot:input>
     </x-ui::field>

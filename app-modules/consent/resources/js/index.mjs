@@ -1,0 +1,1 @@
+import "./consent-form.mjs";
