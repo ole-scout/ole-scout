@@ -21,6 +21,7 @@
         x-bind:aria-controls="$id('collapsible', 'content')"
         x-bind:aria-expanded="String(expanded)"
         aria-expanded="false"
+        x-ui-busy:ignore
         >
         <x-slot:slot>{{ $slot }}</x-slot:slot>
         <x-slot:iconTrailing
