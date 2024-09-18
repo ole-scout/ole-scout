@@ -1,4 +1,5 @@
 import focus from "@alpinejs/focus";
+import "./busy.mjs";
 import "./indeterminate.mjs";
 import "./tab-pane.mjs";
 import "./toggle-button.mjs";

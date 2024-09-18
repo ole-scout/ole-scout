@@ -8,7 +8,6 @@
         'checked' => $category === 'essential',
         'disabled' => $category === 'essential',
         'x-bind:checked' => "isSelected('{$category}', '{$service->id}')",
-        'x-bind:disabled' => $category === 'essential' ? null : 'isSubmitting',
         'x-on:click' => "toggle('{$category}', '{$service->id}')",
     ]);
 @endphp

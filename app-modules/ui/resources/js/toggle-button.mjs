@@ -2,7 +2,7 @@ import { Alpine } from "/vendor/livewire/livewire/dist/livewire.esm";
 
 /**
  * @param {import("alpinejs").ElementWithXAttributes} el
- * @param {import("alpinejs").DirectiveData} directive
+ * @param {import("alpinejs").DirectiveData} data
  * @param {import("alpinejs").DirectiveUtilities} utilities
  * @returns {void}
  */

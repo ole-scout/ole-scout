@@ -91,7 +91,7 @@ const handleTablistKeyup = (evaluate, event) => {
 
 /**
  * @param {import("alpinejs").ElementWithXAttributes} el
- * @param {import("alpinejs").DirectiveData} directive
+ * @param {import("alpinejs").DirectiveData} data
  * @param {import("alpinejs").DirectiveUtilities} utilities
  * @returns {void}
  */
@@ -121,7 +121,7 @@ const TabPane = (el, {}, { cleanup, evaluate }) => {
 
 /**
  * @param {import("alpinejs").ElementWithXAttributes} el
- * @param {import("alpinejs").DirectiveData} directive
+ * @param {import("alpinejs").DirectiveData} data
  * @param {import("alpinejs").DirectiveUtilities} utilities
  * @returns {void}
  */

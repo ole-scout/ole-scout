@@ -6,7 +6,7 @@
         <x-slot:icon class="circle" icon=":shield-person"></x-slot:icon>
         <x-slot:title>{{ __('Datenschutz-Einstellungen') }}</x-slot:title>
         <x-slot:slot class="overflow-y-auto">
-            <x-core-ui::theme-picker class="absolute top-0 -left-48" />
+            <x-core-ui::theme-picker class="absolute top-0 -left-48" x-ui-busy:ignore />
             <x-consent::consent-form :$id class="flex flex-col gap-4">
                 <x-slot:slot hidden>
                     <template x-teleport="#{{ $id . '-footer' }}">
@@ -16,19 +16,17 @@
                                 :form="$id"
                                 class="justify-center flex-1"
                                 name="accept-all"
-                                x-bind:disabled="isSubmitting"
+                                x-ui-busy
                             >
                                 {{ __('Alle akzeptieren & speichern') }}
-                                <x-slot:iconTrailing icon="fluentui-spinner-ios-20" class="animate-spin" x-show="isSubmitting === 'accept-all'" x-cloak></x-slot:iconTrailing>
                             </x-ui::button>
                             <x-ui::button
                                 type="submit"
                                 :form="$id"
                                 class="justify-center flex-1"
-                                x-bind:disabled="isSubmitting"
+                                x-ui-busy
                             >
                                 {{ __('Auswahl speichern') }}
-                                <x-slot:iconTrailing icon="fluentui-spinner-ios-20" class="animate-spin" x-show="isSubmitting === true" x-cloak></x-slot:iconTrailing>
                             </x-ui::button>
                         </div>
                     </template>

@@ -2,6 +2,9 @@
     .btn {
         @apply inline-flex items-center;
 
+        &:where(:not(.busy)) .busy-icon {
+            @apply hidden;
+        }
         &:where(.btn-sm) {
             @apply text-xs;
         }

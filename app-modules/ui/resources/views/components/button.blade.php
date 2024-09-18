@@ -49,6 +49,13 @@
             default => 'btn-normal',
         };
     }
+    if ($attributes->has('x-ui-busy')) {
+        $iconTrailing[] = as_slot('', [
+            'component' => 'ui::icon',
+            'icon' => 'fluentui-spinner-ios-20',
+            'class' => 'animate-spin busy-icon',
+        ]);
+    }
 
     $linkProps = ['href', 'target', 'rel'];
     $fallbackTag = 'button';

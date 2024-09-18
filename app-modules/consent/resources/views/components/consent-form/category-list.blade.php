@@ -6,7 +6,6 @@
         <x-ui::button
             variant="link"
             x-on:click="toggle()"
-            x-bind:disabled="isSubmitting"
         >
             <span x-show="!isAllSelected()">{{ __('Alle auswählen') }}</span>
             <span x-show="isAllSelected()" x-cloak>{{ __('Auswahl aufheben') }}</span>
@@ -23,7 +22,6 @@
             x-ui-indeterminate="!isAllSelected($el.name) && isSelected($el.name)"
             x-on:change="toggleAll($el.name)"
             :disabled="$name === 'essential'"
-            :x-bind:disabled="$name === 'essential' ? null : 'isSubmitting'"
         ></x-slot:input>
     </x-ui::field>
     @endforeach

@@ -12,29 +12,28 @@
                         intent="danger"
                         variant="ghost"
                         x-show="canRevoke"
-                        x-bind:disabled="isSubmitting"
+                        x-ui-busy
                         x-cloak
                     >
                         {{ __('Einwilligung widerrufen') }}
-                        <x-slot:iconTrailing icon="fluentui-spinner-ios-20" class="animate-spin" x-show="isSubmitting === 'revoke'" x-cloak></x-slot:iconTrailing>
                     </x-ui::button>
                 </div>
                 <x-ui::button
                     type="submit"
                     name="accept-all"
-                    x-bind:disabled="(isAllSelected() && !isDirty) || isSubmitting"
+                    x-bind:disabled="isAllSelected() && !isDirty"
+                    x-ui-busy
                 >
                     {{ __('Alle akzeptieren & speichern') }}
-                    <x-slot:iconTrailing icon="fluentui-spinner-ios-20" class="animate-spin" x-show="isSubmitting === 'accept-all'" x-cloak></x-slot:iconTrailing>
                 </x-ui::button>
                 <x-ui::button
                     type="submit"
                     form="consent-form"
-                    x-bind:disabled="(canRevoke && !isDirty) || isSubmitting"
+                    x-bind:disabled="canRevoke && !isDirty"
+                    x-ui-busy
                     disabled
                 >
                     {{ __('Auswahl speichern') }}
-                    <x-slot:iconTrailing icon="fluentui-spinner-ios-20" class="animate-spin" x-show="isSubmitting === true" x-cloak></x-slot:iconTrailing>
                 </x-ui::button>
             </div>
         </x-consent::consent-form>
