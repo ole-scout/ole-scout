@@ -14,6 +14,7 @@ export default {
         "./app-modules/*/src/Filament/**/*.php",
         "./app-modules/*/src/Livewire/**/*.php",
         "./app-modules/*/resources/views/**/*.blade.php",
+        "./app-modules/*/resources/js/**/*.mjs",
         "./vendor/filament/**/*.blade.php",
     ],
 };

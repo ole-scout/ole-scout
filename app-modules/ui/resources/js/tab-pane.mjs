@@ -152,6 +152,7 @@ const Tab = (el, { expression, value }, { evaluate, effect }) => {
     tab.setAttribute("role", "tab");
     tab.setAttribute("id", tabId);
     tab.setAttribute("aria-controls", panelId);
+    el.setAttribute("role", "tabpanel");
     el.setAttribute("id", panelId);
     el.setAttribute("aria-labelledby", tabId);
     el.setAttribute("tabindex", "0");
