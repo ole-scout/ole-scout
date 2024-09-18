@@ -39,12 +39,12 @@ Alpine.data(
                 if (category === "essential") return;
                 if (!category) {
                     return categories.forEach((category) =>
-                        this.select(category)
+                        this.deselect(category)
                     );
                 }
                 if (!id) {
                     return ids[category].forEach((id) =>
-                        this.select(category, id)
+                        this.deselect(category, id)
                     );
                 }
                 if (this.data[category][id]) {
