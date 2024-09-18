@@ -80,13 +80,10 @@
                     @apply bg-neutral-400/50 dark:bg-neutral-500/50;
                 }
                 .btn:not(:has(input:disabled)):has(:checked) {
-                    @apply bg-gray-100 dark:bg-gray-900 shadow-inner;
+                    @apply bg-gray-100 dark:bg-gray-900 shadow-inner cursor-default;
                 }
                 .btn:not(:has(input:disabled), :has(:checked)):hover {
-                    @apply text-gray-700 dark:text-gray-100;
-                }
-                .btn:not(:has(input:disabled)):hover {
-                    @apply bg-gray-200 dark:bg-gray-950;
+                    @apply bg-gray-200 dark:bg-gray-950 text-gray-700 dark:text-gray-100;
                 }
                 &:has(:hover) .btn:not(:has(:disabled), :hover, :has(:focus)) {
                     @apply bg-transparent shadow-none;

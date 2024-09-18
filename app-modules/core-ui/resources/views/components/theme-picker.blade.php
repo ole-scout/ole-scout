@@ -1,18 +1,21 @@
 @props([
     'name' => 'theme',
-    'value' => null,
-    'iconLight' => ':weather-sunny',
-    'iconDark' => ':weather-moon',
-    'iconSystem' => ':desktop',
-    'labelLight' => __('Hell'),
-    'labelDark' => __('Dunkel'),
-    'labelSystem' => __('System'),
     'showLabels' => false,
 ])
-<x-ui::toggle-group x-core-ui-theme-picker :$attributes
-    :$name :$value :hiddenLabel="!$showLabels" :options="[
-        ['label' => $labelLight, 'icon' => $iconLight, 'value' => 'light'],
-        ['label' => $labelDark, 'icon' => $iconDark, 'value' => 'dark'],
-        ['label' => $labelSystem, 'icon' => $iconSystem, 'value' => 'system'],
-    ]"
-/>
+@php
+    $attributes = as_attributes($attributes);
+    $options = [
+        'light' => ['icon' => ':weather-sunny', 'label' => __('Hell')],
+        'dark' => ['icon' => ':weather-moon', 'label' => __('Dunkel')],
+        'system' => ['icon' => ':desktop', 'label' => __('System')],
+    ];
+@endphp
+<x-ui::toggle-group x-data="core_ui_theme_picker()" :$attributes>
+    @foreach($options as $value => $option)
+    <x-ui::toggle-group.button
+        :$name :$value
+        :icon="$option['icon']"
+        :hiddenLabel="!$showLabels"
+    >{{ $option['label'] }}</x-ui::toggle-group.button>
+    @endforeach
+</x-ui::toggle-group>

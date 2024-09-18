@@ -48,6 +48,6 @@
     }
     $slot = as_slot($slot);
 @endphp
-<x-ui::button x-ui-toggle-button="data-when-checked"
+<x-ui::button x-ui-toggle-button:data-when-checked
     :$icon :$iconTrailing :$attributes
 ><x-slot:slot :attributes="$slot->attributes">{{ $slot }}</x-slot:slot></x-ui::button>

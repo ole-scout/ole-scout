@@ -66,7 +66,7 @@
         </header>
         <main>
             <x-core-ui::theme-picker
-                x-data subtle vertical
+                subtle vertical
                 class="absolute top-0 lg:top-4 sm:fixed right-4"
             />
             <x-ui::card>
