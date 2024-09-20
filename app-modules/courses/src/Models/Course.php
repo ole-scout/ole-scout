@@ -75,6 +75,11 @@ class Course extends Model implements Sortable
         'cert' => 'json',
     ];
 
+    public function scopeRoot(Builder $query): void
+    {
+        $query->whereNull('course_group_id');
+    }
+
     public function scopeForUser(Builder $query, ?User $user = null): void
     {
         if (!$user) $user = Auth::user();
