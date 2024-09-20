@@ -1,13 +1,15 @@
 @props([
     'icon' => null,
     'title' => null,
-    'size' => 'lg',
+    'parent' => null,
+    'size' => null,
 ])
 @use('Filament\Support\Colors\Color')
 @php
     $branding = app(\App\Settings\BrandingSettings::class);
     $icon = as_slot($icon);
     $title = as_slot($title);
+    $parent = as_slot($parent);
     $size = (string) $size;
 @endphp
 <!DOCTYPE html>
@@ -59,9 +61,24 @@
     } }}">
         <header>
             @if($branding->logo)
-            <img src="{{ $branding->logo }}" alt="{{ $branding->name }}" />
+            <img class="logo" src="{{ $branding->logo }}" alt="{{ $branding->name }}" />
             @else
-            <span>{{ $branding->name }}</span>
+            <span class="logo">{{ $branding->name }}</span>
+            @endif
+            @if($parent->isNotEmpty())
+            <div class="flex items-center gap-0.5 mt-2 breadcrumbs text-xs text-white dark:text-gray-300 [&>*]:opacity-90 [&>a:hover]:opacity-100">
+                <a href="/"><x-ui::icon class="size-[1.5em]" icon=":home" /></a>
+                <x-ui::icon icon=":chevron-right:o" class="size-[1em] opacity-75" />
+                {{ render_slot($parent, ['class' => 'hover:underline'], fallbackTag: 'a') }}
+                <x-ui::icon icon=":chevron-right:o" class="size-[1em] opacity-75" />
+                <span class="cursor-default">{{ $title }}</span>
+            </div>
+            @elseif(!Request::is('/'))
+            <div class="flex items-center gap-0.5 mt-2 breadcrumbs text-xs text-white dark:text-gray-300 [&>*]:opacity-90 [&>a:hover]:opacity-100">
+                <a href="/"><x-ui::icon class="size-[1.5em]" icon=":home" /></a>
+                <x-ui::icon icon=":chevron-right:o" class="size-[1em] opacity-75" />
+                <span class="cursor-default">{{ $title }}</span>
+            </div>
             @endif
         </header>
         <main>
