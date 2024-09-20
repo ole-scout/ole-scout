@@ -5,35 +5,12 @@ const inputSelector =
 
 /**
  * @param {import("alpinejs").ElementWithXAttributes} el
- */
-const disableInputs = (el) => {
-    const rollbacks = [];
-    const inputs = el.querySelectorAll(
-        `${inputSelector}:not([x-bind:disabled])`
-    );
-    for (const input of inputs) {
-        if (input.hasAttribute("disabled")) continue;
-        input.setAttribute("disabled", "disabled");
-        rollbacks.push(() => input.removeAttribute("disabled"));
-    }
-    return () => {
-        while (rollbacks.length) {
-            const rollback = rollbacks.pop();
-            rollback();
-        }
-    };
-};
-
-/**
- * @param {import("alpinejs").ElementWithXAttributes} el
  * @param {import("alpinejs").DirectiveData} data
  * @param {import("alpinejs").DirectiveUtilities} utilities
  * @returns {void}
  */
-const BusyForm = (el, { expression }, { effect, evaluateLater }) => {
+const BusyForm = (el, { expression }) => {
     if (expression === "x-ui-busy" || !expression) expression = "isSubmitting";
-    const isBusy = evaluateLater(expression);
-    const rollbacks = {};
     const inputs = el.querySelectorAll(inputSelector);
     for (const input of inputs) {
         let condition = expression;
@@ -44,18 +21,6 @@ const BusyForm = (el, { expression }, { effect, evaluateLater }) => {
         } else if (input.hasAttribute("disabled")) continue;
         input.setAttribute("x-bind:disabled", condition);
     }
-    effect(() => {
-        isBusy((busy) => {
-            if (busy) {
-                if (!rollbacks[expression]) rollbacks[expression] = [];
-                rollbacks[expression].push(disableInputs(el));
-            } else {
-                if (!rollbacks[expression]) return;
-                const rollback = rollbacks[expression].pop();
-                if (rollback) rollback();
-            }
-        });
-    });
 };
 
 /**
@@ -64,27 +29,20 @@ const BusyForm = (el, { expression }, { effect, evaluateLater }) => {
  * @param {import("alpinejs").DirectiveUtilities} utilities
  * @returns {void}
  */
-const BusyButton = (
-    el,
-    { expression },
-    { effect, evaluate, evaluateLater }
-) => {
+const BusyButton = (el, { expression }) => {
     if (expression === "x-ui-busy" || !expression) expression = "isSubmitting";
-    const isBusy = evaluateLater(expression);
-    let previous = false;
-    effect(() => {
-        isBusy((busy) => {
-            if (!previous) {
-                if (busy === (el.name || true)) {
-                    el.classList.add("busy");
-                    previous = true;
-                }
-            } else {
-                el.classList.remove("busy");
-                previous = false;
-            }
-        });
-    });
+    const name = JSON.stringify(el.name || true);
+    expression = `((${expression}) === ${name})`;
+    let condition = `${expression} && 'busy'`;
+    if (el.hasAttribute("x-bind:class")) {
+        condition = el.getAttribute("x-bind:class");
+        if (condition.startsWith("{")) {
+            condition = `{ 'busy': ${expression}, ${condition.slice(1)}`;
+        } else {
+            condition = `[${expression} && 'busy', ${condition}].filter(Boolean).join(' ')`;
+        }
+    }
+    el.setAttribute("x-bind:class", condition);
 };
 
 Alpine.directive(
