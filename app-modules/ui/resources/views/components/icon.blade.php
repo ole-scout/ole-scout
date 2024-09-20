@@ -16,18 +16,25 @@
         'icon-lg' => $size === 'lg',
     ]);
 
-    if (str_starts_with($icon, 'data:')) {
+    if (preg_match('/^\w+:/', $icon) || strpos($icon, '/') !== false) {
         $src = $icon;
         $icon = null;
     } else if (str_starts_with($icon, ':')) {
         $icon = substr($icon, 1);
-        $suffix = match($size) {
+        $size = match($size) {
             'xs' => '12',
             'sm' => '16',
             default => '20',
             'lg' => '24',
         };
-        $icon = "fluentui-{$icon}-{$suffix}";
+        $i = strrpos($icon, ':');
+        if ($i !== false) {
+            $suffix = substr($icon, $i + 1);
+            $icon = substr($icon, 0, $i);
+            $icon = "fluentui-{$icon}-{$size}-{$suffix}";
+        } else {
+            $icon = "fluentui-{$icon}-{$size}";
+        }
     }
 
     $hasLabel = $attributes->hasAny(['aria-label', 'aria-labelledby']);
