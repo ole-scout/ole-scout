@@ -20,7 +20,7 @@
 @endphp
 @capture($transform, $contents)
 {{ $contents }}
-<input {{ $inputAttributes }}>
+<input {{ $inputAttributes->merge(['value' => 'true']) }}>
 <span class="toggle"></span>
 @endcapture
 {{ render_slot(
