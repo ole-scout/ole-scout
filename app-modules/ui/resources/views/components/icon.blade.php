@@ -32,7 +32,7 @@
 
     $hasLabel = $attributes->hasAny(['aria-label', 'aria-labelledby']);
     if ($src) {
-        $attributes = $attributes->merge(['src', $src]);
+        $attributes = $attributes->merge(['src' => $src]);
         if ($label) {
             $attributes = $attributes->merge(['alt' => $slot]);
             $hasLabel = true;
