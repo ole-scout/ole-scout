@@ -36,15 +36,13 @@ const BusyForm = (el, { expression }, { effect, evaluateLater }) => {
     const rollbacks = {};
     const inputs = el.querySelectorAll(inputSelector);
     for (const input of inputs) {
+        let condition = expression;
         if (input.hasAttribute("x-bind:disabled")) {
-            const condition = input.getAttribute("x-bind:disabled");
-            input.setAttribute(
-                "x-bind:disabled",
-                `(${condition}) || (${expression})`
-            );
-        } else {
-            input.setAttribute("x-bind:disabled", expression);
-        }
+            condition = `(${input.getAttribute(
+                "x-bind:disabled"
+            )}) || (${condition})`;
+        } else if (input.hasAttribute("disabled")) continue;
+        input.setAttribute("x-bind:disabled", condition);
     }
     effect(() => {
         isBusy((busy) => {
