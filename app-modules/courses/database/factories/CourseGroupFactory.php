@@ -40,7 +40,7 @@ class CourseGroupFactory extends Factory
                 )
             ]),
             'color' => $this->faker->hexColor(),
-            'icon' => fn($attributes) => 'https://place-hold.it/128/128/' . ltrim($attributes['color'], '#'),
+            'icon' => fn($attributes) => 'https://fakeimg.pl/128x128/' . ltrim($attributes['color'], '#'),
         ];
     }
 }

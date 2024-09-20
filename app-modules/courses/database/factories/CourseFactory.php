@@ -50,7 +50,7 @@ class CourseFactory extends Factory
             'color' => $this->faker->hexColor(),
             'author' => null, // currently serves no purpose
             'clearance' => null, // currently serves no purpose
-            'icon' => fn($attributes) => 'https://place-hold.it/128/128/' . ltrim($attributes['color'], '#'),
+            'icon' => fn($attributes) => 'https://fakeimg.pl/128x128/' . ltrim($attributes['color'], '#'),
             'is_published' => true,
             'access' => $this->faker->randomElement(Access::cases()),
             'cert' => null, // TODO
