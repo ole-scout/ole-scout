@@ -2,9 +2,7 @@
 
 This is the rewrite of the OLE Scout e-learning software happening in public (mostly).
 
-Check the [TODO list](/TODO.md) to see what I'm currently working on.
-
-I'm exploring Filament, Livewire and Laravel as I go along so expect mistakes to be made.
+I'm exploring Filament, Livewire, Alpine and Laravel as I go along so expect mistakes to be made.
 
 ## License
 
