@@ -11,7 +11,7 @@ class CoursesServiceProvider extends ServiceProvider
 
 	public function boot(): void
 	{
-		Relation::enforceMorphMap([
+		Relation::morphMap([
 			'download' => 'FossHaas\Courses\Models\DownloadActivity',
 			'weblink' => 'FossHaas\Courses\Models\WeblinkActivity',
 		]);
