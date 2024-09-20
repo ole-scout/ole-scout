@@ -125,7 +125,11 @@ const TabPane = (el, {}, { cleanup, evaluate }) => {
  * @param {import("alpinejs").DirectiveUtilities} utilities
  * @returns {void}
  */
-const Tab = (el, { expression, value }, { evaluate, effect }) => {
+const Tab = (
+    el,
+    { expression, value },
+    { evaluate, evaluateLater, effect }
+) => {
     const { label, badge: badgeExpression } = evaluate(expression);
     const parent = el.parentElement;
     const tablist = parent.querySelector('[role="tablist"]');
@@ -137,22 +141,13 @@ const Tab = (el, { expression, value }, { evaluate, effect }) => {
     const panelId = `${tablist.id}_panel_${value}`;
 
     const tab = document.createElement("button");
-    tab.innerText = label;
-    const badge = document.createElement("span");
-    badge.setAttribute("aria-hidden", "true");
-    badge.setAttribute("class", "badge");
-    tab.appendChild(badge);
-    if (badgeExpression) {
-        effect(() => {
-            badge.innerText = evaluate(badgeExpression);
-        });
-    }
-
     tab.setAttribute("type", "button");
     tab.setAttribute("role", "tab");
     tab.setAttribute("id", tabId);
     tab.setAttribute("aria-controls", panelId);
     tab.setAttribute("x-ui-busy:ignore", "true");
+    tab.innerText = label;
+
     el.setAttribute("role", "tabpanel");
     el.setAttribute("id", panelId);
     el.setAttribute("aria-labelledby", tabId);
@@ -165,6 +160,19 @@ const Tab = (el, { expression, value }, { evaluate, effect }) => {
         tab.setAttribute("aria-selected", "false");
         tab.setAttribute("tabindex", "-1");
         el.setAttribute("hidden", "hidden");
+    }
+
+    if (badgeExpression) {
+        const badgeText = evaluateLater(badgeExpression);
+        const badge = document.createElement("span");
+        badge.setAttribute("aria-hidden", "true");
+        badge.setAttribute("class", "badge");
+        effect(() => {
+            badgeText((badgeValue) => {
+                badge.innerText = badgeValue;
+            });
+        });
+        tab.appendChild(badge);
     }
     tablist.appendChild(tab);
 };
