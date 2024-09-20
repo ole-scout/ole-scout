@@ -14,11 +14,14 @@ class ConsentController
      */
     public function store(Request $request)
     {
-        $payload = $request->all();
         $now = time();
         $previous = $request->consentCookie() ?: [];
+        $validated = $request->validate([
+            'services' => 'required|array',
+            'services.*' => 'exists:service_definitions,id',
+        ]);
         $consent = Arr::mapWithKeys(
-            $payload,
+            $validated['services'],
             fn($service) => [$service => (
                 array_key_exists($service, $previous)
                 ? $previous[$service]

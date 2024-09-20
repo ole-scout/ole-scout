@@ -13,7 +13,7 @@
 @endphp
 <x-ui::fieldset>
     <div class="pb-4 md:inline-block md:pt-2">
-        <x-ui::field :name="$service->id" :label="$service->name" size="lg" inline="trailing">
+        <x-ui::field :name="'services.' . $service->id" :label="$service->name" size="lg" inline="trailing">
             <x-slot:input :attributes="$switchAttributes"></x-slot:input>
         </x-ui::field>
     </div>

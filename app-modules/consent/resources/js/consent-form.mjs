@@ -150,7 +150,6 @@ Alpine.data(
                  */
                 async "@submit.prevent"(event) {
                     const intent = event.submitter?.name || true;
-                    console.log(intent);
                     try {
                         this.isSubmitting = intent;
                         if (event.submitter.name === "revoke") {
@@ -165,13 +164,15 @@ Alpine.data(
                         await fetch(this.$el.action, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(
-                                categories.flatMap((category) =>
+                            body: JSON.stringify({
+                                services: categories.flatMap((category) =>
                                     ids[category].filter(
-                                        (id) => this.data[category][id]
+                                        (id) =>
+                                            category !== "essential" &&
+                                            this.data[category][id]
                                     )
-                                )
-                            ),
+                                ),
+                            }),
                         });
                         window.location.reload();
                     } catch (error) {
