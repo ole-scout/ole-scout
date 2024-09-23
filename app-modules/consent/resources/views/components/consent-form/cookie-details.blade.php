@@ -7,7 +7,7 @@
     <x-slot:slot component="ui::data-grid" class="m-0 sm:grid-cols-5">
         <x-ui::data-grid.entry span="3">
             <x-slot:label>{{ __('Name') }}</x-slot:label>
-            <x-slot:slot class="font-mono break-words">{{ $cookie->name }}</x-slot:slot>
+            <x-slot:slot class="font-mono break-words whitespace-pre-wrap">{{ strtr($cookie->name, [',' => "\n"]) }}</x-slot:slot>
         </x-ui::data-grid.entry>
         <x-ui::data-grid.entry span="2">
             <x-slot:label>{{ __('Typ') }}</x-slot:label>
