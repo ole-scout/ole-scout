@@ -15,7 +15,7 @@
         </x-ui::data-grid.entry>
         <x-ui::data-grid.entry span="full">
             <x-slot:label>{{ __('Host') }}</x-slot:label>
-            <x-slot:slot class="font-mono break-words">{{ $cookie->host }}</x-slot:slot>
+            <x-slot:slot class="font-mono break-words">{{ $cookie->host ?? config('app.url') }}</x-slot:slot>
         </x-ui::data-grid.entry>
         @if($cookie->description)
         <x-ui::data-grid.entry span="full">

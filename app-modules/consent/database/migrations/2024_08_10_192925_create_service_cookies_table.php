@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->enum('type', CookieType::values());
             $table->string('name');
-            $table->string('host');
+            $table->string('host')->nullable();
             $table->json('description');
             $table->json('duration');
             $table->enum('legal_basis', LegalBasis::values());
