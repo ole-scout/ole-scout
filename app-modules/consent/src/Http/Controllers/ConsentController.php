@@ -17,7 +17,7 @@ class ConsentController
         $now = time();
         $previous = $request->consentCookie() ?: [];
         $validated = $request->validate([
-            'services' => 'required|array',
+            'services' => 'list|present',
             'services.*' => 'exists:service_definitions,id',
         ]);
         $consent = Arr::mapWithKeys(
