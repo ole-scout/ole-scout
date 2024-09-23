@@ -1,6 +1,5 @@
 <?php
 
-use FossHaas\Consent\Settings\ServiceProviderSettings;
 use Illuminate\Support\Arr;
 
 $appModulesPath = base_path(config('app-modules.modules_directory'));

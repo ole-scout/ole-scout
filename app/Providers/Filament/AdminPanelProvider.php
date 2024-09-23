@@ -40,7 +40,6 @@ class AdminPanelProvider extends PanelProvider
             })
             ->path('admin')
             ->login(false)
-            ->topNavigation()
             ->brandLogoHeight('auto')
             ->viteTheme('resources/css/filament.css')
             ->discoverResources(

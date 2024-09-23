@@ -2,7 +2,6 @@
 
 namespace App\Filament\Pages;
 
-use App\HasIconHeading;
 use App\Settings\BrandingSettings;
 use Filament\Forms\Form;
 use Filament\Forms\Components as Forms;
@@ -17,8 +16,6 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class EditAppSettings extends Page
 {
-    use HasIconHeading;
-
     protected static ?string $navigationIcon = 'fluentui-content-settings-20';
 
     protected static string $view = 'filament.pages.edit-app-settings';
@@ -26,6 +23,11 @@ class EditAppSettings extends Page
     public static function getNavigationLabel(): string
     {
         return __('Einstellungen');
+    }
+
+    public function getTitle(): string
+    {
+        return static::getNavigationLabel();
     }
 
     protected function getServiceProviderSettings(): array
