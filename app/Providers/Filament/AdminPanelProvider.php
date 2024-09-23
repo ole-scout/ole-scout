@@ -9,6 +9,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\SpatieLaravelTranslatablePlugin;
 use Filament\Support\Colors\Color;
 use Filament\View\PanelsRenderHook;
 use Filament\Widgets;
@@ -27,7 +28,9 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        return $panel
+        $appModulesPath = base_path(config('app-modules.modules_directory'));
+        $appModulesNamespace = config('app-modules.modules_namespace');
+        $panel
             ->id('admin')
             ->bootUsing(function (Panel $panel) {
                 $settings = app(BrandingSettings::class);
@@ -38,6 +41,10 @@ class AdminPanelProvider extends PanelProvider
                 $panel->brandLogo($settings->logo);
                 $panel->brandName($settings->name);
             })
+            ->plugin(
+                SpatieLaravelTranslatablePlugin::make()
+                    ->defaultLocales(array_keys(config('support.locales')))
+            )
             ->path('admin')
             ->login(false)
             ->brandLogoHeight('auto')
@@ -53,7 +60,31 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(
                 in: app_path('Filament/Widgets'),
                 for: 'App\\Filament\\Widgets'
-            )
+            );
+
+        $kebab2studly = fn(string $kebab) => str_replace(' ', '', ucwords(
+            str_replace('-', ' ', $kebab)
+        ));
+
+        foreach (array_diff(scandir($appModulesPath), ['.', '..']) as $moduleName) {
+            $modulePath = $appModulesPath . '/' . $moduleName . '/src';
+            $namespace = $appModulesNamespace . '\\' . $kebab2studly($moduleName);
+            $panel
+                ->discoverResources(
+                    in: $modulePath . '/Filament/Resources',
+                    for: $namespace . '\\Filament\\Resources'
+                )
+                ->discoverPages(
+                    in: $modulePath . '/Filament/Pages',
+                    for: $namespace . '\\Filament\\Pages'
+                )
+                ->discoverWidgets(
+                    in: $modulePath . '/Filament/Widgets',
+                    for: $namespace . '\\Filament\\Widgets'
+                );
+        }
+
+        $panel
             ->pages([
                 Pages\Dashboard::class,
             ])
@@ -90,5 +121,6 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+        return $panel;
     }
 }
