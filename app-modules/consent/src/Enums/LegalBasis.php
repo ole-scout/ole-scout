@@ -21,24 +21,24 @@ enum LegalBasis: string
   public function label(): string
   {
     return match ($this) {
-      self::CONSENT => __('DSGVO Art. 6 Abs. 1 lit. a'),
-      self::CONTRACT => __('DSGVO Art. 6 Abs. 1 lit. b'),
-      self::LEGAL_OBLIGATION => __('DSGVO Art. 6 Abs. 1 lit. c'),
-      self::VITAL_INTEREST => __('DSGVO Art. 6 Abs. 1 lit. d'),
-      self::PUBLIC_INTEREST => __('DSGVO Art. 6 Abs. 1 lit. e'),
-      self::LEGITIMATE_INTEREST => __('DSGVO Art. 6 Abs. 1 lit. f'),
+      self::CONSENT => __('GDPR Article 6(1)(a)'),
+      self::CONTRACT => __('GDPR Article 6(1)(b)'),
+      self::LEGAL_OBLIGATION => __('GDPR Article 6(1)(c)'),
+      self::VITAL_INTEREST => __('GDPR Article 6(1)(d)'),
+      self::PUBLIC_INTEREST => __('GDPR Article 6(1)(e)'),
+      self::LEGITIMATE_INTEREST => __('GDPR Article 6(1)(f)'),
     };
   }
 
   public function description(): string
   {
     return match ($this) {
-      self::CONSENT => __('Einwilligung'),
-      self::CONTRACT => __('Erfüllung eines Vertrags'),
-      self::LEGAL_OBLIGATION => __('Rechtliche Verpflichtung'),
-      self::VITAL_INTEREST => __('Lebenswichtige Interessen'),
-      self::PUBLIC_INTEREST => __('Öffentliches Interesse'),
-      self::LEGITIMATE_INTEREST => __('Berechtiges Interesse'),
+      self::CONSENT => __('Consent'),
+      self::CONTRACT => __('Performance of a contract'),
+      self::LEGAL_OBLIGATION => __('Legal obligation'),
+      self::VITAL_INTEREST => __('Vital interest'),
+      self::PUBLIC_INTEREST => __('Public interest'),
+      self::LEGITIMATE_INTEREST => __('Legitimate interest'),
     };
   }
 }

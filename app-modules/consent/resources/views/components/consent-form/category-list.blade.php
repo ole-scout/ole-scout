@@ -7,8 +7,8 @@
             variant="link"
             x-on:click="toggle()"
         >
-            <span x-show="!isAllSelected()">{{ __('Alle auswählen') }}</span>
-            <span x-show="isAllSelected()" x-cloak>{{ __('Auswahl aufheben') }}</span>
+            <span x-show="!isAllSelected()">{{ __('Select all') }}</span>
+            <span x-show="isAllSelected()" x-cloak>{{ __('Reset selection') }}</span>
         </x-ui::button>
     </div>
     @foreach($categories as $name => $label)

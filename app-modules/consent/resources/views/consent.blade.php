@@ -1,6 +1,6 @@
 <x-layouts.app size="lg">
     <x-slot:icon class="circle" icon=":shield-person"></x-slot:icon>
-    <x-slot:title>{{ __('Datenschutz-Einstellungen') }}</x-slot:title>
+    <x-slot:title>{{ __('Privacy settings') }}</x-slot:title>
     <x-slot:slot>
         <x-consent::consent-form id="consent-form" class="flex flex-col gap-4">
             <div class="flex gap-4">
@@ -15,7 +15,7 @@
                         x-ui-busy
                         x-cloak
                     >
-                        {{ __('Einwilligung widerrufen') }}
+                        {{ __('Revoke consent') }}
                     </x-ui::button>
                 </div>
                 <x-ui::button
@@ -24,7 +24,7 @@
                     x-bind:disabled="isAllSelected() && !isDirty"
                     x-ui-busy
                 >
-                    {{ __('Alle akzeptieren & speichern') }}
+                    {{ __('Accept all & save') }}
                 </x-ui::button>
                 <x-ui::button
                     type="submit"
@@ -33,7 +33,7 @@
                     x-ui-busy
                     disabled
                 >
-                    {{ __('Auswahl speichern') }}
+                    {{ __('Save selected') }}
                 </x-ui::button>
             </div>
         </x-consent::consent-form>

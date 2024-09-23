@@ -18,8 +18,8 @@ class Duration
       ]);
     }
     return match ($duration) {
-      'session' => __('Sitzung'),
-      'indefinite' => __('unbefristet'),
+      'session' => __('Session'),
+      'indefinite' => __('indefinite'),
       default => (string) $duration,
     };
   }

@@ -4,10 +4,10 @@
 <footer class="core::footer">
   <nav>
     @isset($settings->imprint_url)
-    <x-ui::button href="{{ $settings->imprint() }}">{{ __('Impressum') }}</x-ui::button>
+    <x-ui::button href="{{ $settings->imprint() }}">{{ __('Imprint') }}</x-ui::button>
     @endisset
-    <x-ui::button href="{{ $settings->privacyPolicy() }}">{{ __('Datenschutz') }}</x-ui::button>
-    <x-ui::button href="{{ $settings->consent() }}">{{ __('Datenschutz-Einstellungen') }}</x-ui::button>
+    <x-ui::button href="{{ $settings->privacyPolicy() }}">{{ __('Privacy policy') }}</x-ui::button>
+    <x-ui::button href="{{ $settings->consent() }}">{{ __('Privacy settings') }}</x-ui::button>
   </nav>
   <div class="core::footer-attribution">
     <x-ui::button size="sm"

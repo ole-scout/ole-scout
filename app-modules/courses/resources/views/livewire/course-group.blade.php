@@ -1,5 +1,5 @@
 <x-slot:title>{{ $courseGroup->title }}</x-slot:title>
-<x-slot:parent :href="$courseGroup->parent ? route('courses.group', $courseGroup->parent) : route('courses.root')">{{ $courseGroup->parent ? $courseGroup->parent->title : __('Kursübersicht') }}</x-slot:parent>
+<x-slot:parent :href="$courseGroup->parent ? route('courses.group', $courseGroup->parent) : route('courses.root')">{{ $courseGroup->parent ? $courseGroup->parent->title : __('Course overview') }}</x-slot:parent>
 <x-slot:icon :icon="$courseGroup->icon"></x-slot:icon>
 <div>
     <div>slug: {{ $courseGroup->slug }}</div>

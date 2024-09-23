@@ -22,7 +22,7 @@ class EditAppSettings extends Page
 
     public static function getNavigationLabel(): string
     {
-        return __('Einstellungen');
+        return __('Settings');
     }
 
     public function getTitle(): string
@@ -42,32 +42,32 @@ class EditAppSettings extends Page
             ->schema([
                 Forms\TextInput::make('name')
                     ->columnSpan(3)
-                    ->label(__('Name des Anbieters'))
+                    ->label(__('Service provider name'))
                     ->required()
-                    ->placeholder(__('Mustermann GmbH & Co KG')),
+                    ->placeholder(__('Contoso Ltd.')),
                 Forms\TextInput::make('address')
                     ->columnSpan(3)
-                    ->label(__('Postanschrift')),
+                    ->label(__('Postal address')),
                 Forms\TextInput::make('email')
                     ->columnSpan(2)
-                    ->label(__('E-Mail-Adresse'))
+                    ->label(__('Email address'))
                     ->email(),
                 Forms\TextInput::make('phone')
-                    ->label(__('Telefonnummer'))
+                    ->label(__('Phone number'))
                     ->placeholder(__('+49 123 4567890'))
                     ->live(debounce: 500)
-                    ->validationAttribute(__('Telefonnummer'))
+                    ->validationAttribute(__('Phone number'))
                     ->rules(fn(): \Closure => function (string $attribute, $value, \Closure $fail) {
                         if (!str_starts_with($value, '+')) {
-                            $fail(__(':attribute verwendet keine Ländervorwahl.'));
+                            $fail(__(':attribute does not contain a country code.'));
                             return;
                         }
                         if (preg_match('/[^-+\s0-9]+/', $value, $matches)) {
-                            $fail(__(':attribute enthält ungültige Zeichen: ":match"', ['match' => $matches[0]]));
+                            $fail(__(':attribute contains invalid characters: ":match"', ['match' => $matches[0]]));
                             return;
                         }
                         if (!preg_match('/^[+][1-9]([-\s]?[0-9])+$/i', $value)) {
-                            $fail(__(':attribute ist keine gültige Telefonnummer.'));
+                            $fail(__(':attribute is not a well-formed phone number.'));
                             return;
                         }
                     })
@@ -97,12 +97,12 @@ class EditAppSettings extends Page
         return $infolist
             ->state($state)
             ->schema([
-                Infolists\Section::make(__('Datenschutzangaben'))
+                Infolists\Section::make(__('Privacy Information'))
                     ->compact()
                     ->columns(3)
                     ->headerActions([
                         Infolists\Actions\Action::make('edit')
-                            ->label(__('Bearbeiten'))
+                            ->label(__('Edit'))
                             ->icon('heroicon-o-pencil')
                             ->size('sm')
                             ->fillForm($state)
@@ -116,15 +116,15 @@ class EditAppSettings extends Page
                     ->schema([
                         Infolists\TextEntry::make('name')
                             ->columnSpan(3)
-                            ->label(__('Name des Anbieters')),
+                            ->label(__('Service provider name')),
                         Infolists\TextEntry::make('address')
                             ->columnSpan(3)
-                            ->label(__('Postanschrift')),
+                            ->label(__('Postal address')),
                         Infolists\TextEntry::make('email')
                             ->columnSpan(2)
-                            ->label(__('E-Mail-Adresse')),
+                            ->label(__('Email address')),
                         Infolists\TextEntry::make('phone')
-                            ->label(__('Telefonnummer')),
+                            ->label(__('Phone number')),
                     ])
             ]);
     }
@@ -161,17 +161,17 @@ class EditAppSettings extends Page
                             )
                             ->required(false),
                     ]),
-                Forms\Fieldset::make(__('Farben'))
+                Forms\Fieldset::make(__('Colors'))
                     ->columnSpan(1)
                     ->columns(2)
                     ->schema([
                         Forms\ColorPicker::make('brandColor')
                             ->columnSpan(1)
-                            ->label(__('Hauptfarbe'))
+                            ->label(__('Brand color'))
                             ->required(),
                         Forms\ColorPicker::make('primaryColor')
                             ->columnSpan(1)
-                            ->label(__('Akzentfarbe'))
+                            ->label(__('Accent color'))
                             ->required(),
                     ]),
             ]);
@@ -189,7 +189,7 @@ class EditAppSettings extends Page
                     ->columns(2)
                     ->headerActions([
                         Infolists\Actions\Action::make('edit')
-                            ->label(__('Bearbeiten'))
+                            ->label(__('Edit'))
                             ->icon('heroicon-o-pencil')
                             ->size('sm')
                             ->fillForm($state)
@@ -215,16 +215,16 @@ class EditAppSettings extends Page
                                     ))
                                     ->height(80),
                             ]),
-                        Infolists\Fieldset::make(__('Farben'))
+                        Infolists\Fieldset::make(__('Colors'))
                             ->columnSpan(1)
                             ->columns(2)
                             ->schema([
                                 Infolists\ColorEntry::make('brandColor')
                                     ->columnSpan(1)
-                                    ->label(__('Hauptfarbe')),
+                                    ->label(__('Brand color')),
                                 Infolists\ColorEntry::make('primaryColor')
                                     ->columnSpan(1)
-                                    ->label(__('Interaktionsfarbe')),
+                                    ->label(__('Accent color')),
                             ]),
                     ])
             ]);

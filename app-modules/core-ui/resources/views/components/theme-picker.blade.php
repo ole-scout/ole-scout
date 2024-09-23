@@ -5,8 +5,8 @@
 @php
     $attributes = as_attributes($attributes);
     $options = [
-        'light' => ['icon' => ':weather-sunny', 'label' => __('Hell')],
-        'dark' => ['icon' => ':weather-moon', 'label' => __('Dunkel')],
+        'light' => ['icon' => ':weather-sunny', 'label' => __('Light')],
+        'dark' => ['icon' => ':weather-moon', 'label' => __('Dark')],
         'system' => ['icon' => ':desktop', 'label' => __('System')],
     ];
 @endphp

@@ -19,9 +19,9 @@ enum Category: string
   public function label(): string
   {
     return match ($this) {
-      self::ESSENTIAL => __('Essenziell'),
-      self::FUNCTIONAL => __('Funktional'),
-      self::ANALYTICS => __('Statistik'),
+      self::ESSENTIAL => __('Essential'),
+      self::FUNCTIONAL => __('Functional'),
+      self::ANALYTICS => __('Analytics'),
       self::MARKETING => __('Marketing'),
     };
   }

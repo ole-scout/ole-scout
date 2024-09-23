@@ -1,4 +1,4 @@
-<x-slot:title>{{ __('Kursübersicht') }}</x-slot:title>
+<x-slot:title>{{ __('Course overview') }}</x-slot:title>
 <x-slot:icon icon="icon-ole-scout" class="circle"></x-slot:icon>
 <div>
     <div class="flex flex-col pl-4 gap-y-1">

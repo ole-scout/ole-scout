@@ -10,7 +10,7 @@
             <x-slot:slot class="font-mono break-words whitespace-pre-wrap">{{ strtr($cookie->name, [',' => "\n"]) }}</x-slot:slot>
         </x-ui::data-grid.entry>
         <x-ui::data-grid.entry span="2">
-            <x-slot:label>{{ __('Typ') }}</x-slot:label>
+            <x-slot:label>{{ __('Type') }}</x-slot:label>
             {{ $cookie->type->label() }}
         </x-ui::data-grid.entry>
         <x-ui::data-grid.entry span="full">
@@ -19,17 +19,17 @@
         </x-ui::data-grid.entry>
         @if($cookie->description)
         <x-ui::data-grid.entry span="full">
-            <x-slot:label>{{ __('Beschreibung') }}</x-slot:label>
+            <x-slot:label>{{ __('Purposes and description') }}</x-slot:label>
             {!! markdown($cookie->description) !!}
         </x-ui::data-grid.entry>
         @endif
         <x-ui::data-grid.entry span="3">
-            <x-slot:label>{{ __('Rechtsgrundlage') }}</x-slot:label>
+            <x-slot:label>{{ __('Legal basis') }}</x-slot:label>
             <div>{{ $cookie->legal_basis->description() }}</div>
             <div class="text-gray-700 dark:text-gray-400">{{ $cookie->legal_basis->label() }}</div>
         </x-ui::data-grid.entry>
         <x-ui::data-grid.entry span="2">
-            <x-slot:label>{{ __('Laufzeit') }}</x-slot:label>
+            <x-slot:label>{{ __('Duration') }}</x-slot:label>
             {{ Duration::format($cookie->duration) }}
         </x-ui::data-grid.entry>
     </x-slot:slot>

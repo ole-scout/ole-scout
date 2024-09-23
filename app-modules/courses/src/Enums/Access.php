@@ -18,18 +18,18 @@ enum Access: string
     public function label(): string
     {
         return match ($this) {
-            self::HIDDEN => __('Verborgen'),
-            self::VISIBLE => __('Sichtbar'),
-            self::OPEN => __('Freie Teilnahme'),
+            self::HIDDEN => __('Hidden'),
+            self::VISIBLE => __('Visible'),
+            self::OPEN => __('Open participation'),
         };
     }
 
     public function description(): string
     {
         return match ($this) {
-            self::HIDDEN => __('Der Kurs ist nur mit Zuweisung sichtbar.'),
-            self::VISIBLE => __('Die Teilnahme erfordert eine Zuweisung.'),
-            self::OPEN => __('Die Teilnahme ist ohne Zuweisung möglich.'),
+            self::HIDDEN => __('This course is only visible to enrolled users.'),
+            self::VISIBLE => __('Participation requires enrollment.'),
+            self::OPEN => __('Participation does not require enrollment.'),
         };
     }
 }

@@ -14,7 +14,7 @@
 @endphp
 <form {{ $attributes }} x-data="consent_form(@js($selected))" x-ui-busy>
     <div class="text-sm leading-6 prose max-w-none dark:prose-invert [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
-        {!! markdown(__("Diese Anwendung verwendet Cookies und ähnliche Technologien und verarbeitet personenbezogene Daten von Ihnen (z.B. IP-Adresse), um Inhalte und Funktionen zur Verfügung zu stellen oder Zugriffe zu analysieren.\n\nSie haben an dieser Stelle die Möglichkeit, Ihre Einwilligung in die Verarbeitung Ihrer personenbezogenen Daten zu bestimmten Zwecken zu erteilen. Sie können diese Einwilligung jederzeit in den [Datenschutz-Einstellungen](:consent_url) widerrufen. Weitere Informationen zu Ihren Rechten und zur Verwendung Ihrer Daten finden Sie in der [Datenschutzerklärung](:privacy_url).", ['consent_url' => $settings->consent_url, 'privacy_url' => $settings->privacy_url])) !!}
+        {!! markdown(__("This app uses a number of services which use cookies and similar technologies to provide its content and functionalities to you or to analyze user behavior. Some of these services need to store or process your personal data in order to function.\n\nYou have the option to consent to the use of non-essential services for specific purposes or proceeding without them. You can always revoke or review your consent by viewing the [privacy settings](:consent_url) at any point. You can find more information about your rights and the use of your personal data by this app in the [privacy policy](:privacy_url).", ['consent_url' => $settings->consent_url, 'privacy_url' => $settings->privacy_url])) !!}
     </div>
     <x-consent::consent-form.category-list
         :$categories

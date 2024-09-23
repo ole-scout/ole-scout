@@ -1,4 +1,4 @@
-<x-slot:title>{{ __('Login mit Scout-Konto') }}</x-slot:title>
+<x-slot:title>{{ __('Log in with Scout account') }}</x-slot:title>
 <x-slot:icon icon="icon-ole-scout"></x-slot:icon>
 <x-slot:size>sm</x-slot:size>
 <div>
@@ -8,8 +8,8 @@
                 type="text"
                 wire:model.live.debounce.200ms="loginForm.email"
             ></x-slot:input>
-            <x-slot:label>{{ __('Benutzername oder E-Mail-Adresse') }}</x-slot:label>
-            <x-slot:hint>{{ __('*Pflichtfeld') }}</x-slot:hint>
+            <x-slot:label>{{ __('Username or email address') }}</x-slot:label>
+            <x-slot:hint>{{ __('*required') }}</x-slot:hint>
         </x-ui::field>
         <x-ui::field name="loginForm.password">
             <x-slot:actionTrailing
@@ -20,30 +20,30 @@
                 x-on:ui-toggle="$el.closest('.field').querySelector('input').type = (
                     $event.detail ? 'text' : 'password'
                 )"
-                :onIconTitle="__('Passwort verbergen')"
-                :offIconTitle="__('Passwort anzeigen')"
+                :onIconTitle="__('Hide password')"
+                :offIconTitle="__('Show password')"
                 hiddenLabel>
-                <span data-when-checked="show" hidden="hidden">{{ __('Passwort verbergen') }}</span>
-                <span data-when-checked="hide">{{ __('Passwort anzeigen') }}</span>
+                <span data-when-checked="show" hidden="hidden">{{ __('Hide password') }}</span>
+                <span data-when-checked="hide">{{ __('Show password') }}</span>
             </x-slot:actionTrailing>
             <x-slot:input
                 type="password"
                 wire:model="loginForm.password"
             ></x-slot:input>
-            <x-slot:label>{{ __('Passwort') }}</x-slot:label>
+            <x-slot:label>{{ __('Password') }}</x-slot:label>
             <x-slot:hint
                 component="ui::button"
-                variant="link">{{ __('Passwort vergessen?') }}</x-slot:hint>
+                variant="link">{{ __('Forgot password?') }}</x-slot:hint>
         </x-ui::field>
         <x-ui::field name="loginForm.remember" class="place-self-start" inline="trailing">
             <x-slot:input
                 component="ui::checkbox"
                 wire:model="loginForm.remember"></x-slot:input>
-            <x-slot:label>{{ __('Auf diesem Gerät merken') }}</x-slot:label>
+            <x-slot:label>{{ __('Remember me') }}</x-slot:label>
         </x-ui::field>
         <x-ui::button
             size="lg"
             type="submit"
-            class="place-self-end">Einloggen</x-ui::button>
+            class="place-self-end">{{ __('Log in') }}</x-ui::button>
     </form>
 </div>
