@@ -14,7 +14,7 @@ class CourseGroupPolicy
      */
     public function viewAny(User $user): bool|null
     {
-        return null;
+        return true;
     }
 
     /**
