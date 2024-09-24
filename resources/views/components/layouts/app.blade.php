@@ -1,7 +1,7 @@
 @props([
     'icon' => null,
     'title' => null,
-    'parent' => null,
+    'crumbs' => null,
     'size' => null,
 ])
 @use('Filament\Support\Colors\Color')
@@ -9,7 +9,7 @@
     $branding = app(\App\Settings\BrandingSettings::class);
     $icon = as_slot($icon);
     $title = as_slot($title);
-    $parent = as_slot($parent);
+    $crumbs = as_slot($crumbs)->attributes->get('crumbs');
     $size = (string) $size;
 @endphp
 <!DOCTYPE html>
@@ -65,11 +65,13 @@
             @else
             <span class="logo">{{ $branding->name }}</span>
             @endif
-            @if($parent->isNotEmpty())
+            @if($crumbs)
             <div class="flex items-center gap-0.5 mt-2 breadcrumbs text-xs text-white dark:text-gray-300 [&>*]:opacity-90 [&>a:hover]:opacity-100">
                 <a href="/"><x-ui::icon class="size-[1.5em]" icon=":home" /></a>
+                @foreach($crumbs as $href => $link)
                 <x-ui::icon icon=":chevron-right:o" class="size-[1em] opacity-75" />
-                {{ render_slot($parent, ['class' => 'hover:underline'], fallbackTag: 'a') }}
+                {{ render_slot($link, ['class' => 'hover:underline', 'href' => $href], fallbackTag: 'a') }}
+                @endforeach
                 <x-ui::icon icon=":chevron-right:o" class="size-[1em] opacity-75" />
                 <span class="cursor-default">{{ $title }}</span>
             </div>

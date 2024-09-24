@@ -29,6 +29,43 @@ class CourseGroup extends Model implements Sortable
     {
         static::creating(function (CourseGroup $group) {
             $group->id = Str::uuid();
+            if ($group->parent_id) {
+                $root = $group->parent->ancestorsAndSelf()
+                    ->depthFirst()
+                    ->whereNull('parent_id')
+                    ->first();
+                $group->path = $root->traversal_slug_path_reverse . '/' . $group->slug;
+            } else {
+                $group->path = $group->slug;
+            }
+        });
+        static::updating(function (CourseGroup $group) {
+            if ($group->wasChanged('parent_id')) {
+                if ($group->parent_id) {
+                    $root = $group->parent->ancestorsAndSelf()
+                        ->depthFirst()
+                        ->whereNull('parent_id')
+                        ->first();
+                    $group->path = $root->traversal_slug_path_reverse . '/' . $group->slug;
+                } else {
+                    $group->path = $group->slug;
+                }
+            } else if ($group->wasChanged('slug')) {
+                $i = strrpos($group->path, '/');
+                if ($i === false) {
+                    $group->path = $group->slug;
+                } else {
+                    $group->path = substr($group->path, 0, $i) . '/' . $group->slug;
+                }
+            }
+        });
+        static::deleting(function (CourseGroup $group) {
+            $children = $group->courseGroups;
+            foreach ($children as $child) {
+                $child->slug = strtr($group->path, ['/' => '-']) . '-' . $child->slug;
+                $child->parent_id = null;
+                $child->save();
+            }
         });
     }
 
@@ -43,6 +80,34 @@ class CourseGroup extends Model implements Sortable
     public $translatable = [
         'title',
     ];
+
+    public function getPathName()
+    {
+        return 'traversal_path';
+    }
+
+    public function getCustomPaths()
+    {
+        return [
+            [
+                'name' => 'traversal_slug_path',
+                'column' => 'slug',
+                'separator' => '/',
+            ],
+            [
+                'name' => 'traversal_slug_path_reverse',
+                'column' => 'slug',
+                'separator' => '/',
+                'reverse' => true,
+            ],
+            [
+                'name' => $this->getPathName() . '_reverse',
+                'column' => $this->getKeyName(),
+                'separator' => $this->getPathSeparator(),
+                'reverse' => true,
+            ],
+        ];
+    }
 
     public function buildSortQuery()
     {

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignIdFor(CourseGroup::class, 'parent_id')->nullable()->index()
                 ->constrained('course_groups')->nullOnDelete();
-            $table->string('slug')->unique()->index();
+            $table->string('slug')->index();
+            $table->string('path')->index();
             $table->json('title');
             $table->text('icon')->nullable();
             $table->string('color');
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
+            $table->unique(['parent_id', 'slug']);
             $table->index(['parent_id', 'deleted_at']);
         });
     }

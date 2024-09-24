@@ -1,5 +1,10 @@
+@php
+    $crumbs = $courseGroup->ancestors()->depthFirst()->get()
+        ->mapWithKeys(fn($item) => [route('courses.group', $item) => $item['title']])->toArray();
+    $crumbs = array_merge([route('courses.root') => __('Course overview')], $crumbs);
+@endphp
 <x-slot:title>{{ $courseGroup->title }}</x-slot:title>
-<x-slot:parent :href="$courseGroup->parent ? route('courses.group', $courseGroup->parent) : route('courses.root')">{{ $courseGroup->parent ? $courseGroup->parent->title : __('Course overview') }}</x-slot:parent>
+<x-slot:crumbs :crumbs="$crumbs"></x-slot:crumbs>
 <x-slot:icon :icon="$courseGroup->icon"></x-slot:icon>
 <div>
     <div>slug: {{ $courseGroup->slug }}</div>
