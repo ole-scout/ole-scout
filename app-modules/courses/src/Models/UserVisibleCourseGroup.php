@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class UserVisibleCourseGroup extends Model
 {
@@ -23,11 +22,6 @@ class UserVisibleCourseGroup extends Model
                 $query->forUser($user);
             }
         );
-    }
-
-    public function user(): HasOneThrough
-    {
-        return $this->hasOneThrough(User::class, Enrollment::class);
     }
 
     public function courseGroup(): BelongsTo
