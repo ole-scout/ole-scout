@@ -18,6 +18,7 @@ use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Translatable\HasTranslations;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
+use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
 
 class CourseGroup extends Model implements Sortable
 {
@@ -101,6 +102,11 @@ class CourseGroup extends Model implements Sortable
     public function parent(): BelongsTo
     {
         return $this->belongsTo(CourseGroup::class);
+    }
+
+    public function recursiveCourses(): HasManyOfDescendants
+    {
+        return $this->hasManyOfDescendants(Course::class);
     }
 
     public function commonVisibleCourseGroups(): HasMany

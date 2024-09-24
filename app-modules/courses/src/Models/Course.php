@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
+use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
 
 class Course extends Model implements Sortable
 {
@@ -108,6 +109,16 @@ class Course extends Model implements Sortable
     public function courseGroup(): BelongsTo
     {
         return $this->belongsTo(CourseGroup::class);
+    }
+
+    public function recursiveActivityGroups(): HasManyOfDescendants
+    {
+        return $this->hasManyOfDescendants(ActivityGroup::class);
+    }
+
+    public function recursiveActivities(): HasManyOfDescendants
+    {
+        return $this->hasManyOfDescendants(Activity::class);
     }
 
     public function prereqs(): BelongsToMany
