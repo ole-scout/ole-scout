@@ -17,7 +17,7 @@ Route::name('courses.')
             ->name('root');
 
         Route::get('/g/{courseGroup:slug}', CourseGroupView::class)
-            ->middleware('can:view')
+            ->middleware('can:view,courseGroup')
             ->name('group');
         // Route::get('/c/{course:slug}', CourseView::class)->name('course');
         // Route::get('/c/{course:slug}/a/{activity:id}', ActivityView::class)->name('activity');
