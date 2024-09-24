@@ -20,7 +20,6 @@ return new class extends Migration
             $table->foreignIdFor(Course::class)->index()
                 ->constrained()->cascadeOnDelete();
             $table->timestamp('expires_at')->nullable()->index();
-            $table->softDeletes();
             $table->timestamps();
 
             $table->unique(['user_id', 'course_id']);
