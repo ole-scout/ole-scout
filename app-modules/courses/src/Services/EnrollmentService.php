@@ -4,7 +4,6 @@ namespace FossHaas\Courses\Services;
 
 use App\Models\User;
 use DateTime;
-use FossHaas\Courses\Actions\CreateUserVisibleCourseGroups;
 use FossHaas\Courses\Models\Course;
 use FossHaas\Courses\Models\Enrollment;
 use Illuminate\Support\Collection;
@@ -12,9 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class EnrollmentService
 {
-    public function __construct(
-        private CreateUserVisibleCourseGroups $createUserVisibleCourseGroups
-    ) {}
     /**
      * @param Collection<User> $users
      * @param Collection<Course> $courses
@@ -45,11 +41,7 @@ class EnrollmentService
                         ]
                     )
                 )->toArray());
-            $enrollments = Enrollment::with('course.courseGroup')
-                ->where('id', '>', $lastId)
-                ->get();
-            $this->createUserVisibleCourseGroups->handle($enrollments);
-            return $enrollments;
+            return Enrollment::where('id', '>', $lastId)->get();
         });
     }
 }

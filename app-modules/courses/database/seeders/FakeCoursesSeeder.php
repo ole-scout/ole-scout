@@ -8,7 +8,6 @@ use FossHaas\Courses\Models\ActivityGroup;
 use FossHaas\Courses\Models\Course;
 use FossHaas\Courses\Models\CourseGroup;
 use FossHaas\Courses\Models\DownloadActivity;
-use FossHaas\Courses\Models\UserVisibleCourseGroup;
 use FossHaas\Courses\Models\WeblinkActivity;
 use FossHaas\Courses\Services\EnrollmentService;
 use Illuminate\Database\Seeder;
@@ -91,11 +90,9 @@ class FakeCoursesSeeder extends Seeder
 
         $enrollments = $enrollmentService->enrollUsers($users, $allCourses);
         $numEnrollments = $enrollments->count();
-        $numUVCGs = UserVisibleCourseGroup::count();
         Log::info(sprintf(
-            'Created %d enrollments with %d user visible course groups (%d enrollments/s)',
+            'Created %d enrollments (%d enrollments/s)',
             $numEnrollments,
-            $numUVCGs,
             $numEnrollments / $time->diffInSeconds()
         ), ['time' => preciseDiffForHumans($time)]);
 
@@ -106,11 +103,9 @@ class FakeCoursesSeeder extends Seeder
             ->inRandomOrder()
             ->limit($numDeleted)
             ->delete();
-        $numUVCGsDeleted = $numUVCGs - UserVisibleCourseGroup::count();
         Log::info(sprintf(
-            'Deleted %d enrollments and %d user visible course groups (%d enrollments/s)',
+            'Deleted %d enrollments (%d enrollments/s)',
             $numDeleted,
-            $numUVCGsDeleted,
             $numDeleted / $time->diffInSeconds()
         ), ['time' => preciseDiffForHumans($time)]);
 

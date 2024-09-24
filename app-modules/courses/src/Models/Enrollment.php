@@ -6,7 +6,6 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
 class Enrollment extends Model
@@ -41,10 +40,5 @@ class Enrollment extends Model
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
-    }
-
-    public function userVisibleCourseGroups(): HasMany
-    {
-        return $this->hasMany(UserVisibleCourseGroup::class);
     }
 }

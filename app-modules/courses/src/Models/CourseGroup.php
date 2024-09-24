@@ -3,8 +3,6 @@
 namespace FossHaas\Courses\Models;
 
 use App\Models\User;
-use FossHaas\Courses\Actions\CreateCommonVisibleCourseGroups;
-use FossHaas\Courses\Actions\CreateUserVisibleCourseGroups;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,22 +29,6 @@ class CourseGroup extends Model implements Sortable
     {
         static::creating(function (CourseGroup $group) {
             $group->id = Str::uuid();
-        });
-        static::updated(function (CourseGroup $group) {
-            if ($group->wasChanged('parent_id')) {
-                app(CreateCommonVisibleCourseGroups::class)->handle(
-                    $group->descendantsAndSelf()->get()->flatMap(
-                        fn($group) => $group->publishedCourses()
-                            ->where('access', '!=', Access::HIDDEN)
-                            ->get()
-                    ),
-                    purge: true
-                );
-                app(CreateUserVisibleCourseGroups::class)->handle(
-                    $group->enrollments()->get(),
-                    purge: true
-                );
-            }
         });
     }
 
