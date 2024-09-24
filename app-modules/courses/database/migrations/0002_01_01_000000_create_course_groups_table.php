@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('order_column');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->index(['parent_id', 'deleted_at']);
         });
     }
 

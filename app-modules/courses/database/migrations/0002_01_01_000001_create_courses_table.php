@@ -32,6 +32,8 @@ return new class extends Migration
             $table->jsonb('cert')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->index(['course_group_id', 'is_published']);
         });
     }
 
