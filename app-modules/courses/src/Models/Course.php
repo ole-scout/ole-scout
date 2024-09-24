@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -85,6 +86,11 @@ class Course extends Model implements Sortable
     public function scopeForUser(Builder $query, ?User $user = null): void
     {
         if (!$user) $user = Auth::user();
+        static::filterForUser($query, $user);
+    }
+
+    public static function filterForUser(Builder|Relation $query, ?User $user = null): void
+    {
         $query->where('access', Access::OPEN);
         if ($user) {
             $query->orWhereHas(

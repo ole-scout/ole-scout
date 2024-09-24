@@ -5,7 +5,6 @@ namespace FossHaas\Courses\Models;
 use App\Models\User;
 use FossHaas\Courses\Actions\CreateCommonVisibleCourseGroups;
 use FossHaas\Courses\Actions\CreateUserVisibleCourseGroups;
-use FossHaas\Courses\Enums\Access;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -78,15 +77,9 @@ class CourseGroup extends Model implements Sortable
     public function scopeForUser(Builder $query, ?User $user = null): void
     {
         if (!$user) $user = Auth::user();
-        $query->whereHas('commonVisibleCourseGroups');
-        if ($user) {
-            $query->orWhereHas(
-                'userVisibleCourseGroups',
-                function (Builder $query) use ($user) {
-                    $query->forUser($user);
-                }
-            );
-        }
+        $query->whereHas('recursiveCourses', function (Builder $query) use ($user) {
+            Course::filterForUser($query, $user);
+        });
     }
 
     public function courses(): HasMany
@@ -109,21 +102,11 @@ class CourseGroup extends Model implements Sortable
         return $this->hasManyOfDescendantsAndSelf(Course::class);
     }
 
-    public function commonVisibleCourseGroups(): HasMany
-    {
-        return $this->hasMany(CommonVisibleCourseGroup::class);
-    }
-
-    public function userVisibleCourseGroups(): HasMany
-    {
-        return $this->hasMany(UserVisibleCourseGroup::class);
-    }
-
     public function isVisible(?User $user = null)
     {
         if (!$user) $user = Auth::user();
-        if ($this->commonVisibleCourseGroups()->exists()) return true;
-        if (!$user) return false;
-        return $this->userVisibleCourseGroups()->forUser($user)->exists();
+        $query = $this->recursiveCourses();
+        Course::filterForUser($query, $user);
+        return $query->exists();
     }
 }
