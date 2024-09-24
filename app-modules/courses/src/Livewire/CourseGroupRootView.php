@@ -16,7 +16,6 @@ class CourseGroupRootView extends Component
 
     public function mount()
     {
-        $this->authorize('viewAny', CourseGroup::class);
         $this->courseGroups = CourseGroup::root()->forUser()->get();
         $this->courses = Course::root()->forUser()->get();
     }
