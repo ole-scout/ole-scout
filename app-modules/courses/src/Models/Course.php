@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\EloquentSortable\Sortable;
@@ -19,7 +20,7 @@ use Spatie\EloquentSortable\SortableTrait;
 
 class Course extends Model implements Sortable
 {
-    use HasFactory, SortableTrait;
+    use HasFactory, SoftDeletes, SortableTrait;
 
     protected $keyType = 'string';
 
