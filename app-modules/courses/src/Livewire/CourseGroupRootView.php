@@ -5,7 +5,6 @@ namespace FossHaas\Courses\Livewire;
 use FossHaas\Courses\Models\Course;
 use FossHaas\Courses\Models\CourseGroup;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class CourseGroupRootView extends Component
@@ -17,7 +16,7 @@ class CourseGroupRootView extends Component
 
     public function mount()
     {
-        Gate::authorize('viewAny', CourseGroup::class);
+        $this->authorize('viewAny', CourseGroup::class);
         $this->courseGroups = CourseGroup::root()->forUser()->get();
         $this->courses = Course::root()->forUser()->get();
     }
