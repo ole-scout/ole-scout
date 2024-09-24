@@ -106,7 +106,7 @@ class CourseGroup extends Model implements Sortable
 
     public function recursiveCourses(): HasManyOfDescendants
     {
-        return $this->hasManyOfDescendants(Course::class);
+        return $this->hasManyOfDescendantsAndSelf(Course::class);
     }
 
     public function commonVisibleCourseGroups(): HasMany
