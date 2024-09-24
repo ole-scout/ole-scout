@@ -12,56 +12,58 @@ class CourseGroupPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): bool|null
     {
-        return true;
+        return null;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, CourseGroup $courseGroup): bool
+    public function view(User $user, CourseGroup $courseGroup): bool|null
     {
-        return CourseGroup::forUser($user)->where('id', $courseGroup->id)->exists();
+        if ($courseGroup->isVisible($user)) {
+            return true;
+        }
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): bool|null
     {
-        return false;
+        return null;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, CourseGroup $courseGroup): bool
+    public function update(User $user, CourseGroup $courseGroup): bool|null
     {
-        return false;
+        return null;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, CourseGroup $courseGroup): bool
+    public function delete(User $user, CourseGroup $courseGroup): bool|null
     {
-        return false;
+        return null;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, CourseGroup $courseGroup): bool
+    public function restore(User $user, CourseGroup $courseGroup): bool|null
     {
-        return false;
+        return null;
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, CourseGroup $courseGroup): bool
+    public function forceDelete(User $user, CourseGroup $courseGroup): bool|null
     {
-        return false;
+        return null;
     }
 }

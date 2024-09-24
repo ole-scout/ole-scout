@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Filesystem\FakeAdapter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use League\Flysystem\Filesystem;
@@ -35,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
                 $adapter,
                 $config
             );
+        });
+        Gate::after(function ($user, $ability) {
+            return $user->is_admin;
         });
     }
 }

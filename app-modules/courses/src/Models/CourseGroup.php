@@ -112,4 +112,12 @@ class CourseGroup extends Model implements Sortable
     {
         return $this->hasMany(UserVisibleCourseGroup::class);
     }
+
+    public function isVisible(?User $user = null)
+    {
+        if (!$user) $user = Auth::user();
+        if ($this->commonVisibleCourseGroups()->exists()) return true;
+        if (!$user) return false;
+        return $this->userVisibleCourseGroups()->forUser($user)->exists();
+    }
 }
