@@ -25,6 +25,7 @@ class CourseGroupPolicy
         if ($courseGroup->isVisible($user)) {
             return true;
         }
+        return null;
     }
 
     /**
