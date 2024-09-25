@@ -19,6 +19,7 @@
         "foss-haas/core-ui": "*",
         "foss-haas/courses": "*",
         "foss-haas/filament-partials": "*",
+        "foss-haas/laravel-permission-objects": "*",
         "foss-haas/support": "*",
         "foss-haas/ui": "*",
         "giggsey/libphonenumber-for-php": "^8.13",
