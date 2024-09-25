@@ -6,10 +6,10 @@ use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
-	public function register(): void {}
+    public function register(): void {}
 
-	public function boot(): void
-	{
-		$this->loadViewsFrom(__DIR__ . '/../../resources/views', 'auth');
-	}
+    public function boot(): void
+    {
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'auth');
+    }
 }
