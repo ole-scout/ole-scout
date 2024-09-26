@@ -231,6 +231,10 @@ Gate::after(function (User $user, string $ability, bool|null $result, mixed $arg
 Gate::authorize('edit', [$article, $scope]);
 ```
 
+Note that the `can` method returns `null` when passed a permission name it does
+not recognize or that can't be resolved using the object or object type it is
+passed.
+
 ## Global Permissions
 
 Permissions don't have to be tied to specific models or classes. You can
@@ -243,13 +247,75 @@ Permission::register(null, [
 ]);
 ```
 
+Note that you will still need to pass `null` as an object ID when using this
+permission as this argument is intentionally not optional to avoid mistakes:
+
+```php
+$permission = Permission::find('self-destruct');
+$user->permissions->has($permission, null);
+
+// This also works:
+$user->permissions->can('self-destruct', null);
+```
+
+If you want to misuse the object ID for your own purposes, keep in mind that
+the `can` method will not work correctly as it expects the `string` argument
+to be a class name and will attempt to resolve the permission name using it:
+
+```php
+// This DOES NOT work:
+$user->permissions->can('self-destruct', '1234'); // Always returns null!
+```
+
+### Super Admins
+
+Although not built for this purpose, global permissions can be used to
+implement as "super admin" flag that will pass all `Gate` or `Policy` checks:
+
+```php
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
+use FossHaas\LaravelPermissionObjects\Permission;
+
+Permission::register(null, [
+    'is-super-admin' => fn() => __('Is Super Admin'),
+]);
+
+// Use as a fallback check if no other Gate or Policy applied
+Gate::after(function (User $user): bool {
+    return $user->permissions->has('is-super-admin', null);
+});
+
+// Alternatively, if super admins should always bypass all rules
+Gate::before(function (User $user): bool|null {
+    return $user->permissions->has('is-super-admin', null) ?: null;
+});
+```
+
 ## Scoped Permissions
 
 When using `ScopedPermissions`, you can pass in an additional `scopes`
-parameter to method calls to define which scopes the method should consider.
+parameter to method calls to define which scope or scopes the method should
+consider:
 
-The default scope is identified by the empty string and will be used if no
-scope is passed explicitly.
+```php
+$user->permissions->grant($permission, $objectId, $scope);
+```
+
+Alternatively, you can use the `scope` method to access the `Permissions`
+for that scope directly:
+
+```php
+$user->permissions->scope($scope)->grant($permission, $objectId);
+```
+
+Scopes are identified by their name as string values. The meaning of scopes is
+up to your application's needs but could range from organizational units of
+your company to different customers in a poor man's single-database
+multi-tenancy implementation.
+
+The default or global scope is identified by the empty string and will be used
+if no scope is passed explicitly.
 
 All permission checks using `has` or `can` will always also check the default
 scope in addition to any scopes passed explicitly.
@@ -259,6 +325,28 @@ using `revokeAll`:
 
 ```php
 $user->permissions->revokeAll($permission, scopes: null);
+```
+
+## Roles
+
+If you want to implement role-based authorization, you can create a role model
+and give it a `Permissions` attribute just as you would for a user model. As
+this package aims to be unopinionated, how you use this model is up to you,
+but a possible schema could look like this:
+
+```php
+Schema::create('roles', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->json('permissions');
+});
+
+Schema::create('user_roles', function (Blueprint $table) {
+    $table->foreignIdFor(User::class)
+        ->constrained('users')->cascadeOnDelete();
+    $table->foreignIdFor(Role::class)
+        ->constrained('roles')->cascadeOnDelete();
+});
 ```
 
 ## License

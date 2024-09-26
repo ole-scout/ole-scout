@@ -142,6 +142,14 @@ class ScopedPermissions implements Arrayable, Castable, Jsonable
         return $this;
     }
 
+    public function scope(string $scope): Permissions
+    {
+        if (!isset($this->scoped[$scope])) {
+            $this->scoped[$scope] = new Permissions();
+        }
+        return $this->scoped[$scope];
+    }
+
     public function __debugInfo(): array
     {
         return Arr::mapWithKeys(
