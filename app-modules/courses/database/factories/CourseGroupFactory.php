@@ -35,7 +35,7 @@ class CourseGroupFactory extends Factory
             },
             'title' => Arr::mapWithKeys($locales, fn($locale) => [
                 $locale => $locale . ': ' . $this->faker->words(
-                    $this->faker->numberBetween(2, 3),
+                    $this->faker->numberBetween(3, 12),
                     true
                 )
             ]),

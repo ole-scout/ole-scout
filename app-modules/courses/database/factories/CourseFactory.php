@@ -43,7 +43,7 @@ class CourseFactory extends Factory
             },
             'language' => $this->faker->randomElement($locales),
             'title' => $this->faker->words(
-                $this->faker->numberBetween(2, 3),
+                $this->faker->numberBetween(3, 12),
                 true
             ),
             'description' => $this->faker->paragraph(),
