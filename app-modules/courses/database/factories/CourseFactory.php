@@ -11,10 +11,28 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class CourseFactory extends Factory
 {
+    protected static $counters = [];
     public function unpublished(): self
     {
         return $this->state([
             'is_published' => false,
+        ]);
+    }
+
+    public function withCourseGroup(CourseGroup $courseGroup): self
+    {
+        $course_group_id = (string) $courseGroup->id;
+        return $this->state([
+            'course_group_id' => $course_group_id,
+            'slug' => fn() => join('-', [
+                $courseGroup->slug,
+                sprintf(
+                    '%02d',
+                    isset(static::$counters[$course_group_id])
+                        ? ++static::$counters[$course_group_id]
+                        : static::$counters[$course_group_id] = 1
+                )
+            ]),
         ]);
     }
 
@@ -28,19 +46,10 @@ class CourseFactory extends Factory
         $locales = array_keys(config('support.locales'));
         return [
             'course_group_id' => null,
-            'slug' => function ($attributes) {
-                if ($attributes['course_group_id']) {
-                    $courseGroup = CourseGroup::find($attributes['course_group_id']);
-                    return join('-', [
-                        $courseGroup->slug,
-                        sprintf('%02d', $courseGroup->courses()->count() + 1)
-                    ]);
-                }
-                return join('-', [
-                    $this->faker->lexify($this->faker->randomElement(['??', '???', '???'])),
-                    sprintf('%02d', $this->faker->randomNumber(2))
-                ]);
-            },
+            'slug' => join('-', [
+                $this->faker->lexify($this->faker->randomElement(['??', '???', '???'])),
+                sprintf('%02d', $this->faker->randomNumber(2))
+            ]),
             'language' => $this->faker->randomElement($locales),
             'title' => $this->faker->words(
                 $this->faker->numberBetween(3, 12),

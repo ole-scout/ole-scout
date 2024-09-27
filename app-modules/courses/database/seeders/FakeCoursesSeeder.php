@@ -30,14 +30,14 @@ class FakeCoursesSeeder extends Seeder
         $allCourses = collect();
         foreach ($rootGroups as $rootGroup) {
             $groups = $rootGroup->courseGroups()->createMany(
-                CourseGroup::factory(3)->make()->toArray()
+                CourseGroup::factory(3)->withParent($rootGroup)->make()->toArray()
             );
             $groups->push(...$rootGroups->take(2));
             foreach ($groups as $subGroup) {
                 $courses = $subGroup->courses()->createMany(
                     Course::factory(
                         fake()->numberBetween(1, 5)
-                    )->make()->toArray()
+                    )->withCourseGroup($subGroup)->make()->toArray()
                 );
                 $allCourses->push(...$courses);
                 foreach ($courses as $course) {
