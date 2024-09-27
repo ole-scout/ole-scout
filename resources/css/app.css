@@ -17,8 +17,14 @@
         @apply flex flex-col items-center min-h-screen antialiased font-normal bg-gray-200 dark:bg-black text-gray-950 dark:text-white;
         > header {
             @apply self-stretch bg-brand-500 text-white px-2 py-4 md:pb-24 md:px-16;
-            img {
-                @apply block h-16 object-contain object-left;
+            > .logo {
+                @apply inline-block h-16;
+                &:is(img) {
+                    @apply object-contain object-left;
+                }
+                &:not(img) {
+                    @apply text-2xl font-extrabold leading-[4rem] text-brand-100;
+                }
             }
         }
         > main {
