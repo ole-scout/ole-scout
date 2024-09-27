@@ -1,5 +1,6 @@
 <x-slot:title>{{ __('Log in with Scout account') }}</x-slot:title>
 <x-slot:icon icon="icon-ole-scout"></x-slot:icon>
+<x-slot:crumbs :crumbs="false"></x-slot:crumbs>
 <x-slot:size>sm</x-slot:size>
 <div>
     <form wire:submit="login" class="flex flex-col gap-4">

@@ -35,12 +35,12 @@
             &:not(.page-sm > main, .page-md > main, .page-lg > main) {
                 @apply md:px-16;
             }
-            &:is(header + main:has(> .card > .header > .title)) {
-                @apply md:pt-0 md:-mt-16;
-            }
-            > .card,
-            > .card > .header {
-                @apply rounded-t-none md:rounded-t-lg;
+            &:not(:has(> .breadcrumbs)):has(> .card) {
+                @apply md:-mt-16;
+                > .card,
+                > .card > .header {
+                    @apply rounded-t-none md:rounded-t-lg;
+                }
             }
         }
         > footer {

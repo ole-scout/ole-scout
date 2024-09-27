@@ -11,6 +11,9 @@
     $title = as_slot($title);
     $crumbs = as_slot($crumbs)->attributes->get('crumbs');
     $size = (string) $size;
+    if ($crumbs === null) {
+        $crumbs = Request::is("/") ? false : [];
+    }
 @endphp
 <!DOCTYPE html>
 <html
@@ -65,20 +68,14 @@
             @else
             <span class="logo">{{ $branding->name }}</span>
             @endif
-            @if($crumbs)
-            <div class="flex items-center gap-0.5 mt-2 breadcrumbs text-xs text-white dark:text-gray-300 [&>*]:opacity-90 [&>a:hover]:opacity-100">
-                <a href="/"><x-ui::icon class="size-[1.5em]" icon=":home" /></a>
+            @if($crumbs !== false)
+            <div class="flex items-center gap-0.5 py-4 breadcrumbs text-xs text-gray-900 dark:text-gray-300 [&>*]:opacity-90 [&>a:hover]:opacity-100">
+                <a href="/" wire:navigate><x-ui::icon class="size-[1.5em]" icon=":home" class="text-gray-600 dark:text-gray-500" /></a>
                 @foreach($crumbs as $href => $link)
-                <x-ui::icon icon=":chevron-right:o" class="size-[1em] opacity-75" />
-                {{ render_slot($link, ['class' => 'hover:underline', 'href' => $href], fallbackTag: 'a') }}
+                <x-ui::icon icon=":chevron-right:o" class="size-[1em] text-gray-600 dark:text-gray-500" />
+                {{ render_slot($link, ['class' => 'hover:underline', 'href' => $href, 'wire:navigate'], fallbackTag: 'a') }}
                 @endforeach
-                <x-ui::icon icon=":chevron-right:o" class="size-[1em] opacity-75" />
-                <span class="cursor-default">{{ $title }}</span>
-            </div>
-            @elseif(!Request::is('/'))
-            <div class="flex items-center gap-0.5 mt-2 breadcrumbs text-xs text-white dark:text-gray-300 [&>*]:opacity-90 [&>a:hover]:opacity-100">
-                <a href="/"><x-ui::icon class="size-[1.5em]" icon=":home" /></a>
-                <x-ui::icon icon=":chevron-right:o" class="size-[1em] opacity-75" />
+                <x-ui::icon icon=":chevron-right:o" class="size-[1em] text-gray-600 dark:text-gray-500" />
                 <span class="cursor-default">{{ $title }}</span>
             </div>
             @endif
