@@ -10,6 +10,9 @@ export default {
             fontFamily: {
                 sans: ["'Inter'", ...defaultTheme.fontFamily.sans],
             },
+            fontSize: {
+                "2xs": "0.666667rem",
+            },
             colors: {
                 brand: {
                     50: "rgba(var(--brand-50), <alpha-value>)",

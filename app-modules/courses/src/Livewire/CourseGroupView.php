@@ -17,8 +17,13 @@ class CourseGroupView extends Component
     public function mount(CourseGroup $courseGroup)
     {
         $this->courseGroup = $courseGroup;
-        $this->courseGroups = $courseGroup->courseGroups()->forUser()->get();
-        $this->courses = $courseGroup->courses()->forUser()->get();
+        $this->courseGroups = $courseGroup->courseGroups()
+            ->forUser()
+            ->with(['recursiveCourses' => fn($query) => $query->forUser()])
+            ->get();
+        $this->courses = $courseGroup->courses()
+            ->forUser()
+            ->get();
     }
 
     public function render()

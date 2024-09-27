@@ -8,16 +8,12 @@
 <x-ui::dialog :color="$courseGroup->color">
     <x-slot:title>{{ $courseGroup->title }}</x-slot:title>
     <x-slot:icon :icon="$courseGroup->icon" class="circle"></x-slot:icon>
-    <div>slug: {{ $courseGroup->slug }}</div>
-    <div class="flex flex-col pl-4 gap-y-1">
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
         @foreach($courseGroups as $group)
-        <x-ui::button :href="route('courses.group', $group)">{{ $group->title }} ({{ $group->courseGroups()->forUser()->count() + $group->courses()->forUser()->count() }})</x-ui::button>
+        <x-courses::course-group :group="$group" />
         @endforeach
-    </div>
-    <div>{{ $courses->count() }} courses:</div>
-    <div class="flex flex-col pl-4 gap-y-1">
         @foreach($courses as $course)
-        <x-ui::button variant="link" disabled>{{ $course->slug }}: {{ $course->title }} ({{ $course->language }})</x-ui::button>
+        <x-courses::course :course="$course" />
         @endforeach
     </div>
 </x-ui::dialog>
