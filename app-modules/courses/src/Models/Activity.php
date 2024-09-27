@@ -24,6 +24,9 @@ class Activity extends Model implements Sortable
 
     protected static function booted(): void
     {
+        static::addGlobalScope('enabled', function (Builder $query): void {
+            $query->where('is_disabled', false);
+        });
         $calver = new CalVer(minorIsDay: true);
         static::creating(function (Activity $activity) use ($calver) {
             $activity->id = Str::uuid();
