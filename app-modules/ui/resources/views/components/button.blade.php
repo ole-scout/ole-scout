@@ -98,17 +98,16 @@
     @endforeach
     {{ render_slot(
         $contents,
-        [
+        $slot->attributes->merge([
             'size' => $attributes->has('component') ? $size : null,
-            'class' => $hiddenLabel ? 'sr-only' : null,
-        ]
+        ])->class(['sr-only' => $hiddenLabel])
     ) }}
     @foreach($iconTrailing as $icon)
     {{ render_slot($icon) }}
     @endforeach
 @endcapture
 {{ render_slot(
-    $slot,
+    $slot->toHtml(),
     $attributes,
     transform: $transform,
     fallbackTag: $fallbackTag,
