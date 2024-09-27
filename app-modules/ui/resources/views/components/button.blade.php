@@ -78,6 +78,7 @@
                 'rel' => 'noopener noreferrer',
             ] : [
                 'href' => is_relative_url($href) ? url($href) : $href,
+                'wire:navigate'
             ]
         )->class(
             [...$classes, 'disabled' => $disabled]
