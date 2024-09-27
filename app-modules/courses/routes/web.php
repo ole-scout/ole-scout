@@ -16,8 +16,7 @@ Route::name('courses.')
             ->middleware('can:viewAny,' . CourseGroup::class)
             ->name('root');
 
-        Route::get('/g/{courseGroup:path}', CourseGroupView::class)
-            ->where('courseGroup', '[0-9a-z]+(?:/[0-9a-z]+)*')
+        Route::get('/g/{courseGroup:slug}', CourseGroupView::class)
             ->middleware('can:view,courseGroup')
             ->name('group');
         // Route::get('/c/{course:slug}', CourseView::class)->name('course');

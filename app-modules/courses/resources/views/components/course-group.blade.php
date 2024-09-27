@@ -55,6 +55,6 @@
         </div>
     </div>
     <x-ui::button :href="route('courses.group', $group)" variant="alt" class="justify-center mx-4">
-        <x-slot:slot>{{ __('View contents') }}</x-slot:slot>
+        {{ __('View contents') }}
     </x-ui::button>
 </x-ui::card>
