@@ -101,11 +101,6 @@ class Course extends Model implements Sortable
         return $this->hasManyOfDescendantsAndSelf(ActivityGroup::class);
     }
 
-    public function recursiveActivities(): HasManyOfDescendants
-    {
-        return $this->hasManyOfDescendantsAndSelf(Activity::class);
-    }
-
     public function prereqs(): BelongsToMany
     {
         return $this->belongsToMany(
