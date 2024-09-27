@@ -35,10 +35,10 @@
             &:not(.page-sm > main, .page-md > main, .page-lg > main) {
                 @apply md:px-16;
             }
-            &:not(:has(> .breadcrumbs)):has(> .card) {
+            &:not(:has(> .breadcrumbs)):has(> .dialog) {
                 @apply md:-mt-16;
-                > .card,
-                > .card > .header {
+                > .dialog,
+                > .dialog > .header {
                     @apply rounded-t-none md:rounded-t-lg;
                 }
             }

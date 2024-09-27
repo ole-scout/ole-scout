@@ -1,8 +1,9 @@
-<x-slot:title>{{ __('Log in with Scout account') }}</x-slot:title>
-<x-slot:icon icon="icon-ole-scout"></x-slot:icon>
+<x-slot:title>{{ __('Log in') }}</x-slot:title>
 <x-slot:crumbs :crumbs="false"></x-slot:crumbs>
 <x-slot:size>sm</x-slot:size>
-<div>
+<x-ui::dialog>
+    <x-slot:title>{{ __('Log in with Scout account') }}</x-slot:title>
+    <x-slot:icon icon="icon-ole-scout"></x-slot:icon>
     <form wire:submit="login" class="flex flex-col gap-4">
         <x-ui::field name="loginForm.email">
             <x-slot:input
@@ -47,4 +48,4 @@
             type="submit"
             class="place-self-end">{{ __('Log in') }}</x-ui::button>
     </form>
-</div>
+</x-ui::dialog>

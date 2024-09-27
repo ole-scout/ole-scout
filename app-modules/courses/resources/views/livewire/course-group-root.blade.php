@@ -1,6 +1,7 @@
 <x-slot:title>{{ __('Course overview') }}</x-slot:title>
-<x-slot:icon icon="icon-ole-scout" class="circle"></x-slot:icon>
-<div>
+<x-ui::dialog>
+    <x-slot:title>{{ __('Course overview') }}</x-slot:title>
+    <x-slot:icon icon="icon-ole-scout" class="circle"></x-slot:icon>
     <div class="flex flex-col pl-4 gap-y-1">
         @foreach($courseGroups as $group)
         <x-ui::button :href="route('courses.group', $group)">{{ $group->title }}</x-ui::button>
@@ -12,4 +13,4 @@
         <x-ui::button variant="link" disabled>{{ $course->slug }}: {{ $course->title }} ({{ $course->language }})</x-ui::button>
         @endforeach
     </div>
-</div>
+</x-ui::dialog>

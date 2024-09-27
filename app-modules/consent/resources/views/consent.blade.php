@@ -1,7 +1,8 @@
 <x-layouts.app size="lg">
-    <x-slot:icon class="circle" icon=":shield-person"></x-slot:icon>
     <x-slot:title>{{ __('Privacy settings') }}</x-slot:title>
-    <x-slot:slot>
+    <x-ui::dialog>
+        <x-slot:title>{{ __('Privacy settings') }}</x-slot:title>
+        <x-slot:icon class="circle" icon=":shield-person"></x-slot:icon>
         <x-consent::consent-form id="consent-form" class="flex flex-col gap-4">
             <div class="flex gap-4">
                 <div class="flex flex-grow gap-4">
@@ -37,5 +38,5 @@
                 </x-ui::button>
             </div>
         </x-consent::consent-form>
-    </x-slot:slot>
+    </x-ui::dialog>
 </x-layouts.app>

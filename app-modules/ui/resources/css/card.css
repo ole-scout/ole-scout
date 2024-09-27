@@ -22,32 +22,9 @@
         @apply bg-white dark:bg-gray-800;
     }
 
-    :is(.card, .card-2, .card-3) {
-        @apply flex flex-col shadow rounded-lg ring-1 ring-gray-950/5 dark:ring-white/15;
-        & > :where(.body) {
-            @apply p-4 m-4 flex-grow flex-shrink;
-        }
-        & > :where(.header) {
-            @apply px-8 pt-6 pb-2 leading-8 bg-brand-500/40 dark:bg-brand-500/50 rounded-t-lg;
-            @apply flex items-center gap-4 flex-grow-0 flex-shrink-0;
-            > :where(.title) {
-                @apply flex-grow flex-shrink-0;
-            }
-            > :where(.icon-wrap) {
-                @apply shadow bg-brand-500 text-white ring-1 ring-white dark:ring-white/25 p-2 -mt-2 mr-1 -mb-6 rounded-md leading-[0];
-                > .icon {
-                    @apply size-10;
-                }
-                &:where(:has(> .icon.circle)) {
-                    @apply rounded-full p-3 -ml-1.5 -mt-3.5 -mb-6 -mr-0.5;
-                    > .icon {
-                        @apply size-11;
-                    }
-                }
-            }
-        }
-        & > :where(.footer) {
-            @apply px-8 pb-4 leading-8 flex-grow-0 flex-shrink-0;
-        }
+    .card,
+    .card-2,
+    .card-3 {
+        @apply shadow rounded-lg ring-1 ring-gray-950/5 dark:ring-white/15;
     }
 }

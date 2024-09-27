@@ -1,5 +1,4 @@
 @props([
-    'icon' => null,
     'title' => null,
     'crumbs' => null,
     'size' => null,
@@ -7,8 +6,8 @@
 @use('Filament\Support\Colors\Color')
 @php
     $branding = app(\App\Settings\BrandingSettings::class);
-    $icon = as_slot($icon);
     $title = as_slot($title);
+    $slot = as_slot($slot);
     $crumbs = as_slot($crumbs)->attributes->get('crumbs');
     $size = (string) $size;
     if ($crumbs === null) {
@@ -67,6 +66,12 @@
             <img class="logo" src="{{ $branding->logo }}" alt="{{ $branding->name }}" />
             @else
             <span class="logo">{{ $branding->name }}</span>
+        </header>
+        <main>
+            <x-core-ui::theme-picker
+                subtle vertical
+                class="absolute top-0 lg:top-4 sm:fixed right-4"
+            />
             @endif
             @if($crumbs !== false)
             <div class="flex items-center gap-0.5 py-4 breadcrumbs text-xs text-gray-900 dark:text-gray-300 [&>*]:opacity-90 [&>a:hover]:opacity-100">
@@ -79,21 +84,7 @@
                 <span class="cursor-default">{{ $title }}</span>
             </div>
             @endif
-        </header>
-        <main>
-            <x-core-ui::theme-picker
-                subtle vertical
-                class="absolute top-0 lg:top-4 sm:fixed right-4"
-            />
-            <x-ui::card>
-                @if($title->isNotEmpty())
-                <x-slot:title :attributes="$title->attributes">{{ $title }}</x-slot:title>
-                @endif
-                @if($icon->attributes->isNotEmpty())
-                <x-slot:icon :attributes="$icon->attributes">{{ $icon }}</x-slot:icon>
-                @endif
-                {{ $slot }}
-            </x-ui::card>
+            {{ $slot }}
         </main>
         <x-core-ui::footer />
         @unlessconsentgiven
