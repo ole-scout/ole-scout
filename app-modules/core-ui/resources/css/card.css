@@ -23,11 +23,17 @@
             @apply box-content flex items-center justify-center flex-shrink-0 py-1 mx-6 my-px overflow-hidden text-sm font-semibold leading-tight text-center min-h-12;
         }
         > :where(.body) {
-            @apply flex flex-col flex-grow px-6 mt-4 space-y-2;
+            @apply flex flex-col flex-grow px-6 mt-4 space-y-4 text-xs;
+            > :where(.preview) {
+                @apply object-contain w-full aspect-video ring-1 ring-gray-950/15 dark:ring-white/15;
+            }
+            > :where(.description) {
+                @apply text-gray-700 dark:text-gray-300;
+            }
         }
         > :where(.actions) {
             @apply mx-4 flex flex-col gap-2;
-            > :where(.btn) {
+            :where(.btn) {
                 @apply justify-center;
             }
         }
@@ -35,13 +41,13 @@
     .core__card_course-list {
         @apply grid grid-cols-[4rem,1fr] gap-1 items-center;
         > :where(.intro) {
-            @apply col-span-2 text-xs;
+            @apply col-span-2;
         }
         > :where(.slug) {
             @apply font-semibold uppercase truncate text-2xs cursor-help;
         }
         > :where(.more) {
-            @apply [grid-column:2] text-xs cursor-help;
+            @apply [grid-column:2] cursor-help;
         }
     }
 }

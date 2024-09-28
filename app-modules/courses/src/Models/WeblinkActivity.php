@@ -21,4 +21,14 @@ class WeblinkActivity extends Model
     {
         return $this->belongsTo(Activity::class);
     }
+
+    public function renderCard()
+    {
+        return view('courses::components.activity-cards.weblink', [
+            'course' => $this->activity->course,
+            'activity' => $this->activity,
+            'state' => $this->activity->states->first(),
+            'content' => $this,
+        ]);
+    }
 }

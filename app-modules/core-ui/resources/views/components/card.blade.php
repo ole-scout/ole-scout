@@ -4,6 +4,7 @@
     'title',
     'color',
     'count',
+    'slot',
     'slug',
 ])
 @php
@@ -30,9 +31,7 @@
     <div class="slug">{{ $slug }}</div>
     @endisset
     <div class="title">{{ $title }}</div>
-    <div class="body">
-        {{ render_slot($slot) }}
-    </div>
+    {{ render_slot($slot, ['class' => 'body']) }}
     @if($actions->isNotEmpty())
     {{ render_slot($actions, ['class' => 'actions']) }}
     @endif

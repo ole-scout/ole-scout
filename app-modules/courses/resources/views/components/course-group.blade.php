@@ -1,7 +1,7 @@
 @props([
     'courseGroup',
 ])
-<x-core-ui::course-card
+<x-core-ui::card
     :color="$courseGroup->color"
     :icon="$courseGroup->icon"
     :slug="$courseGroup->slug"
@@ -12,7 +12,7 @@
             {{ __('View contents') }}
         </x-ui::button>
     </x-slot:actions>
-    <x-core-ui::course-card.course-list
+    <x-core-ui::card.course-list
         :courses="$courseGroup->recursiveCourses"
     />
-</x-core-ui::course-card>
+</x-core-ui::card>

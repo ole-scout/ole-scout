@@ -9,7 +9,7 @@
         $numHidden = 0;
     }
 @endphp
-<div class="core__card_course-list" x-id="['progress']">
+@capture($transform, $contents)
     <div class="intro">
         {{ trans_choice(
             'This category contains one course:|This category contains :count courses:',
@@ -34,5 +34,13 @@
         ))
         ->join("\n")
     }}">{{ __('+:count more courses', ['count' => $numHidden]) }}</div>
+    @if($contents)
+    {{ render_slot($contents, $slot->attributes) }}
     @endif
-</div>
+    @endif
+@endcapture
+{{ render_slot(
+    $slot->toHtml(),
+    $attributes->merge(['x-id' => '[\'progress\']'])->class('core__card_course-list'),
+    transform: $transform
+) }}
