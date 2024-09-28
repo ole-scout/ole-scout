@@ -85,7 +85,7 @@ class Activity extends Model implements Sortable
 
     public function states(): HasMany
     {
-        return $this->hasMany(ActivityState::class);
+        return $this->hasMany(ActivityState::class)->chaperone();
     }
 
     public function prereqs(): BelongsToMany

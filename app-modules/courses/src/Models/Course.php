@@ -83,12 +83,12 @@ class Course extends Model implements Sortable
 
     public function activities(): HasMany
     {
-        return $this->hasMany(Activity::class);
+        return $this->hasMany(Activity::class)->chaperone();
     }
 
     public function activityGroups(): HasMany
     {
-        return $this->hasMany(ActivityGroup::class);
+        return $this->hasMany(ActivityGroup::class)->chaperone();
     }
 
     public function courseGroup(): BelongsTo

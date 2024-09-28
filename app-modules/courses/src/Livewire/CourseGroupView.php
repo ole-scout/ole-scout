@@ -19,6 +19,7 @@ class CourseGroupView extends Component
         $this->courseGroup = $courseGroup;
         $this->courseGroups = $courseGroup->courseGroups()
             ->forUser()
+            ->ordered()
             ->with([
                 'recursiveCourses' => fn($query) => $query->forUser(),
                 'recursiveCourses.states' => fn($query) => $query->forUser()->limit(1),
@@ -26,6 +27,7 @@ class CourseGroupView extends Component
             ->get();
         $this->courses = $courseGroup->courses()
             ->forUser()
+            ->ordered()
             ->get();
     }
 

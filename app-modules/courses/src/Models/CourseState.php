@@ -35,6 +35,6 @@ class CourseState extends Model
 
     public function activityStates(): HasMany
     {
-        return $this->hasMany(ActivityState::class);
+        return $this->hasMany(ActivityState::class)->chaperone();
     }
 }
