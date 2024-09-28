@@ -17,7 +17,7 @@ class WeblinkActivityFactory extends Factory
     public function definition(): array
     {
         return [
-            'image' => 'https://fakeimg.pl/640x360/' . ltrim($this->faker->hexColor(), '#'),
+            'image' => $this->faker->boolean(10) ? 'https://picsum.photos/seed/' . random_int(0, 999999) . '/640/360/' : null,
             'url' => $this->faker->url(),
         ];
     }

@@ -17,7 +17,7 @@ class DownloadActivityFactory extends Factory
     public function definition(): array
     {
         return [
-            'image' => 'https://fakeimg.pl/640x360/' . ltrim($this->faker->hexColor(), '#'),
+            'image' => $this->faker->boolean(40) ? 'https://picsum.photos/seed/' . random_int(0, 999999) . ($this->faker->boolean(30) ? '/' . round(sqrt(2) * 640) . '/640/' : '/640/360/') : null,
             'filename' => $this->faker->word(), // TODO
         ];
     }
