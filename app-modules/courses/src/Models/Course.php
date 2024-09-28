@@ -115,4 +115,9 @@ class Course extends Model implements Sortable
     {
         return $this->hasMany(Enrollment::class);
     }
+
+    public function states(): HasMany
+    {
+        return $this->hasMany(CourseState::class);
+    }
 }

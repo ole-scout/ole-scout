@@ -19,10 +19,10 @@ return new class extends Migration
                 ->constrained()->cascadeOnDelete();
             $table->foreignIdFor(ActivityGroup::class)->nullable()
                 ->constrained()->nullOnDelete();
-            $table->morphs('content');
             $table->string('version');
             $table->string('title');
             $table->text('description')->nullable();
+            $table->morphs('content');
             $table->integer('order_column');
             $table->boolean('is_disabled')->default(false)->index();
             $table->boolean('is_required')->default(false)->index();
