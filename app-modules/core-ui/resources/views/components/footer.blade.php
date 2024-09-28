@@ -1,7 +1,7 @@
 @php
   $settings = app(\FossHaas\Consent\Settings\AppConsentSettings::class);
 @endphp
-<footer class="core::footer">
+<footer class="core__footer">
   <nav>
     @isset($settings->imprint_url)
     <x-ui::button href="{{ $settings->imprint() }}">{{ __('Imprint') }}</x-ui::button>
@@ -9,7 +9,7 @@
     <x-ui::button href="{{ $settings->privacyPolicy() }}">{{ __('Privacy policy') }}</x-ui::button>
     <x-ui::button href="{{ $settings->consent() }}">{{ __('Privacy settings') }}</x-ui::button>
   </nav>
-  <div class="core::footer-attribution">
+  <div class="core__footer-attribution">
     <x-ui::button size="sm"
       variant="neutral"
       href="https://ole-scout.app"
