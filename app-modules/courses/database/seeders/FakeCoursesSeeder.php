@@ -30,22 +30,42 @@ class FakeCoursesSeeder extends Seeder
         $allCourses = collect();
         foreach ($rootGroups as $rootGroup) {
             $groups = $rootGroup->courseGroups()->createMany(
-                CourseGroup::factory(3)->withParent($rootGroup)->make()->toArray()
+                CourseGroup::factory(3)
+                    ->withParent($rootGroup)
+                    ->make()->toArray()
             );
+            if (fake()->boolean(30)) {
+                $group = $groups->shuffle()->first();
+                $groups->push(
+                    $group->courseGroups()->create(
+                        CourseGroup::factory()
+                            ->withParent($group)
+                            ->make()->toArray()
+                    )
+                );
+            }
             $groups->push(...$rootGroups->take(2));
             foreach ($groups as $subGroup) {
                 $courses = $subGroup->courses()->createMany(
-                    Course::factory(
-                        fake()->numberBetween(1, 5)
-                    )->withCourseGroup($subGroup)->make()->toArray()
+                    Course::factory(fake()->biasedNumberBetween(1, 5))
+                        ->withCourseGroup($subGroup)
+                        ->make()->toArray()
                 );
                 $allCourses->push(...$courses);
                 foreach ($courses as $course) {
                     $activityGroups = $course->activityGroups()->createMany(
-                        ActivityGroup::factory(
-                            fake()->numberBetween(0, 1)
-                        )->make()->toArray()
+                        ActivityGroup::factory(fake()->biasedNumberBetween(0, 2))
+                            ->make()->toArray()
                     );
+                    if ($activityGroups->count() && fake()->boolean(50)) {
+                        $group = $activityGroups->shuffle()->first();
+                        $activityGroups->push(
+                            $group->activityGroups()->create(
+                                ActivityGroup::factory()
+                                    ->make()->toArray()
+                            )
+                        );
+                    }
                     $contentFactories = [
                         DownloadActivity::factory(),
                         WeblinkActivity::factory(),
@@ -56,14 +76,13 @@ class FakeCoursesSeeder extends Seeder
                             ->push(null)
                             ->flatMap(
                                 fn(string|null $activityGroupId) => Activity::factory(
-                                    fake()->numberBetween(0, 2)
+                                    fake()->numberBetween(1, 5)
+                                )->withContent(
+                                    fn() => fake()
+                                        ->randomElement($contentFactories)
+                                        ->create()
                                 )->make(fn() => [
                                     'activity_group_id' => $activityGroupId,
-                                    ...getMorphFields(
-                                        fake()->randomElement($contentFactories)
-                                            ->create(),
-                                        'content'
-                                    ),
                                 ])->toArray()
                             )->toArray()
                     );

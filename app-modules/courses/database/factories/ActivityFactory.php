@@ -17,6 +17,17 @@ class ActivityFactory extends Factory
         ]);
     }
 
+    public function withContent($content): self
+    {
+        return $this->state(fn() => (fn($content) => [
+            'content_id' => $content->id,
+            'content_type' => $content->getMorphClass(),
+            'description' => $content->image
+                ? $this->faker->sentence()
+                : $this->faker->sentences($this->faker->numberBetween(3, 5), true),
+        ])($content()));
+    }
+
     /**
      * Define the model's default state.
      *
