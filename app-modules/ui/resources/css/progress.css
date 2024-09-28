@@ -1,0 +1,22 @@
+@layer components {
+    .progress {
+        > :where(.bar) {
+            @apply size-full bg-gray-200 dark:bg-gray-900 rounded cursor-help;
+            > :where(.fill) {
+                @apply h-full bg-primary-400 dark:bg-primary-600 rounded-l;
+                &:where(.full > .bar > .fill) {
+                    @apply rounded-r;
+                }
+            }
+        }
+        &:where(.progress-sm) {
+            @apply h-2;
+        }
+        &:where(:not(.progress-sm, .progress-lg)) {
+            @apply h-3;
+        }
+        &:where(.progress-lg) {
+            @apply h-4;
+        }
+    }
+}
