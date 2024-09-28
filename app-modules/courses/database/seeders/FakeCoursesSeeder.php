@@ -88,7 +88,14 @@ class FakeCoursesSeeder extends Seeder
             $numUsers
         ));
 
-        $enrollments = $enrollmentService->enrollUsers($users, $allCourses);
+        $enrollments = $enrollmentService->enrollUsers(
+            $users,
+            $allCourses,
+            fn() => now()->{fake()->boolean(60) ? 'add' : 'sub'}(
+                ['days', 'weeks', 'months'][fake()->biasedNumberBetween(0, 2)],
+                fake()->biasedNumberBetween(1, 6) % 6
+            )
+        );
         $numEnrollments = $enrollments->count();
         Log::info(sprintf(
             'Created %d enrollments (%d enrollments/s)',
@@ -107,19 +114,6 @@ class FakeCoursesSeeder extends Seeder
             'Deleted %d enrollments (%d enrollments/s)',
             $numDeleted,
             $numDeleted / $time->diffInSeconds()
-        ), ['time' => preciseDiffForHumans($time)]);
-
-        $numEnrollments -= $numDeleted;
-        $time = now();
-        $numExpired = (int) ceil($numEnrollments * (fake()->numberBetween(20, 40) / 100));
-        DB::table($enrollmentsTable)
-            ->inRandomOrder()
-            ->limit($numExpired)
-            ->update(['expires_at' => now()->subMonths(2)]);
-        Log::info(sprintf(
-            'Expired %d enrollments (%d enrollments/s)',
-            $numExpired,
-            $numExpired / $time->diffInSeconds()
         ), ['time' => preciseDiffForHumans($time)]);
     }
 }

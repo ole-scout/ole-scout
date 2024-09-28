@@ -3,6 +3,7 @@
 namespace FossHaas\Courses\Services;
 
 use App\Models\User;
+use Closure;
 use DateTime;
 use FossHaas\Courses\Models\Course;
 use FossHaas\Courses\Models\Enrollment;
@@ -16,7 +17,7 @@ class EnrollmentService
      * @param Collection<Course> $courses
      * @return Collection<int,Enrollment>
      */
-    public function enrollUsers(Collection $users, Collection $courses, ?DateTime $expires_at = null): Collection
+    public function enrollUsers(Collection $users, Collection $courses, DateTime|Closure|null $expires_at = null): Collection
     {
         return DB::transaction(function () use (
             $users,
@@ -35,7 +36,7 @@ class EnrollmentService
                         fn($user) => [
                             'user_id' => $user->id,
                             'course_id' => $course->id,
-                            'expires_at' => $expires_at,
+                            'expires_at' => $expires_at && $expires_at instanceof Closure ? $expires_at($user->id, $course->id) : $expires_at,
                             'created_at' => now(),
                             'updated_at' => now(),
                         ]
