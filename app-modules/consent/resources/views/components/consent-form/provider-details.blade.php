@@ -2,7 +2,7 @@
 @props([
     'provider',
 ])
-<x-ui::section.collapsible
+<x-ui::section.collapsible collapsed
     :label="$provider->name"
     :description="$provider->address"
 >

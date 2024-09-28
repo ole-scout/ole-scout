@@ -1,6 +1,7 @@
 @props([
     'label',
     'description' => null,
+    'collapsed' => false,
 ])
 @php
     $attributes = as_attributes($attributes);
@@ -11,7 +12,7 @@
 <x-ui::section
     :$attributes
     x-id="['collapsible']"
-    x-data="{'expanded': false}"
+    :x-data="'{\'expanded\': ' . ($collapsed ? 'false' : 'true') . '}'"
 >
     @capture($header, $attributes, $slot)
     <x-ui::button
