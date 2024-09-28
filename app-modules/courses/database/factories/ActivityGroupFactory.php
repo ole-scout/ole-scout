@@ -3,6 +3,7 @@
 namespace FossHaas\Courses\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\FossHaas\Courses\Models\ActivityGroup>
@@ -18,10 +19,10 @@ class ActivityGroupFactory extends Factory
     {
         return [
             'parent_id' => null,
-            'title' => $this->faker->words(
+            'title' => Str::title($this->faker->words(
                 $this->faker->numberBetween(2, 3),
                 true
-            ),
+            )),
         ];
     }
 }

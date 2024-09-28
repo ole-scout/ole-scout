@@ -5,6 +5,7 @@ namespace FossHaas\Courses\Database\Factories;
 use FossHaas\Courses\Enums\Access;
 use FossHaas\Courses\Models\CourseGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\FossHaas\Courses\Models\Course>
@@ -51,10 +52,10 @@ class CourseFactory extends Factory
                 sprintf('%02d', $this->faker->randomNumber(2))
             ]),
             'language' => $this->faker->randomElement($locales),
-            'title' => $this->faker->words(
+            'title' => Str::title($this->faker->words(
                 $this->faker->numberBetween(3, 12),
                 true
-            ),
+            )),
             'description' => $this->faker->paragraph(),
             'color' => $this->faker->hexColor(),
             'author' => null, // currently serves no purpose

@@ -5,6 +5,7 @@ namespace FossHaas\Courses\Database\Factories;
 use FossHaas\Courses\Models\CourseGroup;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\FossHaas\Courses\Models\CourseGroup>
@@ -37,10 +38,10 @@ class CourseGroupFactory extends Factory
                 $this->faker->randomElement(['??', '???', '???'])
             ),
             'title' => Arr::mapWithKeys($locales, fn($locale) => [
-                $locale => $locale . ': ' . $this->faker->words(
+                $locale => $locale . ': ' . Str::title($this->faker->words(
                     $this->faker->numberBetween(3, 12),
                     true
-                )
+                ))
             ]),
             'color' => $this->faker->hexColor(),
             'icon' => fn($attributes) => 'https://fakeimg.pl/128x128/' . ltrim($attributes['color'], '#'),
