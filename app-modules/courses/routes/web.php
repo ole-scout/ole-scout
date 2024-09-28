@@ -2,6 +2,7 @@
 
 use FossHaas\Courses\Livewire\CourseGroupRootView;
 use FossHaas\Courses\Livewire\CourseGroupView;
+use FossHaas\Courses\Livewire\CourseView;
 use FossHaas\Courses\Livewire\DashboardView;
 use FossHaas\Courses\Models\CourseGroup;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,10 @@ Route::name('courses.')
         Route::get('/g/{courseGroup:slug}', CourseGroupView::class)
             ->middleware('can:view,courseGroup')
             ->name('group');
-        // Route::get('/c/{course:slug}', CourseView::class)->name('course');
+
+        Route::get('/c/{course:slug}', CourseView::class)
+            ->middleware('can:view,course')
+            ->name('course');
+
         // Route::get('/c/{course:slug}/a/{activity:id}', ActivityView::class)->name('activity');
     });
