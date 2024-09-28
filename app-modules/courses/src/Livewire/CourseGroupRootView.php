@@ -19,7 +19,10 @@ class CourseGroupRootView extends Component
     {
         $this->courseGroups = CourseGroup::root()
             ->forUser()
-            ->with(['recursiveCourses' => fn($query) => $query->forUser()])
+            ->with([
+                'recursiveCourses' => fn($query) => $query->forUser(),
+                'recursiveCourses.states' => fn($query) => $query->forUser()->limit(1),
+            ])
             ->get();
         $this->courses = Course::root()
             ->forUser()
@@ -28,6 +31,6 @@ class CourseGroupRootView extends Component
 
     public function render()
     {
-        return view('courses::livewire.course-group-root');
+        return view('courses::livewire.course-group-root-view');
     }
 }

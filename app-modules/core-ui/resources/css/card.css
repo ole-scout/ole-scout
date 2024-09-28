@@ -1,0 +1,47 @@
+@layer components {
+    .core__card {
+        @apply relative flex flex-col pb-4 min-h-[28rem] isolate max-w-[18rem];
+        > :where(.header) {
+            @apply relative flex justify-center h-24 mb-4 rounded-t-lg flex-shrink-0 bg-opacity-50 saturate-[.8] bg-custom-500 dark:bg-custom-900;
+            :where(.icon-wrap) {
+                @apply relative p-4 overflow-hidden text-white border border-white rounded-full bg-custom-500 size-24 dark:border-gray-800 -bottom-4;
+                & > .icon {
+                    @apply size-full;
+                }
+            }
+            :where(.count-wrap) {
+                @apply absolute mr-[-4rem] overflow-hidden bg-white dark:bg-black border border-white dark:border-gray-800 rounded-full -bottom-3 size-6;
+                > :where(.count) {
+                    @apply flex items-center justify-center h-full text-xs bg-opacity-50 saturate-[.8] bg-custom-500 dark:bg-custom-900;
+                }
+            }
+        }
+        > :where(.slug) {
+            @apply absolute font-bold uppercase text-2xs top-4 left-4;
+        }
+        > :where(.title) {
+            @apply box-content flex items-center justify-center flex-shrink-0 py-1 mx-6 my-px overflow-hidden text-sm font-semibold leading-tight text-center min-h-12;
+        }
+        > :where(.body) {
+            @apply flex flex-col flex-grow px-6 mt-4 space-y-2;
+        }
+        > :where(.actions) {
+            @apply mx-4 flex flex-col gap-2;
+            > :where(.btn) {
+                @apply justify-center;
+            }
+        }
+    }
+    .core__card_course-list {
+        @apply grid grid-cols-[4rem,1fr] gap-1 items-center;
+        > :where(.intro) {
+            @apply col-span-2 text-xs;
+        }
+        > :where(.slug) {
+            @apply font-semibold uppercase truncate text-2xs cursor-help;
+        }
+        > :where(.more) {
+            @apply [grid-column:2] text-xs cursor-help;
+        }
+    }
+}

@@ -37,6 +37,7 @@
             :root {
                 @foreach(Color::hex($branding->brandColor) as $shade => $value)
                 --brand-{{ $shade }}: {{ $value }};
+                --c-{{ $shade }}: {{ $value }};
                 @endforeach
                 @foreach(Color::hex($branding->primaryColor) as $shade => $value)
                 --primary-{{ $shade }}: {{ $value }};
