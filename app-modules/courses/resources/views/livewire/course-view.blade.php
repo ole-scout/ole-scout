@@ -28,6 +28,13 @@
         <div class="flex-shrink-0">{{ $course->title }}</div>
         <div class="flex-shrink-0 text-xs font-semibold uppercase">{{ $course->slug }}</div>
     </x-slot:title>
+    @if($course->enrollments->isNotEmpty() && $course->enrollments->first()->expires_at !== null)
+    <x-slot:header>
+    <div class="core__flag {{ $course->enrollments->first()->expires_at < now()->addDays(1) ? 'urgent' : '' }}">
+    {{ $course->enrollments->first()->expiration_for_humans }}
+    </div>
+    </x-slot:header>
+    @endif
     <x-slot:icon :icon="$course->icon" class="circle"></x-slot:icon>
     <x-slot:slot class="flex flex-col gap-4">
         @if($activities->count())

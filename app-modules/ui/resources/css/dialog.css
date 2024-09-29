@@ -5,8 +5,7 @@
             @apply p-4 m-4 flex-grow flex-shrink;
         }
         & > :where(.header) {
-            @apply px-8 pt-5 pb-3 leading-8 rounded-t-lg;
-            @apply flex items-center gap-4 flex-grow-0 flex-shrink-0;
+            @apply relative px-8 pt-5 pb-3 leading-8 rounded-t-lg flex items-center gap-4 flex-grow-0 flex-shrink-0;
             > :where(.title) {
                 @apply flex-grow flex-shrink-0 text-left;
             }

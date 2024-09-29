@@ -32,6 +32,7 @@
 </span>
 @endif
 {{ render_slot($title, ['class' => 'title'], fallbackTag: 'span') }}
+{{ $contents }}
 @endcapture
 @capture($transform, $contents)
     @if($title->isNotEmpty())

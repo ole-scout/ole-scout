@@ -60,6 +60,9 @@ class Enrollment extends Model
         $diff = $interval->forHumans(parts: 1);
         $key = array_keys($nonZero)[0];
         $value = $nonZero[$key];
-        return trans_choice(':diff remaining', $value, ['diff' => $diff]);
+        if ($this->expires_at < now()->addDay()) {
+            return trans_choice('only :diff left', $value, ['diff' => $diff]);
+        }
+        return trans_choice(':diff left', $value, ['diff' => $diff]);
     }
 }

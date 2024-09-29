@@ -31,10 +31,10 @@
         @isset($count)
         <div class="count-wrap"><div class="count">{{ $count }}</div></div>
         @endisset
-        @if($flag->isNotEmpty())
-        {{ render_slot($flag, ['class' => 'flag']) }}
-        @endif
     </div>
+    @if($flag->isNotEmpty())
+    {{ render_slot($flag, ['class' => 'core__flag']) }}
+    @endif
     @isset($slug)
     <div class="slug">{{ $slug }}</div>
     @endisset
