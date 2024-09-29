@@ -5,6 +5,7 @@ namespace FossHaas\Courses\Models;
 use App\Models\User;
 use FossHaas\Courses\Enums\Access;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -20,7 +21,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
 
 class Course extends Model implements Sortable
 {
-    use HasFactory, SoftDeletes, SortableTrait;
+    use HasFactory, HasTimestamps, SoftDeletes, SortableTrait;
 
     protected $keyType = 'string';
 

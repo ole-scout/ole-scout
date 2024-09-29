@@ -8,13 +8,14 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use FossHaas\LaravelPermissionObjects\ScopedPermissions;
 use FossHaas\LaravelPermissionObjects\Traits\HasPermissions;
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements FilamentUser
 {
-    use HasFactory, Notifiable, HasPermissions;
+    use HasFactory, Notifiable, HasPermissions, HasTimestamps;
 
     protected $attributes = [
         'is_admin' => false,

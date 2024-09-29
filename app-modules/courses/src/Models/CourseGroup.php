@@ -4,6 +4,7 @@ namespace FossHaas\Courses\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,7 +20,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\HasManyOfDescendants;
 
 class CourseGroup extends Model implements Sortable
 {
-    use HasFactory, HasRecursiveRelationships, HasTranslations, SoftDeletes, SortableTrait;
+    use HasFactory, HasRecursiveRelationships, HasTimestamps, HasTranslations, SoftDeletes, SortableTrait;
 
     protected $keyType = 'string';
 

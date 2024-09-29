@@ -3,6 +3,7 @@
 namespace FossHaas\Courses\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +15,7 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class ActivityGroup extends Model implements Sortable
 {
-    use HasFactory, HasRecursiveRelationships, SoftDeletes, SortableTrait;
+    use HasFactory, HasRecursiveRelationships, HasTimestamps, SoftDeletes, SortableTrait;
 
     protected static function booted()
     {

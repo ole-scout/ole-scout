@@ -4,12 +4,15 @@ namespace FossHaas\Courses\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 
 class Enrollment extends Model
 {
+    use HasTimestamps;
+
     protected $fillable = [
         'user_id',
         'course_id',
