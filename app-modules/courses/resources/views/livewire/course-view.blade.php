@@ -20,7 +20,7 @@
 <x-ui::dialog :color="$course->color">
     <x-slot:title class="flex flex-row items-center justify-between">
         <div class="flex-shrink-0">{{ $course->title }}</div>
-        <div class="flex-shrink-0 text-sm font-semibold">{{ $course->slug }}</div>
+        <div class="flex-shrink-0 text-xs font-semibold uppercase">{{ $course->slug }}</div>
     </x-slot:title>
     <x-slot:icon :icon="$course->icon" class="circle"></x-slot:icon>
     <div class="flex flex-col gap-4">

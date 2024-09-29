@@ -8,7 +8,7 @@
 <x-ui::dialog :color="$courseGroup->color">
     <x-slot:title class="flex flex-row items-center justify-between">
         <div class="flex-shrink-0">{{ $courseGroup->title }}</div>
-        <div class="flex-shrink-0 text-sm font-semibold">{{ $courseGroup->slug }}</div>
+        <div class="flex-shrink-0 text-xs font-semibold uppercase">{{ $courseGroup->slug }}</div>
     </x-slot:title>
     <x-slot:icon :icon="$courseGroup->icon" class="circle"></x-slot:icon>
     @if($courseGroups->count() > 3 || $courseGroups->some(fn($group) => $group->courseGroups->isNotEmpty()))
@@ -39,7 +39,7 @@
             </x-slot:slot>
             <x-slot:title class="flex flex-row items-center justify-between">
             <div class="flex-shrink-0">{{ $group->title }}</div>
-            <div class="flex-shrink-0 text-sm font-semibold">{{ $group->slug }}</div>
+            <div class="flex-shrink-0 text-xs font-semibold uppercase">{{ $group->slug }}</div>
             </x-slot:title>
         </x-ui::dialog.collapsible>
         @endforeach
