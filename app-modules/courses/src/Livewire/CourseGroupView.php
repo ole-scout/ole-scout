@@ -24,13 +24,17 @@ class CourseGroupView extends Component
             ->ordered()
             ->with([
                 'recursiveCourses' => fn($query) => $query->forUser(),
+                'recursiveCourses.enrollments' => fn($query) => $query->forUser()->limit(1),
                 'recursiveCourses.states' => fn($query) => $query->forUser()->limit(1),
             ])
             ->get();
         $this->courses = $courseGroup->courses()
             ->forUser()
             ->ordered()
-            ->with(['states' => fn($query) => $query->forUser()->limit(1)])
+            ->with([
+                'enrollments' => fn($query) => $query->forUser()->limit(1),
+                'states' => fn($query) => $query->forUser()->limit(1),
+            ])
             ->get();
         $courseStateService->createStatesForCourses(
             $this->courseGroups->flatMap(fn($courseGroup) => $courseGroup->recursiveCourses)

@@ -1,6 +1,7 @@
 @props([
     'icon' => 'icon-ole-scout',
     'actions' => null,
+    'flag' => null,
     'title',
     'footer',
     'color',
@@ -11,6 +12,7 @@
 @php
     $attributes = as_attributes($attributes);
     $actions = as_slot($actions);
+    $flag = as_slot($flag);
     $slot = as_slot($slot);
     if (isset($color)) {
         $shades = \Filament\Support\Colors\Color::hex($color);
@@ -29,6 +31,9 @@
         @isset($count)
         <div class="count-wrap"><div class="count">{{ $count }}</div></div>
         @endisset
+        @if($flag->isNotEmpty())
+        {{ render_slot($flag, ['class' => 'flag']) }}
+        @endif
     </div>
     @isset($slug)
     <div class="slug">{{ $slug }}</div>

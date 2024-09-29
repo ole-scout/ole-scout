@@ -3,6 +3,7 @@
 namespace FossHaas\Courses\Models;
 
 use App\Models\User;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,10 @@ class Enrollment extends Model
         'user_id',
         'course_id',
         'expires_at',
+    ];
+
+    protected $casts = [
+        'expires_at' => 'datetime',
     ];
 
     protected static function booted()
@@ -43,5 +48,18 @@ class Enrollment extends Model
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function getExpirationForHumansAttribute(): string|null
+    {
+        if ($this->expires_at === null || $this->expires_at->isPast()) {
+            return null;
+        }
+        $interval = CarbonInterval::diff($this->expires_at, now());
+        $nonZero = $interval->getNonZeroValues();
+        $diff = $interval->forHumans(parts: 1);
+        $key = array_keys($nonZero)[0];
+        $value = $nonZero[$key];
+        return trans_choice(':diff remaining', $value, ['diff' => $diff]);
     }
 }

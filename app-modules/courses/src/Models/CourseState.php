@@ -26,6 +26,7 @@ class CourseState extends Model
     ];
 
     protected $casts = [
+        'completed_at' => 'datetime',
         'activities' => AsArrayObject::class,
     ];
 
