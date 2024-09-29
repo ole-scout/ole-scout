@@ -24,13 +24,12 @@ class EnrollmentService
             $courses,
             $expires_at
         ) {
-            $enrollmentsTable = (new Enrollment())->getTable();
             $lastId = Enrollment::query()
                 ->orderBy('id', 'desc')
                 ->limit(1)
                 ->pluck('id')
                 ->first() ?? 0;
-            DB::table($enrollmentsTable)
+            Enrollment::query()
                 ->insert($courses->flatMap(
                     fn($course) => $users->map(
                         fn($user) => [

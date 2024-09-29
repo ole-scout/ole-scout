@@ -18,7 +18,7 @@
     </div>
     @foreach($courses->take($numVisible) as $course)
     <div x-bind:id="$id('progress', '{{ $course->slug }}')" class="slug" title="{{ $course->title }}">{{ $course->slug }}</div>
-    <x-core-ui::progress-bar :progress="$course->states->first()?->progress" size="sm">
+    <x-core-ui::progress-bar :progress="$course->states->first()->progress" size="sm">
         <x-slot:slot :aria-labelledby="'$id(\'progress\', ' . $course->slug . '\')'"></x-slot>
     </x-core-ui::progress-bar>
     @endforeach
@@ -31,7 +31,7 @@
             $course->slug,
             $course->title,
         ) . (
-            $course->states->first()?->progress['required_total'] ? floor((
+            $course->states->first()->progress['required_total'] ? floor((
                 $course->states->first()->progress['required_completed'] /
                 $course->states->first()->progress['required_total']
             ) * 100) . ' %' : ''

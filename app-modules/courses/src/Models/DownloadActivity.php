@@ -27,7 +27,7 @@ class DownloadActivity extends Model
         return view('courses::components.activity-cards.download', [
             'course' => $this->activity->course,
             'activity' => $this->activity,
-            'state' => $this->activity->states->first(),
+            'state' => $this->activity->course->states->first()?->activities[$this->activity->id],
             'content' => $this,
         ]);
     }

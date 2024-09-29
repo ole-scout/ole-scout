@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Course::class)->constrained()->cascadeOnDelete();
-            $table->jsonb('progress');
+            $table->jsonb('activities');
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
 

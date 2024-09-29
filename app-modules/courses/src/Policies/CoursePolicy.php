@@ -28,6 +28,7 @@ class CoursePolicy
         if ($course->enrollments()->forUser($user)->exists()) {
             return true;
         }
+        return null;
     }
 
     /**

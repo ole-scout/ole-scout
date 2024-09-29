@@ -3,7 +3,9 @@
 namespace FossHaas\Courses\Livewire;
 
 use FossHaas\Courses\Models\CourseGroup;
+use FossHaas\Courses\Services\CourseStateService;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CourseGroupView extends Component
@@ -14,7 +16,7 @@ class CourseGroupView extends Component
     /** Collection<int,Course> */
     public Collection $courses;
 
-    public function mount(CourseGroup $courseGroup)
+    public function mount(CourseGroup $courseGroup, CourseStateService $courseStateService)
     {
         $this->courseGroup = $courseGroup;
         $this->courseGroups = $courseGroup->courseGroups()
@@ -30,6 +32,11 @@ class CourseGroupView extends Component
             ->ordered()
             ->with(['states' => fn($query) => $query->forUser()->limit(1)])
             ->get();
+        $courseStateService->createStatesForCourses(
+            $this->courseGroups->flatMap(fn($courseGroup) => $courseGroup->recursiveCourses)
+                ->merge($this->courses)->filter(fn($course) => $course->states->isEmpty()),
+            collect([Auth::user()])
+        );
     }
 
     public function render()

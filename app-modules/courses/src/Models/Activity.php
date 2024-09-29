@@ -83,11 +83,6 @@ class Activity extends Model implements Sortable
         return $this->belongsTo(ActivityGroup::class);
     }
 
-    public function states(): HasMany
-    {
-        return $this->hasMany(ActivityState::class)->chaperone();
-    }
-
     public function prereqs(): BelongsToMany
     {
         return $this->belongsToMany(
