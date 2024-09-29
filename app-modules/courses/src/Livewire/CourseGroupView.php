@@ -28,6 +28,7 @@ class CourseGroupView extends Component
         $this->courses = $courseGroup->courses()
             ->forUser()
             ->ordered()
+            ->with(['states' => fn($query) => $query->forUser()->limit(1)])
             ->get();
     }
 

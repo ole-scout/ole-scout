@@ -24,6 +24,12 @@ class ActivityState extends Model
 
     protected static function booted()
     {
+        static::creating(function (ActivityState $activityState) {
+            $content = $activityState->activity?->content;
+            if ($content && method_exists($content, 'getInitialState')) {
+                $activityState->content_state = $content->getInitialState();
+            }
+        });
         static::updated(function (ActivityState $activityState) {
             if (
                 $activityState->wasChanged('completed_at') &&

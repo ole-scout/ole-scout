@@ -28,6 +28,7 @@ class CourseGroupRootView extends Component
         $this->courses = Course::root()
             ->forUser()
             ->ordered()
+            ->with(['states' => fn($query) => $query->forUser()->limit(1)])
             ->get();
     }
 

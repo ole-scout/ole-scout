@@ -26,12 +26,25 @@ class CourseState extends Model
         static::creating(function (CourseState $state) {
             if ($state->course_id) {
                 $state->progress['required_total'] = 0;
+                $state->progress['required_completed'] = 0;
                 $state->progress['optional_total'] = 0;
+                $state->progress['optional_completed'] = 0;
                 foreach ($state->course->activities as $activity) {
+                    $activityState = $activity->states()->firstOrCreate([
+                        'user_id' => $state->user_id,
+                        'course_id' => $state->course_id,
+                        'activity_id' => $activity->id,
+                    ]);
                     if ($activity->is_required) {
                         $state->progress['required_total']++;
+                        if ($activityState->completed_at !== null) {
+                            $state->progress['required_completed']++;
+                        }
                     } else {
                         $state->progress['optional_total']++;
+                        if ($activityState->completed_at !== null) {
+                            $state->progress['optional_completed']++;
+                        }
                     }
                 }
             }
