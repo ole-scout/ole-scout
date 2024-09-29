@@ -2,6 +2,7 @@
     :title="$activity->title"
     :color="$course->color"
     icon="heroicon-c-link"
+    :style="$content->image ? '--background-image: url(\'' . $content->image . '\')' : null"
 >
 @if($content->image)
 <img src="{{ $content->image }}" class="preview" aria-hidden="true" />

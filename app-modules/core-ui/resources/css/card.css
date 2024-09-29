@@ -3,17 +3,25 @@
         @apply relative flex flex-col pb-4 min-h-[28rem] isolate max-w-[18rem];
         > :where(.header) {
             @apply relative flex justify-center h-24 mb-4 rounded-t-lg flex-shrink-0 bg-opacity-50 saturate-[.8] bg-custom-500 dark:bg-custom-900;
-            :where(.icon-wrap) {
-                @apply relative p-4 overflow-hidden text-white border border-white rounded-full bg-custom-500 size-24 dark:border-gray-800 -bottom-4;
-                & > .icon {
-                    @apply size-full;
+            > :where(.image) {
+                @apply absolute inset-0 overflow-hidden;
+                &::before {
+                    @apply block size-full bg-cover bg-center rounded-t-lg opacity-25 saturate-0 pointer-events-none touch-none scale-110 blur-[1px];
+                    background-image: var(--background-image);
+                    content: " ";
                 }
             }
-            :where(.count-wrap) {
-                @apply absolute mr-[-4rem] overflow-hidden bg-white dark:bg-black border border-white dark:border-gray-800 rounded-full -bottom-3 size-6;
-                > :where(.count) {
-                    @apply flex items-center justify-center h-full text-xs bg-opacity-50 saturate-[.8] bg-custom-500 dark:bg-custom-900;
-                }
+        }
+        :where(.icon-wrap) {
+            @apply relative p-4 overflow-hidden text-white border border-white rounded-full bg-custom-500 size-24 dark:border-gray-800 -bottom-4;
+            & > .icon {
+                @apply size-full;
+            }
+        }
+        :where(.count-wrap) {
+            @apply absolute mr-[-4rem] overflow-hidden bg-white dark:bg-black border border-white dark:border-gray-800 rounded-full -bottom-3 size-6;
+            > :where(.count) {
+                @apply flex items-center justify-center h-full text-xs bg-opacity-50 saturate-[.8] bg-custom-500 dark:bg-custom-900;
             }
         }
         > :where(.slug) {
@@ -25,7 +33,7 @@
         > :where(.body) {
             @apply flex flex-col flex-grow px-6 mt-4 space-y-4 text-xs;
             > :where(.preview) {
-                @apply object-contain w-full aspect-video ring-1 ring-gray-950/15 dark:ring-white/15;
+                @apply max-h-36 w-auto mx-auto ring-1 ring-gray-950/15 dark:ring-white/15;
             }
             > :where(.description) {
                 @apply text-gray-700 dark:text-gray-300;
