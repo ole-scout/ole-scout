@@ -18,19 +18,23 @@
     </div>
     @foreach($courses->take($numVisible) as $course)
     <div x-bind:id="$id('progress', '{{ $course->slug }}')" class="slug" title="{{ $course->title }}">{{ $course->slug }}</div>
-    <x-ui::progress-bar :progress="$course->states->first()?->percent_complete ?? 0" size="sm">
-        <x-slot:slot :aria-labelledby="'$id(\'progress\', ' . $course->slug . '\')'"></x-slot:slot>
-    </x-ui::progress-bar>
+    <x-core-ui::progress-bar :progress="$course->states->first()?->progress" size="sm">
+        <x-slot:slot :aria-labelledby="'$id(\'progress\', ' . $course->slug . '\')'"></x-slot>
+    </x-core-ui::progress-bar>
     @endforeach
     @if($numHidden > 0)
     <div class="more" title="{{
         $courses
         ->take(-$numHidden)
         ->map(fn($course) => sprintf(
-            '%s: %s (%d %%)',
+            '%s: %s',
             $course->slug,
             $course->title,
-            $course->states->first()?->percent_complete ?? 0,
+        ) . (
+            $course->states->first()?->progress['required_total'] ? floor((
+                $course->states->first()->progress['required_completed'] /
+                $course->states->first()->progress['required_total']
+            ) * 100) . ' %' : ''
         ))
         ->join("\n")
     }}">{{ __('+:count more courses', ['count' => $numHidden]) }}</div>

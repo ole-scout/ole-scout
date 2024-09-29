@@ -1,7 +1,7 @@
 @layer components {
     .progress {
         > :where(.bar) {
-            @apply size-full bg-gray-200 dark:bg-gray-900 rounded cursor-help;
+            @apply size-full bg-gray-200 dark:bg-gray-700 rounded cursor-help;
             > :where(.fill) {
                 @apply h-full bg-primary-400 dark:bg-primary-600 rounded-l;
                 &:where(.full > .bar > .fill) {

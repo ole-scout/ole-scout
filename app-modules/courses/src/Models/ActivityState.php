@@ -25,35 +25,19 @@ class ActivityState extends Model
     protected static function booted()
     {
         static::updated(function (ActivityState $activityState) {
-            if ($activityState->wasChanged('completed_at')) {
+            if (
+                $activityState->wasChanged('completed_at') &&
+                $activityState->completed_at !== null
+            ) {
                 $courseState = $activityState->course->states()
                     ->where('user_id', $activityState->user_id)
                     ->first();
-                $activityStates = $courseState->activityState()
-                    ->select(['activity_id', 'completed_at'])
-                    ->get();
-                $numTotal = $activityStates->count();
-                $numCompleted = $activityStates
-                    ->where('completed_at', '!==', null)
-                    ->count();
-                $courseState->percent_completed = (int) round(
-                    ($numCompleted / $numTotal) * 100
-                );
-                if (
-                    $courseState->completed_at === null
-                    && $activityState->activity->is_required
-                ) {
-                    $requiredActivities = $courseState->activities()
-                        ->where('is_required', true)
-                        ->select(['id'])
-                        ->pluck('id');
-                    $requiredCompleted = $activityStates
-                        ->whereIn('activity_id', $requiredActivities)
-                        ->where('completed_at', '!==', null)
-                        ->count();
-                    if ($requiredCompleted === $requiredActivities->count()) {
+                if ($activityState->activity->is_required) {
+                    if (++$courseState->progress['required_completed'] === $courseState->progress['required_total']) {
                         $courseState->completed_at = now();
                     }
+                } else {
+                    $courseState->progress['optional_completed']++;
                 }
                 $courseState->save();
             }

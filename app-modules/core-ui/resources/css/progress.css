@@ -1,0 +1,43 @@
+@layer components {
+    .progress.core__progress {
+        > :where(.bar) {
+            @apply flex flex-row;
+            &:where(:has(.fill)) {
+                @apply bg-transparent dark:bg-transparent;
+            }
+            &:where(:not(:has(.fill))) {
+                @apply bg-gray-200 dark:bg-gray-700;
+            }
+            > :where(.fill) {
+                &:where(.completed) {
+                    &:where(.required, :not(:has(.required)) > .optional) {
+                        @apply bg-green-400 dark:bg-green-600;
+                    }
+                    &:where(:has(.required) > .optional) {
+                        @apply bg-green-400/75 dark:bg-green-600/50;
+                    }
+                }
+                &:where(.missing) {
+                    &:where(.required, :not(:has(.required)) > .optional) {
+                        @apply bg-gray-200 dark:bg-gray-700;
+                    }
+                    &:where(:has(.required) > .optional) {
+                        @apply bg-gray-200/50 dark:bg-gray-700/50;
+                    }
+                }
+                &:not(:first-child) {
+                    @apply rounded-l-none ml-px;
+                }
+                &:not(:last-child) {
+                    @apply rounded-r-none;
+                }
+                &:first-child {
+                    @apply rounded-l;
+                }
+                &:last-child {
+                    @apply rounded-r;
+                }
+            }
+        }
+    }
+}

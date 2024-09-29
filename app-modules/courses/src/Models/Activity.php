@@ -23,7 +23,7 @@ class Activity extends Model implements Sortable
 
     public $incrementing = false;
 
-    protected static function booted(): void
+    protected static function booted()
     {
         static::addGlobalScope('enabled', function (Builder $query): void {
             $query->where('is_disabled', false);

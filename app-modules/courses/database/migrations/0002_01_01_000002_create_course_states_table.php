@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Course::class)->constrained()->cascadeOnDelete();
-            $table->integer('percent_complete')->default(0);
+            $table->jsonb('progress');
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
 
