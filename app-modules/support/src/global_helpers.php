@@ -107,7 +107,7 @@ if (! function_exists('as_attributes')) {
             if (isset($class)) $attributes = $attributes->class($class);
         }
         return $attributes->filter(
-            fn($value) => $value !== null && $value !== false
+            fn($value, $key) => $value !== null && $value !== false && ($key !== 'class' || $value !== '')
         );
     }
 }
@@ -126,12 +126,10 @@ if (! function_exists('as_slot')) {
         } else if (!is_string($contents) && is_callable($contents)) {
             $contents = $contents();
         } else if ($contents instanceof ComponentSlot) {
-            if ($attributes) {
-                $contents->attributes = as_attributes(
-                    $contents->attributes,
-                    $attributes
-                );
-            }
+            $contents->attributes = as_attributes(
+                $contents->attributes,
+                $attributes
+            );
             return $contents;
         }
 
