@@ -6,6 +6,7 @@
     :icon="$courseGroup->icon"
     :slug="$courseGroup->slug"
     :title="$courseGroup->title"
+    :count="$courseGroup->recursiveCourses->count()"
 >
     <x-slot:actions>
         <x-ui::button :href="route('courses.group', $courseGroup)" variant="alt">
