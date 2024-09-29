@@ -5,20 +5,29 @@
             @apply p-4 m-4 flex-grow flex-shrink;
         }
         & > :where(.header) {
-            @apply px-8 pt-5 pb-3 leading-8 rounded-t-lg;
+            @apply px-8 pt-5 pb-3 leading-8 rounded-t-lg transition-[padding] duration-100;
             @apply flex items-center gap-4 flex-grow-0 flex-shrink-0;
             > :where(.title) {
-                @apply flex-grow flex-shrink-0;
+                @apply flex-grow flex-shrink-0 text-left;
             }
             > :where(.icon-wrap) {
-                @apply shadow text-white ring-1 ring-white dark:ring-white/25 p-2 -mt-2 mr-1.5 -mb-6 rounded-md leading-[0];
+                @apply shadow text-white ring-1 ring-white dark:ring-white/25 p-2 -mt-2 mr-1.5 -mb-6 rounded-md leading-[0] transition-[margin] duration-100;
                 > .icon {
-                    @apply size-10;
+                    @apply size-10 transition-all duration-100;
                 }
                 &:where(:has(> .icon.circle)) {
                     @apply rounded-full p-3 -ml-2 -mt-3.5 -mb-6;
                     > .icon {
                         @apply size-11;
+                    }
+                }
+            }
+            &:where([aria-expanded="false"]) {
+                @apply rounded-b-lg py-4 transition-[padding] duration-100;
+                > :where(.icon-wrap) {
+                    @apply -my-3 transition-[margin] duration-100;
+                    > .icon {
+                        @apply size-8 transition-all duration-100;
                     }
                 }
             }

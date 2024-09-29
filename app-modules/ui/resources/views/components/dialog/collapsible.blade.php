@@ -1,18 +1,22 @@
+@use(Illuminate\Support\Js)
 @props([
-    'label',
-    'description' => null,
+    'title' => null,
+    'icon' => null,
+    'footer' => null,
+    'layer' => 1,
     'collapsed' => false,
 ])
 @php
     $attributes = as_attributes($attributes);
-    $label = as_slot($label);
-    $description = as_slot($description);
+    $title = as_slot($title);
+    $icon = as_slot($icon);
     $slot = as_slot($slot);
+    $footer = as_slot($footer);
 @endphp
-<x-ui::section
+<x-ui::dialog
     :$attributes
     x-id="['collapsible']"
-    :x-data="'{\'expanded\': ' . ($collapsed ? 'false' : 'true') . '}'"
+    :x-data="Js::from(['expanded' => !$collapsed])"
 >
     @capture($header, $attributes, $slot)
     <x-ui::button
@@ -21,7 +25,7 @@
         x-on:click="expanded = !expanded"
         x-bind:aria-controls="$id('collapsible', 'content')"
         x-bind:aria-expanded="String(expanded)"
-        aria-expanded="false"
+        :aria-expanded="$collapsed ? 'false' : 'true'"
         x-ui-busy:ignore
         >
         <x-slot:slot>{{ $slot }}</x-slot:slot>
@@ -33,13 +37,11 @@
     </x-ui::button>
     @endcapture
     <x-slot:header :callback="$header"></x-slot:header>
-    <x-slot:label
-        :attributes="$label->attributes"
+    <x-slot:icon :attributes="$icon->attributes">{{ $icon }}</x-slot:icon>
+    <x-slot:title
+        :attributes="$title->attributes"
         x-bind:id="$id('collapsible', 'label')"
-    >{{ $label }}</x-slot:label>
-    <x-slot:description
-        :attributes="$description->attributes"
-    >{{ $description }}</x-slot:description>
+    >{{ $title }}</x-slot:title>
     <x-slot:slot
         :attributes="$slot->attributes"
         x-bind:id="$id('collapsible', 'content')"
@@ -47,4 +49,7 @@
         x-cloak
         x-show="expanded"
     >{{ $slot }}</x-slot:slot>
+    <x-slot:footer
+        :attributes="$footer->attributes"
+    >{{ $footer }}</x-slot:footer>
 </x-ui::section>

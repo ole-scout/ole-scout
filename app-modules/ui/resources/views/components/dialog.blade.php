@@ -1,13 +1,16 @@
 @props([
     'as' => 'div',
     'title' => null,
+    'header' => null,
     'icon' => null,
     'color' => null,
     'footer' => null,
     'layer' => 1,
 ])
 @php
+    $attributes = as_attributes($attributes);
     $title = as_slot($title);
+    $header = as_slot($header);
     $icon = as_slot($icon);
     $body = as_slot($slot);
     $footer = as_slot($footer);
@@ -19,7 +22,7 @@
         $attributes = $attributes->class(['color-custom'])->style(implode(';', $styles));
     }
 @endphp
-@capture($transformTitle, $title)
+@capture($transformHeader, $contents)
 @if($icon->attributes->isNotEmpty())
 <span class="icon-wrap">
     {{ render_slot(
@@ -28,19 +31,19 @@
     ) }}
 </span>
 @endif
-<span class="title">{{ $title }}</span>
+{{ render_slot($title, ['class' => 'title'], fallbackTag: 'span') }}
 @endcapture
-@capture($transform, $body)
+@capture($transform, $contents)
     @if($title->isNotEmpty())
     {{ render_slot(
-        $title,
+        $header,
         ['class' => 'header'],
-        transform: $transformTitle,
+        transform: $transformHeader,
     ) }}
     @endif
     {{ render_slot(
-        $body,
-        ['class' => 'body']
+        $contents,
+        $body->attributes->class('body')
     ) }}
     @if($footer->isNotEmpty() || $footer->attributes->isNotEmpty())
     {{ render_slot(
@@ -50,7 +53,7 @@
     @endif
 @endcapture
 {{ render_slot(
-    $body,
+    $body->toHtml(),
     $attributes->merge(['component' => 'ui::card'])->class('dialog'),
     transform: $transform
 ) }}
