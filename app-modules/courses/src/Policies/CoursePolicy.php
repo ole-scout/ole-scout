@@ -3,6 +3,7 @@
 namespace FossHaas\Courses\Policies;
 
 use App\Models\User;
+use FossHaas\Courses\Enums\Access;
 use FossHaas\Courses\Models\Course;
 use Illuminate\Auth\Access\Response;
 
@@ -21,7 +22,12 @@ class CoursePolicy
      */
     public function view(User $user, Course $course): bool|null
     {
-        return null;
+        if ($course->access === Access::OPEN) {
+            return true;
+        }
+        if ($course->enrollments()->forUser($user)->exists()) {
+            return true;
+        }
     }
 
     /**
