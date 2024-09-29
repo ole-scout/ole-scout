@@ -18,7 +18,10 @@
 <x-slot:title>{{ $course->title }}</x-slot:title>
 <x-slot:crumbs :crumbs="$crumbs"></x-slot:crumbs>
 <x-ui::dialog :color="$course->color">
-    <x-slot:title>{{ $course->title }}</x-slot:title>
+    <x-slot:title class="flex flex-row items-center justify-between">
+        <div class="flex-shrink-0">{{ $course->title }}</div>
+        <div class="flex-shrink-0 text-sm font-semibold">{{ $course->slug }}</div>
+    </x-slot:title>
     <x-slot:icon :icon="$course->icon" class="circle"></x-slot:icon>
     <div class="flex flex-col gap-4">
         @if($activitiesByGroup->get(null))

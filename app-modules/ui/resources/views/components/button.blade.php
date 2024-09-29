@@ -96,12 +96,12 @@
     @foreach($iconLeading as $icon)
     {{ render_slot($icon) }}
     @endforeach
-    {{ render_slot(
+    {{ $slot->attributes->isNotEmpty() || $hiddenLabel ? render_slot(
         $contents,
         $slot->attributes->merge([
-            'size' => $attributes->has('component') ? $size : null,
+            'size' => $slot->attributes->has('component') ? $size : null,
         ])->class(['sr-only' => $hiddenLabel])
-    ) }}
+    ) : $contents }}
     @foreach($iconTrailing as $icon)
     {{ render_slot($icon) }}
     @endforeach
