@@ -2,6 +2,7 @@
     'icon' => 'icon-ole-scout',
     'actions' => null,
     'title',
+    'footer',
     'color',
     'count',
     'slot',
@@ -34,6 +35,11 @@
     @endisset
     <div class="title">{{ $title }}</div>
     {{ render_slot($slot, ['class' => 'body']) }}
+    @isset($footer)
+    <div class="core__card_footer" aria-hidden="true">
+    <x-ui::icon :icon="$icon" />
+    </div>
+    @endisset
     @if($actions->isNotEmpty())
     {{ render_slot($actions, ['class' => 'actions']) }}
     @endif

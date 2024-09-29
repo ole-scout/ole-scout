@@ -31,7 +31,7 @@
             @apply box-content flex items-center justify-center flex-shrink-0 py-1 mx-6 my-px overflow-hidden text-sm font-semibold leading-tight text-center min-h-12;
         }
         > :where(.body) {
-            @apply flex flex-col flex-grow px-6 mt-4 space-y-4 text-xs;
+            @apply flex flex-col flex-grow px-6 mt-4 gap-4 text-xs;
             > :where(.preview) {
                 @apply max-h-36 w-auto mx-auto ring-1 ring-gray-950/15 dark:ring-white/15;
             }
@@ -56,6 +56,23 @@
         }
         > :where(.more) {
             @apply [grid-column:2] cursor-help;
+        }
+    }
+    .core__card_footer {
+        @apply flex items-end justify-center flex-grow text-white invert opacity-10 mb-2;
+        &::before,
+        &&:after {
+            @apply block w-16 h-3 my-4 border-t-2 border-b-2 border-white;
+            content: " ";
+        }
+        &::before {
+            @apply mr-4;
+        }
+        &::after {
+            @apply ml-4;
+        }
+        .icon {
+            @apply size-12;
         }
     }
 }

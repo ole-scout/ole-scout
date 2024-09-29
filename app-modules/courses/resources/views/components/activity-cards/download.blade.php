@@ -3,6 +3,7 @@
     :color="$course->color"
     icon="heroicon-c-arrow-down-tray"
     :style="$content->image ? '--background-image: url(\'' . $content->image . '\')' : null"
+    :footer="true"
 >
 @if($content->image)
 <img src="{{ $content->image }}" class="preview" aria-hidden="true" />
