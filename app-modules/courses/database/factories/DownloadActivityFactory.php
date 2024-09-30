@@ -18,7 +18,7 @@ class DownloadActivityFactory extends Factory
     {
         return [
             'image' => $this->faker->boolean(40) ? 'https://picsum.photos/seed/' . random_int(0, 999999) . ($this->faker->boolean(30) ? '/640/' . round(sqrt(2) * 640) . '/' : '/640/360/') : null,
-            'filename' => $this->faker->word(), // TODO
+            'filename' => fn($attributes) => implode('_', $this->faker->words(2)) . ($attributes['image'] ? '.jpg' : '.txt'), // TODO
         ];
     }
 }

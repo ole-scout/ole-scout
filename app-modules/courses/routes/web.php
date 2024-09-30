@@ -1,5 +1,7 @@
 <?php
 
+use FossHaas\Courses\Http\Controllers\DownloadActivityController;
+use FossHaas\Courses\Http\Controllers\WeblinkActivityController;
 use FossHaas\Courses\Livewire\CourseGroupRootView;
 use FossHaas\Courses\Livewire\CourseGroupView;
 use FossHaas\Courses\Livewire\CourseView;
@@ -14,16 +16,24 @@ Route::name('courses.')
             ->name('dashboard');
 
         Route::get('/g', CourseGroupRootView::class)
-            ->middleware('can:viewAny,' . CourseGroup::class)
+            ->can('viewAny', CourseGroup::class)
             ->name('root');
 
         Route::get('/g/{courseGroup:slug}', CourseGroupView::class)
-            ->middleware('can:view,courseGroup')
+            ->can('view', 'courseGroup')
             ->name('group');
 
         Route::get('/c/{course:slug}', CourseView::class)
-            ->middleware('can:view,course')
+            ->can('view', 'course')
             ->name('course');
+
+        Route::get('/c/{course:slug}/a/{activity:id}/download', DownloadActivityController::class)
+            ->can('view', 'activity')
+            ->name('activity.download');
+
+        Route::get('/c/{course:slug}/a/{activity:id}/weblink', WeblinkActivityController::class)
+            ->can('view', 'activity')
+            ->name('activity.weblink');
 
         // Route::get('/c/{course:slug}/a/{activity:id}', ActivityView::class)->name('activity');
     });

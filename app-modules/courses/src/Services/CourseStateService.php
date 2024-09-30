@@ -2,7 +2,10 @@
 
 namespace FossHaas\Courses\Services;
 
+use FossHaas\Courses\Models\Activity;
+use FossHaas\Courses\Models\Course;
 use FossHaas\Courses\Models\CourseState;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -53,5 +56,30 @@ class CourseStateService
             }
             return $states;
         });
+    }
+
+    public function markActivityAsCompleted(Course $course, Activity $activity): void
+    {
+        $state = (
+            $course->relationLoaded('states')
+            ? $course->states->first()
+            : $course->states()->forUser()->first()
+        );
+        if (!$state) {
+            $this->createStatesForCourses(collect([$course]), collect([Auth::user()]));
+            $state = $course->states->first();
+        }
+        if ($state->activities[$activity->id]['completed_at'] === null) {
+            $state->activities[$activity->id]['completed_at'] = now();
+            if (
+                $state->completed_at === null &&
+                !Arr::first($state->activities, fn($activity) => (
+                    $activity['is_required'] && $activity['completed_at'] === null
+                ))
+            ) {
+                $state->completed_at = now();
+            }
+            $state->save();
+        }
     }
 }

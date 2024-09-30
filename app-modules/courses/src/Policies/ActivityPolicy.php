@@ -5,6 +5,7 @@ namespace FossHaas\Courses\Policies;
 use App\Models\User;
 use FossHaas\Courses\Models\Activity;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Gate;
 
 class ActivityPolicy
 {
@@ -21,6 +22,12 @@ class ActivityPolicy
      */
     public function view(User $user, Activity $activity): bool|null
     {
+        if (
+            $user->can('view', $activity->course) &&
+            $user->can('view', $activity->content) !== false
+        ) {
+            return true;
+        }
         return null;
     }
 

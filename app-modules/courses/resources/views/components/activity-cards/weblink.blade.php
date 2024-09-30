@@ -15,7 +15,7 @@
 <div class="description">{{ $activity->description }}</div>
 @endif
 <x-slot:actions>
-    <x-ui::button :href="$activity->content->url" variant="alt">
+    <x-ui::button :href="route('courses.activity.weblink', [$activity->course, $activity])" variant="alt">
         {{ __('Open link') }}
     </x-ui::button>
 </x-slot:actions>

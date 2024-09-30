@@ -15,7 +15,7 @@
 <div class="description">{{ $activity->description }}</div>
 @endif
 <x-slot:actions>
-    <x-ui::button :href="$activity->content->url" variant="alt" :download="$activity->content->filename">
+    <x-ui::button :href="route('courses.activity.download', [$activity->course, $activity])" variant="alt" :download="$activity->content->filename">
         {{ __('Download') }}
     </x-ui::button>
 </x-slot:actions>

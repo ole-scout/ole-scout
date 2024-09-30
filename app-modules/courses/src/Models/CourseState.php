@@ -65,18 +65,6 @@ class CourseState extends Model
         );
     }
 
-    protected static function booted()
-    {
-        static::updating(function (CourseState $state) {
-            if ($state->isDirty('activities') && $state->completed_at === null) {
-                $progress = $state->progress;
-                if ($progress->required_completed === $progress->required_total) {
-                    $state->completed_at = now();
-                }
-            }
-        });
-    }
-
     public function scopeForUser(Builder $query, ?User $user = null): void
     {
         if (!$user) $user = Auth::user();

@@ -23,6 +23,8 @@ class Activity extends Model implements Sortable
 
     public $incrementing = false;
 
+    public $with = ['content'];
+
     protected static function booted()
     {
         static::addGlobalScope('enabled', function (Builder $query): void {
@@ -91,5 +93,10 @@ class Activity extends Model implements Sortable
             'activity_id',
             'prereq_id'
         );
+    }
+
+    public function getBaseFilePathAttribute(): string
+    {
+        return 'activities/' . $this->content_type . '.' . $this->id;
     }
 }
