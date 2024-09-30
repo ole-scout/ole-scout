@@ -11,6 +11,8 @@ class WeblinkActivity extends Model
 {
     use HasFactory, HasTimestamps;
 
+    public static $viewName = 'courses::activity-cards.weblink';
+
     protected $touches = ['activity'];
 
     protected $fillable = [
@@ -21,15 +23,5 @@ class WeblinkActivity extends Model
     public function activity(): BelongsTo
     {
         return $this->belongsTo(Activity::class);
-    }
-
-    public function renderCard()
-    {
-        return view('courses::components.activity-cards.weblink', [
-            'course' => $this->activity->course,
-            'activity' => $this->activity,
-            'state' => $this->activity->course->states->first()?->activities[$this->activity->id],
-            'content' => $this,
-        ]);
     }
 }

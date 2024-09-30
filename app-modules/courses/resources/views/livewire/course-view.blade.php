@@ -12,7 +12,7 @@
     <x-slot:slot class="flex flex-col gap-4">
         <div class="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
             @foreach($group->activities as $activity)
-            {{ $activity->content->renderCard() }}
+            <x-dynamic-component :component="$activity->content::$viewName" :activity="$activity" />
             @endforeach
         </div>
         @foreach($group->activityGroups as $group)
@@ -40,7 +40,7 @@
         @if($activities->count())
         <div class="grid grid-cols-[repeat(auto-fill,minmax(16rem,1fr))] gap-4">
             @foreach($activities as $activity)
-            {{ $activity->content->renderCard() }}
+            <x-dynamic-component :component="$activity->content::$viewName" :activity="$activity" />
             @endforeach
         </div>
         @endif
