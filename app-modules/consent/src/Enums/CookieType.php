@@ -2,9 +2,10 @@
 
 namespace FossHaas\Consent\Enums;
 
+use Filament\Support\Contracts\HasLabel;
 use Illuminate\Support\Arr;
 
-enum CookieType: string
+enum CookieType: string implements HasLabel
 {
   case COOKIE = 'cookie';
   case LOCAL_STORAGE = 'local_storage';
@@ -16,7 +17,7 @@ enum CookieType: string
     return Arr::map(self::cases(), fn(CookieType $case) => $case->value);
   }
 
-  public function label(): string
+  public function getLabel(): string
   {
     return match ($this) {
       self::COOKIE => __('Cookie'),

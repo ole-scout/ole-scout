@@ -2,9 +2,13 @@
 
 namespace FossHaas\Courses\Enums;
 
+use Filament\Support\Contracts\HasColor;
+use Filament\Support\Contracts\HasDescription;
+use Filament\Support\Contracts\HasIcon;
+use Filament\Support\Contracts\HasLabel;
 use Illuminate\Support\Arr;
 
-enum Access: string
+enum Access: string implements HasLabel, HasDescription, HasIcon, HasColor
 {
     case HIDDEN = 'hidden';
     case VISIBLE = 'visible';
@@ -15,21 +19,39 @@ enum Access: string
         return Arr::map(self::cases(), fn(Access $case) => $case->value);
     }
 
-    public function label(): string
+    public function getLabel(): string
     {
         return match ($this) {
             self::HIDDEN => __('Hidden'),
             self::VISIBLE => __('Visible'),
-            self::OPEN => __('Open participation'),
+            self::OPEN => __('Free for all'),
         };
     }
 
-    public function description(): string
+    public function getIcon(): string
+    {
+        return match ($this) {
+            self::HIDDEN => 'fluentui-eye-off-16-o',
+            self::VISIBLE => 'fluentui-eye-16',
+            self::OPEN => 'fluentui-globe-16',
+        };
+    }
+
+    public function getColor(): string
+    {
+        return match ($this) {
+            self::HIDDEN => 'gray',
+            self::VISIBLE => 'success',
+            self::OPEN => 'warning',
+        };
+    }
+
+    public function getDescription(): string
     {
         return match ($this) {
             self::HIDDEN => __('This course is only visible to enrolled users.'),
-            self::VISIBLE => __('Participation requires enrollment.'),
-            self::OPEN => __('Participation does not require enrollment.'),
+            self::VISIBLE => __('This course is visible to all users but can only be accessed by enrolled users.'),
+            self::OPEN => __('This course is visible to all users and can be accessed without enrollment.'),
         };
     }
 }

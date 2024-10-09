@@ -3,8 +3,11 @@
 @import "/app-modules/core-ui/resources/css/index.css";
 
 .fi-logo {
-    @apply bg-brand-500 px-3 py-1.5 !h-14 object-contain object-left text-white shadow rounded-lg ring-1 ring-gray-950/5 dark:ring-white/15;
+    @apply px-3 py-1.5 !h-14 object-contain object-left text-brand-500;
+    &:is(img) {
+        @apply shadow rounded-lg ring-1 ring-gray-950/5 dark:ring-white/15;
+    }
     &:not(img) {
-        @apply inline-flex items-center text-base px-4;
+        @apply inline-flex items-center text-lg px-4;
     }
 }

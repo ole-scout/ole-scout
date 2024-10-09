@@ -11,7 +11,7 @@
         </x-ui::data-grid.entry>
         <x-ui::data-grid.entry span="2">
             <x-slot:label>{{ __('Type') }}</x-slot:label>
-            {{ $cookie->type->label() }}
+            {{ $cookie->type->getLabel() }}
         </x-ui::data-grid.entry>
         <x-ui::data-grid.entry span="full">
             <x-slot:label>{{ __('Host') }}</x-slot:label>
@@ -26,7 +26,7 @@
         <x-ui::data-grid.entry span="3">
             <x-slot:label>{{ __('Legal basis') }}</x-slot:label>
             <div>{{ $cookie->legal_basis->description() }}</div>
-            <div class="text-gray-700 dark:text-gray-400">{{ $cookie->legal_basis->label() }}</div>
+            <div class="text-gray-700 dark:text-gray-400">{{ $cookie->legal_basis->getLabel() }}</div>
         </x-ui::data-grid.entry>
         <x-ui::data-grid.entry span="2">
             <x-slot:label>{{ __('Duration') }}</x-slot:label>

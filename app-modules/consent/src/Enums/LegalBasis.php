@@ -2,9 +2,10 @@
 
 namespace FossHaas\Consent\Enums;
 
+use Filament\Support\Contracts\HasLabel;
 use Illuminate\Support\Arr;
 
-enum LegalBasis: string
+enum LegalBasis: string implements HasLabel
 {
   case CONSENT = 'consent';
   case CONTRACT = 'contract';
@@ -18,7 +19,7 @@ enum LegalBasis: string
     return Arr::map(self::cases(), fn(LegalBasis $case) => $case->value);
   }
 
-  public function label(): string
+  public function getLabel(): string
   {
     return match ($this) {
       self::CONSENT => __('GDPR Article 6(1)(a)'),

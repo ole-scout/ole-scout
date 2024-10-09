@@ -58,7 +58,7 @@ class ConsentForm extends Component
                     Category::cases(),
                     fn(Category $category) => $this->services->has($category->value)
                 ),
-                fn(Category $category) => [$category->value => $category->label()]
+                fn(Category $category) => [$category->value => $category->getLabel()]
             ),
             'selected' => $this->selected,
             'services' => $this->services
