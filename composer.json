@@ -19,7 +19,7 @@
         "foss-haas/core-ui": "*",
         "foss-haas/courses": "*",
         "foss-haas/filament-partials": "*",
-        "foss-haas/laravel-permission-objects": "*",
+        "foss-haas/laravel-permission-objects": "^1.0.0-alpha.1",
         "foss-haas/support": "*",
         "foss-haas/ui": "*",
         "giggsey/libphonenumber-for-php": "^8.13",
@@ -87,7 +87,7 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
         {
