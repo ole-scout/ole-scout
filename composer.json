@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.2",
         "filefabrik/modular": "^3.0",
+        "foss-haas/identities": "*",
         "foss-haas/laravel-permission-objects": "^1.0@alpha",
         "laravel/framework": "^11.36",
         "laravel/pail": "^1.1",

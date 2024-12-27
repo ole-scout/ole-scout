@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0fde18a7b75974a4573c51d296e1de94",
+    "content-hash": "944915ce4a89bb7dab4d0cda27c44598",
     "packages": [
         {
             "name": "brick/math",
@@ -1267,6 +1267,38 @@
                 "source": "https://github.com/Filefabrik/modular/tree/3.0.4"
             },
             "time": "2024-03-30T05:42:28+00:00"
+        },
+        {
+            "name": "foss-haas/identities",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/identities",
+                "reference": "dfcd208aff5fc602b9b6bceae2d412783593488d"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FossHaas\\Identities\\Providers\\IdentitiesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FossHaas\\Identities\\": "src/",
+                    "FossHaas\\Identities\\Tests\\": "tests/",
+                    "FossHaas\\Identities\\Database\\Factories\\": "database/factories/",
+                    "FossHaas\\Identities\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "foss-haas/laravel-permission-objects",
