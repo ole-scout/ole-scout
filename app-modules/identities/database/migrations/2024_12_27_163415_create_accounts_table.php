@@ -15,6 +15,8 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->nullable()->constrained()->restrictOnDelete();
+            $table->string('email')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->jsonb('permissions')->nullable();
             $table->boolean('is_super_admin')->default(false);
             $table->timestamps();

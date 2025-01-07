@@ -1,5 +1,21 @@
 # ole-scout
 
+# User data
+
+The user data is split into multiple separate models:
+
+-   The `Account` model represents a user account in the system and is used for internal authorization and local authentication.
+-   The `User` model represents a single human using an `Account`. Shared accounts will create a new `User` for each session.
+-   The `Persona` model represents a single human's identity within the system. Every `User` has exactly one `Persona`.
+-   The `AccountIdentity` model represents an identity that can be used by an `Account` to authenticate against an (external) `IdentityProvider`.
+
+This creates some deviations from the traditional Laravel authentication system:
+
+-   The `remember_token` is stored in the `User` model as expected, but the password hash, email and email verification status are stored in the `Account` model.
+-   Authentication logic for external authentication is specific to the `IdentityProvider` and credentials are stored in the `AccountIdentity` model.
+-   Models that are specific to a single human reference the `User` model while models that are only interested in the identity of a human reference the `Persona` model.
+-   We need our own `UserProvider` because the builtin one directly writes to the users table.
+
 ## License
 
 Copyright (c) 2024 Foss & Haas GmbH. All rights reserved.
