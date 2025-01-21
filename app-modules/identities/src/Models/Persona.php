@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property string $first_name
  * @property string $last_name
- * @property string|null $org
+ * @property array|null $profile
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $account_id
@@ -33,7 +33,7 @@ class Persona extends Model
         'account_id',
         'first_name',
         'last_name',
-        'org',
+        'profile',
     ];
 
     /**
@@ -50,7 +50,9 @@ class Persona extends Model
      */
     protected function casts(): array
     {
-        return [];
+        return [
+            'profile' => 'json',
+        ];
     }
 
     //#endregion

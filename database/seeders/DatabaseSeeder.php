@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
         $persona = Persona::factory()->create([
+            'account_id' => $acct->id,
             'first_name' => 'Test',
             'last_name' => 'User',
         ]);

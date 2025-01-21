@@ -2,7 +2,6 @@
 
 namespace FossHaas\Identities\Models;
 
-use FossHaas\Identities\Enums\IdentityProviderType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,9 +11,9 @@ use Spatie\Translatable\HasTranslations;
  * @property int $id
  * @property string $slug
  * @property array $name
- * @property IdentityProviderType $type
+ * @property string $type
  * @property array $config
- * @property bool $is_enabled
+ * @property bool $is_disabled
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int,AccountIdentity> $identities
@@ -35,7 +34,7 @@ class IdentityProvider extends Model
         'name',
         'type',
         'config',
-        'is_enabled',
+        'is_disabled',
     ];
 
     /**
@@ -56,7 +55,6 @@ class IdentityProvider extends Model
     {
         return [
             'config' => 'json',
-            'type' => IdentityProviderType::class,
         ];
     }
 
