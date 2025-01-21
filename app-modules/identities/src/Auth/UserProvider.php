@@ -4,7 +4,6 @@ namespace FossHaas\Identities\Auth;
 
 use Closure;
 use FossHaas\Identities\Models\Account;
-use FossHaas\Identities\Models\AccountIdentity;
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 
@@ -17,11 +16,7 @@ class UserProvider extends EloquentUserProvider
      */
     public function retrieveByCredentials(#[\SensitiveParameter] array $credentials)
     {
-        if (! isset($credentials['idp'])) {
-            $account = $this->retrieveAccountByLocalCredentials($credentials);
-        } else {
-            $account = $this->retrieveAccountByIdpCredentials($credentials);
-        }
+        $account = $this->retrieveAccountByLocalCredentials($credentials);
 
         if (! $account->user) {
             // Shared accounts create a new user for each login
@@ -69,23 +64,6 @@ class UserProvider extends EloquentUserProvider
         return $query->first();
     }
 
-    protected function retrieveAccountByIdpCredentials(#[\SensitiveParameter] array $credentials)
-    {
-        if (! isset($credentials['idp']) || ! isset($credentials['identifier'])) {
-            return null;
-        }
-
-        /** @var AccountIdentity|null */
-        $accountIdentity = AccountIdentity::providedBy($credentials['idp'])
-            ->where('identifier', $credentials['identifier'])->first();
-
-        if (! $accountIdentity) {
-            return null;
-        }
-
-        return $accountIdentity->account;
-    }
-
     /**
      * Validate a user against the given credentials.
      *
@@ -98,21 +76,7 @@ class UserProvider extends EloquentUserProvider
             return false;
         }
 
-        if (! isset($credentials['idp'])) {
-            return parent::validateCredentials($user, $credentials);
-        }
-
-        $account = $user->account;
-
-        $identities = $account->identities()->providedBy($credentials['idp']);
-
-        if ($identities->isEmpty()) {
-            return false;
-        }
-
-        // TODO: implement IDP authentication
-
-        return false;
+        return parent::validateCredentials($user, $credentials);
     }
 
     /**

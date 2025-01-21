@@ -20,7 +20,6 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property-read User|null $user
- * @property-read \Illuminate\Database\Eloquent\Collection<int,AccountIdentity> $identities
  * @property-read \Illuminate\Database\Eloquent\Collection<int,Persona> $personas
  */
 class Account extends Model
@@ -81,11 +80,6 @@ class Account extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
-    }
-
-    public function identities(): HasMany
-    {
-        return $this->hasMany(AccountIdentity::class);
     }
 
     public function personas(): HasMany
