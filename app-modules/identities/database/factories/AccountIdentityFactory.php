@@ -2,10 +2,8 @@
 
 namespace FossHaas\Identities\Database\Factories;
 
-use FossHaas\Identities\Enums\IdentityProviderType;
 use FossHaas\Identities\Models\IdentityProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\FossHaas\Identities\Models\AccountIdentity>
@@ -43,9 +41,7 @@ class AccountIdentityFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'identity_provider_id' => $identityProvider->id,
-            'credentials' => $identityProvider->type === IdentityProviderType::LOCAL ? [
-                'password' => static::$password ??= Hash::make('password'),
-            ] : [],
+            'credentials' => [],
         ]);
     }
 }

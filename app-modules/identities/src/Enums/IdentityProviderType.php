@@ -6,7 +6,8 @@ use Illuminate\Support\Arr;
 
 enum IdentityProviderType: string
 {
-    case LOCAL = 'local';
+    case LDAP = 'ldap';
+    case OIDC = 'oidc';
 
     public static function values(): array
     {
@@ -19,7 +20,8 @@ enum IdentityProviderType: string
     public function getLabel(): string
     {
         return match ($this) {
-            self::LOCAL => __('Local authentication'),
+            self::LDAP => __('LDAP authentication'),
+            self::OIDC => __('OpenID Connect authentication'),
         };
     }
 }

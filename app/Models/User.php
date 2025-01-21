@@ -75,6 +75,26 @@ class User extends Authenticatable
 
     //#endregion
 
+    //#region Authenticatable
+
+    public function getAuthIdentifier()
+    {
+        // For shared accounts, the user is created per login attempt and is
+        // not persisted until the login actually succeeds
+        if (! $this->exists) {
+            $this->save();
+        }
+
+        return $this->id;
+    }
+
+    public function getAuthPassword(): string
+    {
+        return $this->account->password;
+    }
+
+    //#endregion
+
     //#region Authorizable
 
     public function can($abilities, $arguments = [])

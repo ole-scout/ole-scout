@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 
 /**
  * @property int $id
+ * @property string|null $password
  * @property string|null $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property AsPermissions|null $permissions
@@ -35,6 +36,7 @@ class Account extends Model
      */
     protected $fillable = [
         'user_id',
+        'password',
         'email',
         'email_verified_at',
         'permissions',
@@ -47,6 +49,7 @@ class Account extends Model
      * @var array<int, string>
      */
     protected $hidden = [
+        'password',
         'permissions',
         'is_super_admin',
     ];
@@ -59,6 +62,7 @@ class Account extends Model
     protected function casts(): array
     {
         return [
+            'password' => 'hashed',
             'permissions' => AsPermissions::class,
             'is_super_admin' => 'boolean',
         ];
@@ -71,6 +75,11 @@ class Account extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
     }
 
     public function identities(): HasMany

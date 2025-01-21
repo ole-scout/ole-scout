@@ -2,6 +2,7 @@
 
 namespace FossHaas\Identities\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class AccountIdentity extends Model
 {
     use HasFactory;
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope('enabled', function (Builder $builder) {
+            $builder
+                ->whereNot('profile_data->is_disabled', true)
+                ->whereHas('identityProvider', function (Builder $query) {
+                    $query->where('is_enabled', true);
+                });
+        });
+    }
 
     //#region Attributes
 
@@ -55,6 +67,17 @@ class AccountIdentity extends Model
             'profile_data' => 'json',
             'credentials' => 'json',
         ];
+    }
+
+    //#endregion
+
+    //#region Scopes
+
+    public function scopeProvidedBy(Builder $query, string $idpSlug): Builder
+    {
+        return $query->whereHas('identityProvider', function (Builder $query) use ($idpSlug) {
+            $query->where('slug', $idpSlug);
+        });
     }
 
     //#endregion
