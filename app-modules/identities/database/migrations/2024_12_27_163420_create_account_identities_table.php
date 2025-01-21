@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('account_identities', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(IdentityProvider::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Account::class)
+                ->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(IdentityProvider::class)
+                ->constrained()->cascadeOnDelete();
             $table->string('identifier');
             $table->jsonb('credentials')->nullable();
             $table->jsonb('profile_data')->nullable();

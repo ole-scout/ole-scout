@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $org
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $account_id
  * @property-read Account $account
  * @property-read \Illuminate\Database\Eloquent\Collection<int,User> $users
  */

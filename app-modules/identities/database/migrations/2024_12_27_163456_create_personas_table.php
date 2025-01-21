@@ -14,10 +14,11 @@ return new class extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Account::class)
+                ->constrained()->cascadeOnDelete();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('org')->nullable();
+            $table->jsonb('profile')->nullable();
             $table->timestamps();
         });
     }

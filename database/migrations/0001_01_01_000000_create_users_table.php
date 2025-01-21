@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Account::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Persona::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(Account::class)
+                ->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Persona::class)->nullable()
+                ->constrained()->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });

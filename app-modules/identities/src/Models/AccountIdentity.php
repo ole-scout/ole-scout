@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property array|null $profile_data
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
+ * @property int $account_id
+ * @property int $identity_provider_id
  * @property-read Account $account
  * @property-read IdentityProvider $identityProvider
  */
