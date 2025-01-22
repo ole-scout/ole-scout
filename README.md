@@ -16,6 +16,12 @@ This creates some deviations from the traditional Laravel authentication system:
 -   Models that are specific to a single human reference the `User` model while models that are only interested in the identity of a human reference the `Persona` model.
 -   We need our own `UserProvider` because the builtin one directly writes to the users table.
 
+# Metadata
+
+We want to move icons out of the database and into the filesystem so we're not currently including them in the migrations/models.
+
+The `author` and `clearance` fields are currently not implemented. We should gather feedback about how they are currently used by our customers before implementing them.
+
 ## License
 
 Copyright (c) 2024 Foss & Haas GmbH. All rights reserved.

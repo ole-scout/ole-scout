@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "944915ce4a89bb7dab4d0cda27c44598",
+    "content-hash": "80c9db93dc1fd061cda12c201af4f609",
     "packages": [
         {
             "name": "brick/math",
@@ -1267,6 +1267,38 @@
                 "source": "https://github.com/Filefabrik/modular/tree/3.0.4"
             },
             "time": "2024-03-30T05:42:28+00:00"
+        },
+        {
+            "name": "foss-haas/courses",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/courses",
+                "reference": "825802b6007686d5c7f550e0dc69ebcb5b2d7f23"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FossHaas\\Courses\\Providers\\CoursesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FossHaas\\Courses\\": "src/",
+                    "FossHaas\\Courses\\Tests\\": "tests/",
+                    "FossHaas\\Courses\\Database\\Factories\\": "database/factories/",
+                    "FossHaas\\Courses\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "foss-haas/identities",

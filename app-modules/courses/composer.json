@@ -1,0 +1,24 @@
+{
+	"name": "foss-haas/courses",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"FossHaas\\Courses\\": "src/",
+			"FossHaas\\Courses\\Tests\\": "tests/",
+			"FossHaas\\Courses\\Database\\Factories\\": "database/factories/",
+			"FossHaas\\Courses\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"FossHaas\\Courses\\Providers\\CoursesServiceProvider"
+			]
+		}
+	}
+}
