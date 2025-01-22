@@ -2,6 +2,7 @@
 
 namespace App\Hashing;
 
+use App\Hashing\Data\FoxxAuthData;
 use Error;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Illuminate\Hashing\AbstractHasher;
@@ -70,11 +71,11 @@ class FoxxAuthHasher extends AbstractHasher implements HasherContract
             }
             $hash = hash($method, "{$salt}{$value}");
 
-            return json_encode([
+            return FoxxAuthData::from([
                 'method' => $method,
                 'salt' => $salt,
                 'hash' => $hash,
-            ]);
+            ])->toJson();
         }
 
         try {
@@ -84,12 +85,12 @@ class FoxxAuthHasher extends AbstractHasher implements HasherContract
             throw new RuntimeException('PBKDF2 hashing not supported.');
         }
 
-        return json_encode([
+        return FoxxAuthData::from([
             'method' => 'pbkdf2',
             'iter' => $iter,
             'salt' => $salt,
             'hash' => $hash,
-        ]);
+        ])->toJson();
     }
 
     /**
@@ -107,9 +108,9 @@ class FoxxAuthHasher extends AbstractHasher implements HasherContract
             return false;
         }
 
-        $authData = json_decode($hashedValue, true);
-
-        if (! is_array($authData)) {
+        try {
+            $authData = FoxxAuthData::from($hashedValue);
+        } catch (Error) {
             if ($this->verifyAlgorithm) {
                 throw new RuntimeException('This password does not use the Foxx Auth hashing algorithms.');
             }
@@ -117,16 +118,16 @@ class FoxxAuthHasher extends AbstractHasher implements HasherContract
             return parent::check($value, $hashedValue, $options);
         }
 
-        if ($authData['method'] !== 'pbkdf2') {
-            if (! in_array($authData['method'], hash_algos())) {
-                throw new RuntimeException(strtoupper($authData['method']).' hashing not supported.');
+        if ($authData->method !== 'pbkdf2') {
+            if (! in_array($authData->method, hash_algos())) {
+                throw new RuntimeException(strtoupper($authData->method).' hashing not supported.');
             }
-            $generatedHash = hash($authData['method'], "{$authData['salt']}{$value}");
+            $generatedHash = hash($authData->method, "{$authData->salt}{$value}");
         } else {
-            $generatedHash = hash_pbkdf2('sha1', $value, $authData['salt'], $authData['iter'], 32);
+            $generatedHash = hash_pbkdf2('sha1', $value, $authData->salt, $authData->iter, 32);
         }
 
-        return hash_equals($authData['hash'], $generatedHash);
+        return hash_equals($authData->hash, $generatedHash);
     }
 
     /**
