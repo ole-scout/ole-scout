@@ -1,0 +1,24 @@
+{
+	"name": "foss-haas/lrs",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"FossHaas\\Lrs\\": "src/",
+			"FossHaas\\Lrs\\Tests\\": "tests/",
+			"FossHaas\\Lrs\\Database\\Factories\\": "database/factories/",
+			"FossHaas\\Lrs\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"FossHaas\\Lrs\\Providers\\LrsServiceProvider"
+			]
+		}
+	}
+}

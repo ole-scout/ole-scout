@@ -2245,6 +2245,38 @@
             "time": "2024-10-20T17:22:45+00:00"
         },
         {
+            "name": "foss-haas/lrs",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/lrs",
+                "reference": "f8b6a273f52e2b51e0b26f7f72a8947bbb3d5045"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FossHaas\\Lrs\\Providers\\LrsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FossHaas\\Lrs\\": "src/",
+                    "FossHaas\\Lrs\\Tests\\": "tests/",
+                    "FossHaas\\Lrs\\Database\\Factories\\": "database/factories/",
+                    "FossHaas\\Lrs\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "foss-haas/validation",
             "version": "1.0",
             "dist": {
