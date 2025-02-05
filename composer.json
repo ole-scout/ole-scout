@@ -13,6 +13,7 @@
         "foss-haas/courses": "*",
         "foss-haas/identities": "*",
         "foss-haas/laravel-permission-objects": "^1.0@alpha",
+        "foss-haas/validation": "*",
         "laravel/framework": "^11.36",
         "laravel/pail": "^1.1",
         "laravel/tinker": "^2.10",

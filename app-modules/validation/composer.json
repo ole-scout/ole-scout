@@ -1,0 +1,22 @@
+{
+    "name": "foss-haas/validation",
+    "description": "",
+    "type": "library",
+    "version": "1.0",
+    "license": "proprietary",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "FossHaas\\Validation\\": "src/",
+            "FossHaas\\Validation\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FossHaas\\Validation\\Providers\\ValidationServiceProvider"
+            ]
+        }
+    }
+}

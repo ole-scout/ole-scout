@@ -2245,6 +2245,36 @@
             "time": "2024-10-20T17:22:45+00:00"
         },
         {
+            "name": "foss-haas/validation",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/validation",
+                "reference": "b4901fd15ffe75b9ce602f30a1dd7effd8146b85"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FossHaas\\Validation\\Providers\\ValidationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FossHaas\\Validation\\": "src/",
+                    "FossHaas\\Validation\\Tests\\": "tests/",
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "fruitcake/php-cors",
             "version": "v1.3.0",
             "source": {
